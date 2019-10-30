@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components'
+import Navigation from "./components/Navigation/Navigation";
+import  './App.css'
+import {font} from './fonts/Raleway-Regular.ttf'
+import HowItWorks from "./components/HowItWorks/HowItWorks";
+import Navtop from "./components/Navtop/Navtop";
+import Main from "./components/Main/Main";
+import Services from "./components/Services/Services";
+
+const Wrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  font-family: ${font};
+`;
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <Navigation/>
+        <Wrapper>
+        <Navtop/>
+        <Main/>
+        <HowItWorks/>
+        <Services/>
+        </Wrapper>
     </div>
   );
 }
