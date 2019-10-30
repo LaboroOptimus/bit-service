@@ -19,7 +19,7 @@ const Title = styled.h2`
     font-size: 40px;
     text-align: center;
     margin-bottom: 40px;
-`
+`;
 
 const Container = styled.div`
     display: flex;
