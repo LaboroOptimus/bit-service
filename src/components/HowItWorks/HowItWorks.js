@@ -5,8 +5,8 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 40px;
+    margin-bottom: 60px;
 `;
 
 const HowItWorksContainer = styled.div`
@@ -15,9 +15,16 @@ const HowItWorksContainer = styled.div`
     width: 30%;
 `;
 
+const HowItWorksTitle = styled.h3`
+    font-size: 30px;
+`;
+
+const HowItWorksContent = styled.p`
+    font-size: 17px;
+`
 const Title = styled.h2`
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
     margin-top: 30px;
     margin-bottom: 30px;
 `;
@@ -29,21 +36,21 @@ const HowItWorks = () => {
         <Wrapper>
             <HowItWorksContainer>
                 <div>
-                    <h3>Создаете заявку</h3>
-                    <p>с кратким описанием работ и желаемой датой ремонта. Потратите не более 3 минут</p>
+                    <HowItWorksTitle>Создаете заявку</HowItWorksTitle>
+                    <HowItWorksContent>с кратким описанием работ и желаемой датой ремонта. Потратите не более 3 минут</HowItWorksContent>
                 </div>
                 <div>
-                    <h3>Получаете отклики</h3>
-                    <p>от специализированных сервисов по SMS или в личном кабинете</p>
+                    <HowItWorksTitle>Получаете отклики</HowItWorksTitle>
+                    <HowItWorksContent>от специализированных сервисов по SMS или в личном кабинете</HowItWorksContent>
                 </div>
             </HowItWorksContainer>
             <HowItWorksContainer>
                 <div>
-                    <h3>Сравниваете ответы</h3>
-                    <p>наиболее подходящие по стоимости, отзывам, местоположению и другим параметрам</p></div>
+                    <HowItWorksTitle>Сравниваете ответы</HowItWorksTitle>
+                    <HowItWorksContent>наиболее подходящие по стоимости, отзывам, местоположению и другим параметрам</HowItWorksContent></div>
                 <div>
-                    <h3>Подтверждаете запись</h3>
-                    <p>а также все условия ремонта и можно смело ехать в автосервис</p>
+                    <HowItWorksTitle>Подтверждаете запись</HowItWorksTitle>
+                    <HowItWorksContent>а также все условия ремонта и можно смело ехать в автосервис</HowItWorksContent>
                 </div>
             </HowItWorksContainer>
         </Wrapper>

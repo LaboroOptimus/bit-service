@@ -7,6 +7,7 @@ import HowItWorks from "./components/HowItWorks/HowItWorks";
 import Navtop from "./components/Navtop/Navtop";
 import Main from "./components/Main/Main";
 import Services from "./components/Services/Services";
+import Advantages from "./components/Advantages/Advantages";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,6 +25,7 @@ function App() {
         <Main/>
         <HowItWorks/>
         <Services/>
+        <Advantages/>
         </Wrapper>
     </div>
   );

@@ -10,14 +10,14 @@ const Slider = require("react-slick").default;
 
 const Title = styled.h2`
     text-align: center;
-    font-size: 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    font-size: 40px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 `;
 
 const Wrapper = styled.div`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 `;
 
 const ServiceItem = styled.div`
@@ -33,6 +33,7 @@ const ServiceItem = styled.div`
 const ServiceItemContent = styled.span`
     padding: 0;
     text-align: center;
+    font-size: 19px;
 `
 
 class Services extends React.Component{
@@ -63,7 +64,7 @@ render() {
     const reverseData = [...data].reverse()
     return(
         <Wrapper>
-            <Title>Lorem ipsum dolor sit amet, consectetur adipisicing elit</Title>
+            <Title>1594+ сервисов на сайте решают следующие проблемы:</Title>
             <Slider {...settings} styles={slickStyles}>
                 {data.map((e,index)=>{
                     return (
