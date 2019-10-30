@@ -10,6 +10,7 @@ import Services from "./components/Services/Services";
 import Advantages from "./components/Advantages/Advantages";
 import Cta from "./components/Cta/Cta";
 import Prices from "./components/Prices/Prices";
+import Reviews from "./components/Reviews/Reviews";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,6 +31,7 @@ function App() {
         <Advantages/>
         <Cta/>
         <Prices/>
+        <Reviews/>
         </Wrapper>
     </div>
   );
