@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 const ServiceItem = styled.div`
     width: auto !important;
     text-align: center !important;
-    background: #66CC92;
+    background: #00aee0;
     border-radius: 50px;
     color: #fff;
     padding:5px 10px;

@@ -8,6 +8,7 @@ import Navtop from "./components/Navtop/Navtop";
 import Main from "./components/Main/Main";
 import Services from "./components/Services/Services";
 import Advantages from "./components/Advantages/Advantages";
+import Cta from "./components/Cta/Cta";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,6 +27,7 @@ function App() {
         <HowItWorks/>
         <Services/>
         <Advantages/>
+        <Cta/>
         </Wrapper>
     </div>
   );
