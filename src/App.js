@@ -11,6 +11,8 @@ import Advantages from "./components/Advantages/Advantages";
 import Cta from "./components/Cta/Cta";
 import Prices from "./components/Prices/Prices";
 import Reviews from "./components/Reviews/Reviews";
+import News from "./components/News/News";
+import Footer from "./components/Footer/Footer";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -32,6 +34,8 @@ function App() {
         <Cta/>
         <Prices/>
         <Reviews/>
+        <News/>
+        <Footer/>
         </Wrapper>
     </div>
   );
