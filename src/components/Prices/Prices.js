@@ -24,6 +24,7 @@ const Tag = styled.span`
     color: #0095ff;
     cursor: pointer;
     text-decoration: none;
+    border-bottom: 1px solid #fff;
     
     :active, :hover {
     border-bottom: 1px dashed;
