@@ -34,7 +34,7 @@ const Button = styled.button`
     font-size: 15px;
     font-weight: bold;
     height: 44px;
-    width: 40%;
+    width: 60%;
     margin: 0 auto;
 `;
 
@@ -69,21 +69,25 @@ const Link = styled.a`
 `;
 
 
-class LoginForm extends React.Component {
-    render() {
-        return (
+
+class RegistrationForm extends React.Component {
+    render(){
+        return(
             <Wrapper>
                 <FormWrapper>
-                    <Title>Вход на сайт</Title>
-                    <Input placeholder="Email/телефон"/>
+                    <Title>Регистрация на сайте</Title>
+                    <Input placeholder="Имя и Фамилия"/>
+                    <Input placeholder="Email"/>
+                    <Input placeholder="Телефон"/>
                     <Input placeholder="Пароль"/>
-                    <Button>Войти</Button>
-                    <Link href={'#'}>Забыли пароль?</Link>
-                    <Link href={'#'}>Регистрация</Link>
+                    <Input placeholder="Повторите пароль"/>
+                    <Button>Зарегистрироваться</Button>
+                    <p>Уже зарегистрированы?</p>
+                    <Link href={'#'}>Войти на сайт</Link>
                 </FormWrapper>
             </Wrapper>
         )
     }
 }
 
-export default LoginForm
+export default RegistrationForm
