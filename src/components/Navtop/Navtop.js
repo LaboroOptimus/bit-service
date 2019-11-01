@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
+import {NavLink} from 'react-router-dom'
 
 const NavPanel = styled.div`
     display: flex;
@@ -30,9 +31,9 @@ const Navtop = () => {
     return (
         <NavPanel>
             <Phone>8(800)000-00-00</Phone>
-            <NavBlock><a href="/">Вы владелец сервиса?</a></NavBlock>
-            <NavBlock><a href="/">Найти сервис на карте</a></NavBlock>
-            <NavBlock><a href="/">Войти на сайт</a></NavBlock>
+            <NavBlock><NavLink to="/for-service">Вы владелец сервиса?</NavLink></NavBlock>
+            <NavBlock><NavLink to="/map">Найти сервис на карте</NavLink></NavBlock>
+            <NavBlock><NavLink to="/login">Войти на сайт</NavLink></NavBlock>
         </NavPanel>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -78,8 +79,8 @@ class LoginForm extends React.Component {
                     <Input placeholder="Email/телефон"/>
                     <Input placeholder="Пароль"/>
                     <Button>Войти</Button>
-                    <Link href={'#'}>Забыли пароль?</Link>
-                    <Link href={'#'}>Регистрация</Link>
+                    <NavLink to={'/'}>Забыли пароль?</NavLink>
+                    <NavLink to={'/registration'}>Регистрация</NavLink>
                 </FormWrapper>
             </Wrapper>
         )

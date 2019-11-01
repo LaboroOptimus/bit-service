@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -83,7 +84,7 @@ class RegistrationForm extends React.Component {
                     <Input placeholder="Повторите пароль"/>
                     <Button>Зарегистрироваться</Button>
                     <p>Уже зарегистрированы?</p>
-                    <Link href={'#'}>Войти на сайт</Link>
+                    <NavLink to={'/login'}>Войти на сайт</NavLink>
                 </FormWrapper>
             </Wrapper>
         )
