@@ -2,14 +2,13 @@ import React from 'react'
 import { slide as Menu } from 'react-burger-menu'
 import './Navigation.css'
 import styled from 'styled-components'
+import {NavLink} from 'react-router-dom'
 
 const MenuIcon = styled.img`
     width: 18px;
     margin-right: 5px;
     margin-top: 5px;
-`
-
-
+`;
 
 
 class Navigation extends React.Component {
@@ -21,20 +20,22 @@ class Navigation extends React.Component {
 
     render(){
         return (
+            <React.Fragment>
             <Menu>
-                <a id="home" className="menu-item" href="/">
+                <NavLink to="/" id="home" className="menu-item">
                     Главная
-                </a>
-                <a id="about" className="menu-item" href="/">
+                </NavLink>
+                <NavLink to="/profile" id="about" className="menu-item">
                     Мой Профиль
-                </a>
-                <a id="contact" className="menu-item" href="/">
+                </NavLink>
+                <NavLink to="/" id="contact" className="menu-item">
                     Мои Сообщения
-                </a>
-                <a onClick={ this.showSettings } className="menu-item--small" href="/">
+                </NavLink>
+                <NavLink to="/login" onClick={ this.showSettings } className="menu-item--small" >
                     Настройки
-                </a>
+                </NavLink>
             </Menu>
+            </React.Fragment>
             // TODO: добавить иконки
         )
     }
