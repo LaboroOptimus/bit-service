@@ -2,6 +2,9 @@ import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 
+
+
+
 const Wrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -60,31 +63,26 @@ const Title = styled.h3`
     font-size: 30px;
     text-align: center;
     margin-top: 0;
+    margin-bottom: 0;
 `;
 
-const Link = styled.a`
-   font-size: 18px;
-   color: blue;
-   border-bottom: 1px solid dotted; 
-   margin-top: 10px;
-`;
+const Subtitle = styled.p`
+    font-size: 18px;
+    margin-bottom: 40px;
+    margin-top: 0;
+`
 
-
-class LoginForm extends React.Component {
-    render() {
-        return (
-            <Wrapper>
-                <FormWrapper>
-                    <Title>Вход на сайт</Title>
-                    <Input placeholder="Email/телефон"/>
-                    <Input placeholder="Пароль"/>
-                    <Button>Войти</Button>
-                    <NavLink to={'/forgotpass'}>Забыли пароль?</NavLink>
-                    <NavLink to={'/registration'}>Регистрация</NavLink>
-                </FormWrapper>
-            </Wrapper>
-        )
-    }
+const ForgotPass = () => {
+    return (
+        <Wrapper>
+            <FormWrapper>
+                <Title>Восстановление пароля</Title>
+                <Subtitle>Введите email который Вы вводили при регистрации на сайте</Subtitle>
+                <Input placeholder="Email/телефон"/>
+                <Button>Восстановить</Button>
+            </FormWrapper>
+        </Wrapper>
+    )
 }
 
-export default LoginForm
+export default ForgotPass

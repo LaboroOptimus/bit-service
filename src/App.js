@@ -6,6 +6,7 @@ import {Route, Switch} from 'react-router-dom'
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import MapPage from "./components/MapPage/MapPage";
+import ForgotpassPage from "./components/ForgotpassPage/ForgotpassPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path='/login' component={LoginPage}/>
             <Route path='/registration' component={RegistrationPage}/>
             <Route path='/map' component={MapPage}/>
+          <Route path='/forgotpass' component={ForgotpassPage}/>
       </Switch>
   );
 }
