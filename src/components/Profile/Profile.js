@@ -76,8 +76,6 @@ const Button = styled.button`
 
 
 
-
-
 class Profile extends React.Component {
 
     state = {

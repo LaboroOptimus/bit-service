@@ -8,6 +8,7 @@ import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import MapPage from "./components/MapPage/MapPage";
 import ForgotpassPage from "./components/ForgotpassPage/ForgotpassPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import RequestPage from "./components/RequestPage/RequestPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/map' component={MapPage}/>
           <Route path='/forgotpass' component={ForgotpassPage}/>
           <Route path='/profile' component={ProfilePage}/>
+          <Route path='/request' component={RequestPage}/>
       </Switch>
   );
 }

@@ -25,6 +25,9 @@ class Navigation extends React.Component {
                 <NavLink to="/" id="home" className="menu-item">
                     Главная
                 </NavLink>
+                <NavLink to="/request" className="menu-item">
+                    Заявка на ремонт
+                </NavLink>
                 <NavLink to="/profile" id="about" className="menu-item">
                     Мой Профиль
                 </NavLink>
