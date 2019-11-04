@@ -51,7 +51,7 @@ const Button = styled.button`
     position: absolute;
     display: ${props=> props.display || 'none'};
     right: 160px;
-    bottom: 25px;
+    bottom: 230px;
     color: #fff;
     cursor: pointer;
     -webkit-transition: all 0.3s ease;
