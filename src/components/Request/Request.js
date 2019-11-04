@@ -62,8 +62,7 @@ const Select = styled.select`
     margin: 10px 0;
     width: 30%;
     margin-right: 10px;
-
-`
+`;
 
 const Input = styled.input`
     background-color: #fff;

@@ -22,8 +22,8 @@ class Navigation extends React.Component {
         return (
             <React.Fragment>
             <Menu>
-                <NavLink to="/" id="home" className="menu-item">
-                    Главная
+                <NavLink to="/find-service" className="menu-item">
+                    Найти сервис
                 </NavLink>
                 <NavLink to="/request" className="menu-item">
                     Заявка на ремонт
