@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import axios from 'axios'
+import fire from "../../config/Fire";
 
 const Wrapper = styled.div`
     display: flex;
@@ -72,17 +74,74 @@ const Link = styled.a`
 
 
 class RegistrationForm extends React.Component {
+
+    state = {
+        name:'',
+        email: '',
+        phone: '',
+        pass: '',
+        uid:''
+    };
+
+   onNameChanged = (e) => {
+       this.setState({
+           name: e.target.value
+       })
+   }
+
+   onEmailChanged = (e) => {
+       this.setState({
+           email: e.target.value
+       })
+   };
+
+   onPhoneChanged = (e) => {
+       this.setState({
+           phone: e.target.value
+       })
+   };
+
+   onPassChanged = (e) => {
+       this.setState({
+           pass: e.target.value
+       })
+   };
+
+   onSubmit = (e) => {
+       e.preventDefault();
+       fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
+           .then((response) => {
+               //console.log(response.user.uid)
+              /* this.setState({
+                   uid:response.user.uid
+               })*/
+              let uid = response.user.uid;
+              const data = {
+                  name:this.state.name,
+                  email:this.state.email,
+                  phone: this.state.phone,
+              }
+               axios.post(`https://bit-ser.firebaseio.com/users/' + ${uid}.json`,data);
+           })
+           .catch((e) => {
+           console.log(e)
+       });
+   }
+
+
+
     render(){
+        console.log(this.state.uid)
         return(
             <Wrapper>
                 <FormWrapper>
                     <Title>Регистрация на сайте</Title>
-                    <Input placeholder="Имя и Фамилия"/>
-                    <Input placeholder="Email"/>
-                    <Input placeholder="Телефон"/>
-                    <Input placeholder="Пароль"/>
+                    <Input onChange={this.onNameChanged} value={this.state.name} placeholder="Имя и Фамилия"/>
+                    <Input onChange={this.onEmailChanged} value={this.state.email} placeholder="Email"/>
+                    <Input onChange={this.onPhoneChanged} value={this.state.phone} placeholder="Телефон"/>
+                    <Input onChange={this.onPassChanged} value={this.state.pass} placeholder="Пароль"/>
                     <Input placeholder="Повторите пароль"/>
-                    <Button>Зарегистрироваться</Button>
+                    <Button type="submit" onClick={this.onSubmit}>Зарегистрироваться</Button>
                     <p>Уже зарегистрированы?</p>
                     <NavLink to={'/login'}>Войти на сайт</NavLink>
                 </FormWrapper>

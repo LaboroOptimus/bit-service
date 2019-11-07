@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import axios from 'axios'
 
 const Wrapper = styled.div`
     display: flex;
@@ -75,7 +76,17 @@ const AdvantagesItem = styled.h4`
 `;
 
 
+
+
 class ServiceList extends React.Component {
+
+
+    componentDidMount() {
+        axios.get('https://bit-ser.firebaseio.com/company.json').then(response=>{
+            console.log(response)
+        })
+    }
+
     render() {
         return (
             <Wrapper>

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 const Wrapper = styled.div`
     display: flex;
@@ -71,14 +72,47 @@ const Link = styled.a`
 
 
 class LoginForm extends React.Component {
+    state = {
+        login: '',
+        password: '',
+    };
+
+    onChangeLogin = (e) => {
+        this.setState({
+            login: e.target.value
+        })
+    }
+
+    onChangePass = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    }
+
+    onSubmit  = async(e) => {
+        e.preventDefault();
+        const authData = {
+            email:this.state.login,
+            password: this.state.password,
+            returnSecureToken: true
+        }
+        try {
+            const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD9_bt5G55PgVsoh3M20ZKAwe6MhroAOK8',authData);
+            console.log(response.data)
+        }
+        catch (e) {
+
+        }
+    }
+
     render() {
         return (
             <Wrapper>
                 <FormWrapper>
                     <Title>Вход на сайт</Title>
-                    <Input placeholder="Email/телефон"/>
-                    <Input placeholder="Пароль"/>
-                    <Button>Войти</Button>
+                    <Input value={this.state.login} onChange={this.onChangeLogin} placeholder="Email/телефон"/>
+                    <Input value={this.state.password} onChange={this.onChangePass} placeholder="Пароль"/>
+                    <Button type="submit" onClick={this.onSubmit}>Войти</Button>
                     <NavLink to={'/forgotpass'}>Забыли пароль?</NavLink>
                     <NavLink to={'/registration'}>Регистрация</NavLink>
                 </FormWrapper>
