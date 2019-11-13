@@ -13,7 +13,6 @@ import {ReactComponent as Settings} from "./assets/settings.svg";
 import {ReactComponent as Key} from "./assets/key.svg";
 import {ReactComponent as Question} from "./assets/question.svg";
 import {ReactComponent as Exit} from "./assets/exit.svg";
-import {ReactComponent as Close} from "./assets/close.svg";
 
 
 const TopStatickBlock = styled.div`
@@ -32,12 +31,6 @@ const Line = styled.div`
 const Title = styled.p`
     color: #fff;
     margin: 0;
-`;
-
-const CloseIcon = styled(Close)`
-    width: 20px;
-    fill-opacity: .2;
-    vertical-align: top;
 `;
 
 const LocationIcon = styled(Location)`
@@ -93,7 +86,7 @@ const ToggleIcon = styled.img`
     width: 20px !important;
     height: 20px !important;
     margin-top: 10px;
-`
+`;
 
 const KeyIcon = styled(Key)`
     width: 20px;
@@ -119,23 +112,6 @@ const ExitIcon = styled(Exit)`
     margin-top: 3px;
 `;
 
-const MenuIcon = styled.img`
-    width: 20px;
-    margin-right: 10px;
-    vertical-align: top;
-    margin-top: 3px;
-`;
-
-const MenuItem = styled.div`
-    background: #fff;
-    font-size: 19px;
-    padding-left: 40px;
-    color: #B2B2B2;
-    :hover {
-        background: #E1E5FF;
-    }
-`;
-
 
 class Navigation extends React.Component {
     state = {}
@@ -159,62 +135,60 @@ class Navigation extends React.Component {
                         </div>
                     </NavLink>
                     <NavLink to="/find-service" className="menu-item">
-                    <div>
-                        <LoupeIcon/>
+                        <div>
+                            <LoupeIcon/>
                             Найти сервис
-                    </div>
+                        </div>
                     </NavLink>
 
                     <NavLink to="/request" className="menu-item">
-                    <div>
-                        <ServiceIcon/>
+                        <div>
+                            <ServiceIcon/>
                             Заявка на ремонт
-                    </div>
+                        </div>
                     </NavLink>
 
                     <NavLink to="/profile" id="about" className="menu-item">
-                    <div>
-                        <UserIcon/>
+                        <div>
+                            <UserIcon/>
                             Профиль
-                    </div>
+                        </div>
                     </NavLink>
                     <NavLink to="/" id="contact" className="menu-item">
-                    <div>
-                        <MessageIcon/>
+                        <div>
+                            <MessageIcon/>
                             Сообщения
-                    </div>
+                        </div>
                     </NavLink>
                     <NavLink to="/login" onClick={this.showSettings} className="menu-item">
-                    <div>
-                        <SettingsIcon/>
+                        <div>
+                            <SettingsIcon/>
                             Настройки
-                    </div>
+                        </div>
                     </NavLink>
 
                     <Line/>
                     <NavLink to="/login" id="contact" className="menu-item">
-                    <div>
-                        <KeyIcon/>
+                        <div>
+                            <KeyIcon/>
                             Вход для сервисных центров
-                    </div>
+                        </div>
                     </NavLink>
                     <NavLink to="/" id="contact" className="menu-item">
-                    <div>
-                        <QuestionIcon/>
+                        <div>
+                            <QuestionIcon/>
                             Контакты
-                    </div>
+                        </div>
                     </NavLink>
 
                     <NavLink to="/" id="contact" className="menu-item">
-                    <div>
-                        <ExitIcon/>
+                        <div>
+                            <ExitIcon/>
                             Выйти из системы
-                    </div>
+                        </div>
                     </NavLink>
-
                 </Menu>
             </React.Fragment>
-            // TODO: добавить иконки
         )
     }
 }
