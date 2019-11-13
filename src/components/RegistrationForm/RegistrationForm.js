@@ -43,7 +43,7 @@ const Button = styled.button`
 
 const Input = styled.input`
     background-color: #fff;
-    padding: 13px 120px 13px 13px;
+    padding: 13px 13px 13px 13px;
     box-sizing: border-box;
     border-radius: 6px;
     border: 1px solid #eee;
@@ -64,12 +64,25 @@ const Title = styled.h3`
     margin-top: 0;
 `;
 
-const Link = styled.a`
-   font-size: 18px;
-   color: blue;
-   border-bottom: 1px solid dotted; 
-   margin-top: 10px;
+const FormBlock = styled.div`
+    display: flex;
+    margin-top:10px;
+    margin-bottom: 10px;
 `;
+
+const CheckoboxLabel = styled.p`
+    margin: 5px;
+`;
+
+const Error = styled.div`
+    padding: 8px;
+    background: #ff00008f;
+    text-align: left;
+    border-radius: 10px;
+    width: auto;
+    color: #fff;
+`;
+
 
 
 
@@ -79,56 +92,127 @@ class RegistrationForm extends React.Component {
         name:'',
         email: '',
         phone: '',
-        pass: '',
-        uid:''
+        city: '',
+        passOne: '',
+        agree: false,
+        uid:'',
+        showPassTips: false,
+        showEmailTips: false,
+        showAgreeTips: false,
+        emailValidate: false,
+        passValidate: false,
+        isPassEquals: true,
     };
 
+   onChangeAgree = () => {
+        this.setState({
+            agree: !this.state.agree,
+        })
+    }
    onNameChanged = (e) => {
        this.setState({
            name: e.target.value
        })
    }
-
+   onPhoneChanged = (e) => {
+        this.setState({
+            phone: e.target.value
+        })
+    };
+   onCityChanged = (e) => {
+        this.setState({
+            city: e.target.value
+        })
+    };
    onEmailChanged = (e) => {
        this.setState({
            email: e.target.value
        })
-   };
-
-   onPhoneChanged = (e) => {
-       this.setState({
-           phone: e.target.value
-       })
-   };
-
+       console.log(this.state.email);
+       const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       if(reg.test(e.target.value) === true){
+           this.setState({
+               emailValidate: true,
+           })}
+       else {
+           this.setState({
+               emailValidate: false,
+           })
+           }
+       }
    onPassChanged = (e) => {
        this.setState({
-           pass: e.target.value
+           passOne: e.target.value
        })
+
+       const reg  = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+       if(reg.test(e.target.value)=== true){
+           this.setState({
+               passValidate: true,
+           })
+       }
+       else{
+           this.setState({
+               passValidate: false,
+           })
+       }
    };
 
    onSubmit = (e) => {
        e.preventDefault();
-       fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
-           .then((response) => {
-               //console.log(response.user.uid)
-              /* this.setState({
-                   uid:response.user.uid
-               })*/
-              let uid = response.user.uid;
-              const data = {
-                  name:this.state.name,
-                  email:this.state.email,
-                  phone: this.state.phone,
-              }
-               axios.post(`https://bit-ser.firebaseio.com/users/' + ${uid}.json`,data);
+
+       if(this.state.passValidate && this.state.emailValidate && this.state.agree) {
+           fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.passOne)
+               .then((response) => {
+                   let uid = response.user.uid;
+                   const data = {
+                       name: this.state.name,
+                       email: this.state.email,
+                       phone: this.state.phone,
+                       city: this.state.city,
+                   }
+                   axios.post(`https://bit-ser.firebaseio.com/users/${uid}.json`, data);
+               }).then(() => {
+               this.setState({
+                   name:'',
+                   email: '',
+                   phone: '',
+                   city: '',
+                   passOne: '',
+                   agree: false,
+                   uid:'',
+                   showPassTips: false,
+                   showEmailTips: false,
+                   showAgreeTips: false,
+                   emailValidate: false,
+                   passValidate: false,
+                   isPassEquals: true,
+               })
            })
-           .catch((e) => {
-           console.log(e)
-       });
+               .catch((e) => {
+                   console.log(e)
+               });
+       }
+       else if(!this.state.emailValidate){
+           this.setState({
+               showEmailTips: true,
+           })
+       }
+       else if(!this.state.passValidate){
+           this.setState({
+               showPassTips: true,
+           })
+       }
+       else if (!this.state.agree){
+           this.setState({
+               showAgreeTips: true
+           })
+       }
+       else{
+           console.log('введите данные верно')
+       }
    }
-
-
 
     render(){
         console.log(this.state.uid)
@@ -137,13 +221,21 @@ class RegistrationForm extends React.Component {
                 <FormWrapper>
                     <Title>Регистрация на сайте</Title>
                     <Input onChange={this.onNameChanged} value={this.state.name} placeholder="Имя и Фамилия"/>
-                    <Input onChange={this.onEmailChanged} value={this.state.email} placeholder="Email"/>
+                    <Input type='text' onChange={this.onEmailChanged} value={this.state.email} placeholder="Email"/>
+                    <Input onChange={this.onCityChanged} value={this.state.city} placeholder="Город"/>
+                    {this.state.showEmailTips ? <Error>Введите корректный email!</Error> : null}
                     <Input onChange={this.onPhoneChanged} value={this.state.phone} placeholder="Телефон"/>
-                    <Input onChange={this.onPassChanged} value={this.state.pass} placeholder="Пароль"/>
-                    <Input placeholder="Повторите пароль"/>
+                    <Input onChange={this.onPassChanged} value={this.state.passOne} placeholder="Пароль"/>
+                    {this.state.showPassTips ? <Error>Введите корректный пароль!</Error> : null}
+                    {this.state.showAgreeTips ? <Error>Примите условия обработки данных!</Error> : null}
+                    <FormBlock>
+                        <Input onChange={this.onChangeAgree} type='checkbox'/>
+                        <CheckoboxLabel>Согласие на обработку персональных данных </CheckoboxLabel>
+                    </FormBlock>
                     <Button type="submit" onClick={this.onSubmit}>Зарегистрироваться</Button>
                     <p>Уже зарегистрированы?</p>
                     <NavLink to={'/login'}>Войти на сайт</NavLink>
+                    <p>Уже зарегистрированы?</p>
                 </FormWrapper>
             </Wrapper>
         )
