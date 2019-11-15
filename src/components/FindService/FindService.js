@@ -16,6 +16,11 @@ const FormWrapper = styled.form`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    
+    @media (max-width: 768px) {
+        margin-top: 0;
+    }
 `;
 
 const Select = styled.select`
@@ -53,6 +58,12 @@ const Input = styled.input`
     border-radius: 10px;
     width: 330px;
     height: 50px;
+    
+    @media (max-width: 768px) {
+        margin-right:0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 `;
 
 const Button = styled.button`
@@ -76,6 +87,10 @@ const Button = styled.button`
     font-weight: normal;
     height: 48px;    
     box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+    
+     @media (max-width: 768px) {
+        margin: 10px auto;
+    }
 `;
 
 const Container = styled.div`
@@ -83,6 +98,8 @@ const Container = styled.div`
     flex-direction: row;
     margin-top: 20px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+   
 `;
 
 const SortText = styled.span`
