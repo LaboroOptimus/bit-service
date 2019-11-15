@@ -23,7 +23,6 @@ const Button = styled.button`
     transition: all 0.3s ease;
     justify-content: center;
     padding: 0 15px;
-    border-radius: 6px;
     -webkit-text-decoration: none;
     text-decoration: none;
     outline: none;
@@ -32,28 +31,32 @@ const Button = styled.button`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #0095ff;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     height: 44px;
-    width: 40%;
-    margin: 0 auto;
+    width: 200px;
+    margin: 17.5px auto;
+    background: #6A7BFF;
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
 `;
 
 const Input = styled.input`
+    width: 330px;
     background-color: #fff;
-    padding: 13px 120px 13px 13px;
+    box-shadow: 0px -4px 6px rgba(140, 140, 140, 0.1), 0px 4px 6px rgba(140, 140, 140, 0.1);
+    padding: 20px 13px 20px 25px;
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: 50px;
     border: 1px solid #eee;
     -webkit-text-decoration: none;
     text-decoration: none;
     outline: 0;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 24px;
-    color: #333333;
-    margin: 10px 0;
+    color: #787878;
+    margin: 17.5px 0;
     margin-right: 10px;
 `;
 
@@ -63,11 +66,29 @@ const Title = styled.h3`
     margin-top: 0;
 `;
 
-const Link = styled.a`
-   font-size: 18px;
-   color: blue;
-   border-bottom: 1px solid dotted; 
-   margin-top: 10px;
+const Link = styled(NavLink)`
+    text-align: left;
+    color: #3249FF;
+`;
+
+const LinkDecription = styled.p`
+   font-size: 17px;   
+   text-align: right;
+   margin: 0;
+   color: #000;
+   
+`;
+
+const LinksWrapper = styled.div`
+    display: flex;
+    margin-top: 17.5px;
+`;
+
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: ${props=>props.marginLeft};
 `;
 
 
@@ -89,18 +110,17 @@ class LoginForm extends React.Component {
         })
     }
 
-    onSubmit  = async(e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         const authData = {
-            email:this.state.login,
+            email: this.state.login,
             password: this.state.password,
             returnSecureToken: true
         }
         try {
-            const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD9_bt5G55PgVsoh3M20ZKAwe6MhroAOK8',authData);
+            const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD9_bt5G55PgVsoh3M20ZKAwe6MhroAOK8', authData);
             console.log(response.data)
-        }
-        catch (e) {
+        } catch (e) {
 
         }
     }
@@ -113,8 +133,20 @@ class LoginForm extends React.Component {
                     <Input value={this.state.login} onChange={this.onChangeLogin} placeholder="Email/телефон"/>
                     <Input value={this.state.password} onChange={this.onChangePass} placeholder="Пароль"/>
                     <Button type="submit" onClick={this.onSubmit}>Войти</Button>
-                    <NavLink to={'/forgotpass'}>Забыли пароль?</NavLink>
-                    <NavLink to={'/registration'}>Регистрация</NavLink>
+                    <LinksWrapper>
+                    <Container>
+                        <LinkDecription>Забыли пароль?</LinkDecription>
+                        <LinkDecription>Нет аккаунта?</LinkDecription>
+
+                    </Container>
+
+                    <Container marginLeft={'15px'}>
+                        <Link to={'/forgotpass'}>Восстановление пароля</Link>
+                        <Link to={'/registration'}>Зарегистрироваться</Link>
+                    </Container>
+                    </LinksWrapper>
+
+
                 </FormWrapper>
             </Wrapper>
         )
