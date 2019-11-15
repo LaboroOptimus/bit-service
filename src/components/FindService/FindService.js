@@ -9,11 +9,11 @@ const Wrapper = styled.div`
 const Title = styled.h3`
     font-size: 30px;
     margin-top: 0;
+    margin-bottom: 0;
 `;
 
 const FormWrapper = styled.form`
     margin-top: 30px;
-    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
 `;
@@ -38,10 +38,9 @@ const Select = styled.select`
 
 const Input = styled.input`
     background-color: #fff;
-    padding: 13px 120px 13px 13px;
-    box-sizing: border-box;
-    border-radius: 6px;
+    padding: 0px 13px 0px 20px;
     border: 1px solid #eee;
+    box-sizing: border-box;
     -webkit-text-decoration: none;
     text-decoration: none;
     outline: 0;
@@ -49,8 +48,11 @@ const Input = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #333333;
-    margin: 10px 0;
-    margin-right: 10px;
+    margin-right: 30px;
+    box-shadow: 0px -2px 6px rgba(140, 140, 140, 0.1), 0px 2px 6px rgba(140, 140, 140, 0.1);
+    border-radius: 10px;
+    width: 330px;
+    height: 50px;
 `;
 
 const Button = styled.button`
@@ -59,7 +61,7 @@ const Button = styled.button`
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     justify-content: center;
-    padding: 0 15px;
+    padding: 13px 13px 13px 20px;
     border-radius: 6px;
     -webkit-text-decoration: none;
     text-decoration: none;
@@ -69,19 +71,39 @@ const Button = styled.button`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #0095ff;
-    font-size: 15px;
-    font-weight: bold;
-    height: 44px;
-    margin: 0 auto;
-    margin-top: 15px;
+    background-color #6A7BFF;
+    font-size: 17px;
+    font-weight: normal;
+    height: 48px;    
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const Container = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-`
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+
+const SortText = styled.span`
+    color: #969696;
+    font-size: 17px;
+    line-height: 19px
+`;
+
+const SortItem = styled.a`
+    color: #3249FF;
+    //border-bottom: 1px solid #3249FF;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 18px;
+    margin: 0 10px;
+    
+    :hover {
+        cursor: pointer;
+        border-bottom: 1px solid #3249FF;
+    }
+`;
 
 
 class FindService extends React.Component {
@@ -92,24 +114,16 @@ class FindService extends React.Component {
                 <FormWrapper>
                     <Container>
                     <Input placeholder={'Город'}/>
-                    <Select>
-                        <option value="" disabled selected>Тип ремонтируемой техники</option>
-                        <option>Телевизоры</option>
-                        <option>Смартфоны</option>
-                        <option>Планшеты</option>
-                        <option>Ноутбуки</option>
-                    </Select>
-
-                    <Select>
-                        <option value="" disabled selected>Сортировка</option>
-                        <option>по рейтингу</option>
-                        <option>по ценам</option>
-                        <option>по удаленности</option>
-                    </Select>
-
+                    <Input placeholder={'Тип ремонтируемой техники'}/>
                     <Button>Найти сервисы</Button>
                     </Container>
 
+                    <Container>
+                        <SortText>Сортировка:</SortText>
+                        <SortItem>по рейтингу</SortItem>
+                        <SortItem>по цене</SortItem>
+                        <SortItem>по удаленности</SortItem>
+                    </Container>
                 </FormWrapper>
                 <ServiceList/>
 
