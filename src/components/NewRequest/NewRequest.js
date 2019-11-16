@@ -20,7 +20,7 @@ const Group = styled.h4`
 `;
 
 const Wrapper = styled.div`
-    padding: 150px 30px;
+    padding: 100px 30px;
 `;
 
 const FormWrapper = styled.form`
