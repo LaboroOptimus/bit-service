@@ -64,6 +64,15 @@ const RequestItem = styled.div`
     flex-direction: row;
     width: 45%;
     justify-content: space-between;
+    
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
 `;
 
 const RequestName = styled.h3`
@@ -72,22 +81,23 @@ const RequestName = styled.h3`
     color: #000000;
     margin-bottom: 5px;
     margin-top: 5px;
+    
+    @media (max-width: 768px) {
+       margin-bottom: 10px;
+       text-align: center;
+    }
 
 `;
 
-const Row = styled.div`
+const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: row;
-    margin-bottom: ${props => props.marginBottom};
-    justify-content: ${props => props.justifyContent};
+    justify-content: space-between;
     
-`;
-
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: ${props => props.width}
-    justify-content: space-around;
+    @media (max-width: 768px) {
+       flex-direction: column;
+       text-align: center;
+    }
 `;
 
 const RequestTitle = styled.h4`
@@ -98,6 +108,10 @@ const RequestTitle = styled.h4`
     font-weight: normal;
     margin-top: 5px;
     margin-bottom: 5px;
+    
+     @media (max-width: 768px) {
+       text-align: center;
+    }
 `;
 
 const CreationDate = styled.span`
@@ -117,9 +131,24 @@ const Status = styled.span`
     margin-right: 10px;
 `;
 
+const StatusContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    
+     @media (max-width: 768px) {
+       margin-bottom: 10px;
+       justify-content: center;
+    }
+`;
+
 const Contact = styled.div`
     display: flex;
     margin: 5px 0;
+    
+     @media (max-width: 768px) {
+       justify-content: center;
+    }
 `;
 
 const ContactDescription = styled.p`
@@ -140,6 +169,10 @@ const Button = styled(NavLink)`
     width: ${props => props.width}
     margin-top: 10px;
     text-align: ${props => props.textAlign};
+    
+    @media (max-width: 768px) {
+        margin: 10px 0;
+    }
 `;
 
 const ButtonCount = styled.span`
@@ -154,8 +187,32 @@ const ButtonCount = styled.span`
     font-size: 13px;
 `;
 
-const Description = styled.p`
+const LeftColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    justify-content: space-around;
+    
+     @media (max-width: 768px) {
+        width: 100%;
+    }
+`;
 
+const RightColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 64%;
+    justify-content: space-around;
+     @media (max-width: 768px) {
+        width: 100%;
+        margin-top: 20px;
+    }
+`;
+
+const Description = styled.p`
+    @media (max-width: 768px) {
+        padding-left: 15px;
+    }
 `
 
 class MyRequests extends React.Component {
@@ -172,67 +229,67 @@ class MyRequests extends React.Component {
 
                 <Container>
                     <RequestItem>
-                        <Column width={'33%'}>
+                        <LeftColumn width={'33%'}>
                             <RequestName>Заявка № 1284129</RequestName>
-                            <Row marginBottom={'20px'}>
+                            <StatusContainer>
                                 <Status>активна</Status>
                                 <CreationDate> 16.11.19 </CreationDate>
-                            </Row>
+                            </StatusContainer>
                             <Contact><img
                                 src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
                             <Contact><img
                                 src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
                             <Contact><img src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
 
-                        </Column>
+                        </LeftColumn>
 
-                        <Column width={"64%"}>
+                        <RightColumn width={"64%"}>
                             <RequestTitle>Ноутбук Asus X556U</RequestTitle>
                             <Description>
                                 Значимость этих проблем настолько очевидна, что новая модель организационной
                                 деятельности
                                 требуют от нас анализа модели развития. Значимость этих проблем настолько очевидна,
                             </Description>
-                            <Row justifyContent={'space-between'}>
+                            <ButtonsContainer>
                                 <Button color={'#fff'} backgroundColor={'#6A7BFF'} to='/'>Смотреть отклики
                                     <ButtonCount>3</ButtonCount>
                                 </Button>
                                 <Button textAlign={'center'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to='/'>Отменить
                                     заявку</Button>
-                            </Row>
-                        </Column>
+                            </ButtonsContainer>
+                        </RightColumn>
                     </RequestItem>
 
                     <RequestItem>
-                        <Column width={'33%'}>
+                        <LeftColumn width={'33%'}>
                             <RequestName>Заявка № 1284129</RequestName>
-                            <Row marginBottom={'20px'}>
+                            <StatusContainer>
                                 <Status>активна</Status>
                                 <CreationDate> 16.11.19 </CreationDate>
-                            </Row>
+                            </StatusContainer>
                             <Contact><img
                                 src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
                             <Contact><img
                                 src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
                             <Contact><img src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
 
-                        </Column>
+                        </LeftColumn>
 
-                        <Column width={"64%"}>
+                        <RightColumn width={"64%"}>
                             <RequestTitle>Ноутбук Asus X556U</RequestTitle>
                             <Description>
                                 Значимость этих проблем настолько очевидна, что новая модель организационной
                                 деятельности
                                 требуют от нас анализа модели развития. Значимость этих проблем настолько очевидна,
                             </Description>
-                            <Row justifyContent={'space-between'}>
+                            <ButtonsContainer>
                                 <Button color={'#fff'} backgroundColor={'#6A7BFF'} to='/'>Смотреть отклики
                                     <ButtonCount>3</ButtonCount>
                                 </Button>
                                 <Button textAlign={'center'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to='/'>Отменить
                                     заявку</Button>
-                            </Row>
-                        </Column>
+                            </ButtonsContainer>
+                        </RightColumn>
                     </RequestItem>
                 </Container>
 
