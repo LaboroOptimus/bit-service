@@ -10,6 +10,7 @@ import ForgotpassPage from "./components/ForgotpassPage/ForgotpassPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import NewRequestPage from "./components/NewRequestPage/NewRequestPage";
 import FindServicePage from "./components/FindServicePage/FindServicePage";
+import MyRequestPage from "./components/MyRequestsPage/MyRequestsPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/forgotpass' component={ForgotpassPage}/>
           <Route path='/profile' component={ProfilePage}/>
           <Route path='/request' component={NewRequestPage}/>
+          <Route path='/my-requests' component={MyRequestPage}/>
           <Route path='/find-service' component={FindServicePage}/>
       </Switch>
   );
