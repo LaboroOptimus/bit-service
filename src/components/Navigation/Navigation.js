@@ -158,20 +158,20 @@ class Navigation extends React.Component {
                         </div>
                     </NavLink>
 
-                    <NavLink to="/profile" id="about" className="menu-item">
+                    <NavLink to="/my-requests" className="menu-item">
                         <div>
                             <RequestIcon/>
                             Мои заявки
                         </div>
                     </NavLink>
 
-                    <NavLink to="/profile" id="about" className="menu-item">
+                    <NavLink to="/profile" className="menu-item">
                         <div>
                             <UserIcon/>
                             Профиль
                         </div>
                     </NavLink>
-                    <NavLink to="/" id="contact" className="menu-item">
+                    <NavLink to="/" className="menu-item">
                         <div>
                             <MessageIcon/>
                             Сообщения
