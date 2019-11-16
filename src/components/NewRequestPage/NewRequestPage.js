@@ -2,10 +2,10 @@ import React from 'react'
 import Navigation from "../Navigation/Navigation";
 import Navtop from "../Navtop/Navtop";
 import Footer from "../Footer/Footer";
-import Request from "../Request/Request";
+import Request from "../NewRequest/NewRequest";
 
 
-class RequestPage extends React.Component{
+class NewRequestPage extends React.Component{
     render(){
         return(
             <React.Fragment>
@@ -19,4 +19,4 @@ class RequestPage extends React.Component{
 
 }
 
-export default RequestPage
+export default NewRequestPage

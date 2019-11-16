@@ -157,7 +157,7 @@ const Checkbox = styled.input`
 `;
 
 
-class Request extends React.Component {
+class NewRequest extends React.Component {
     render() {
         return (
             <Wrapper>
@@ -235,4 +235,4 @@ class Request extends React.Component {
     }
 }
 
-export default Request
+export default NewRequest

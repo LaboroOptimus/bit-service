@@ -8,7 +8,7 @@ import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import MapPage from "./components/MapPage/MapPage";
 import ForgotpassPage from "./components/ForgotpassPage/ForgotpassPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
-import RequestPage from "./components/RequestPage/RequestPage";
+import NewRequestPage from "./components/NewRequestPage/NewRequestPage";
 import FindServicePage from "./components/FindServicePage/FindServicePage";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
             <Route path='/map' component={MapPage}/>
           <Route path='/forgotpass' component={ForgotpassPage}/>
           <Route path='/profile' component={ProfilePage}/>
-          <Route path='/request' component={RequestPage}/>
+          <Route path='/request' component={NewRequestPage}/>
           <Route path='/find-service' component={FindServicePage}/>
       </Switch>
   );

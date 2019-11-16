@@ -13,6 +13,7 @@ import {ReactComponent as Settings} from "./assets/settings.svg";
 import {ReactComponent as Key} from "./assets/key.svg";
 import {ReactComponent as Question} from "./assets/question.svg";
 import {ReactComponent as Exit} from "./assets/exit.svg";
+import {ReactComponent as Request} from "./assets/file.svg";
 
 
 const TopStatickBlock = styled.div`
@@ -48,6 +49,15 @@ const LoupeIcon = styled(Loupe)`
     vertical-align: top;
     margin-top: 3px;
 `;
+
+const RequestIcon = styled(Request)`
+    width: 20px;
+    fill: #b2b2b2;
+    margin-right: 10px;
+    vertical-align: top;
+    margin-top: 3px;
+`;
+
 
 const ServiceIcon = styled(Service)`
     width: 20px;
@@ -150,6 +160,13 @@ class Navigation extends React.Component {
 
                     <NavLink to="/profile" id="about" className="menu-item">
                         <div>
+                            <RequestIcon/>
+                            Мои заявки
+                        </div>
+                    </NavLink>
+
+                    <NavLink to="/profile" id="about" className="menu-item">
+                        <div>
                             <UserIcon/>
                             Профиль
                         </div>
@@ -160,12 +177,12 @@ class Navigation extends React.Component {
                             Сообщения
                         </div>
                     </NavLink>
-                    <NavLink to="/login" onClick={this.showSettings} className="menu-item">
+                    {/*<NavLink to="/login" onClick={this.showSettings} className="menu-item">
                         <div>
                             <SettingsIcon/>
                             Настройки
                         </div>
-                    </NavLink>
+                    </NavLink>*/}
 
                     <Line/>
                     <NavLink to="/login" id="contact" className="menu-item">
