@@ -99,7 +99,6 @@ const Container = styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-   
 `;
 
 const SortText = styled.span`
