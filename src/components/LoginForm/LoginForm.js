@@ -76,7 +76,6 @@ const LinkDecription = styled.p`
    text-align: right;
    margin: 0;
    color: #000;
-   
 `;
 
 const LinksWrapper = styled.div`
