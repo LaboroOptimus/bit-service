@@ -1,6 +1,12 @@
 import React from 'react'
 import styled from "styled-components";
 
+
+const Wrapper = styled.div`
+    padding: 100px 30px;
+    background-color: #FCFCFE;
+`;
+
 const Title = styled.h3`
     font-size: 30px;
     margin-top: 0;
@@ -17,10 +23,6 @@ const Group = styled.h4`
     color #9D9D9D;
     margin-bottom: 0;
     margin-top: 30px;
-`;
-
-const Wrapper = styled.div`
-    padding: 100px 30px;
 `;
 
 const FormWrapper = styled.form`

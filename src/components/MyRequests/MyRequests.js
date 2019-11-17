@@ -5,11 +5,11 @@ import email from "../ServiceItem/assets/email.png";
 import phone from "../ServiceItem/assets/phone.png";
 import map from "../ServiceItem/assets/map.png";
 
-
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     padding: 100px 30px;
+    background-color: #FCFCFE;
 `;
 
 const Title = styled.h3`
@@ -221,10 +221,10 @@ class MyRequests extends React.Component {
             <Wrapper>
                 <Title>Мои заявки</Title>
                 <SortContainer>
-                    <SortText>Сортировка:</SortText>
-                    <SortItem>по рейтингу</SortItem>
-                    <SortItem>по цене</SortItem>
-                    <SortItem>по удаленности</SortItem>
+                    <SortText>Показывать:</SortText>
+                    <SortItem>все</SortItem>
+                    <SortItem>активные</SortItem>
+                    <SortItem>удаленные</SortItem>
                 </SortContainer>
 
                 <Container>

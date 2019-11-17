@@ -4,6 +4,7 @@ import ServiceList from "../ServiceList/ServiceList";
 
 const Wrapper = styled.div`
     padding: 100px 30px;
+    background-color: #FCFCFE;
 `;
 
 const Title = styled.h3`
