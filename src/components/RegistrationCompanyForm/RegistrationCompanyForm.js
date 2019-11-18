@@ -14,7 +14,6 @@ const FormWrapper = styled.form`
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-  
 `;
 
 const Button = styled.button`
@@ -76,22 +75,40 @@ const Links = styled.div`
     display: flex;
     flex-direction: row;
     margin: 20px 0px 0px 10px;
+    
+    @media (max-width: 768px) {
+        font-size: 13px;
+        margin-top: 0;
+    }
 `;
 
 const LinkDecription = styled.span`
     font-size: 15px;
+    
+    @media (max-width: 768px) {
+        font-size: 13px;
+    }
 `;
 
 const Row = styled.div`
     display: flex;
     flex-direction: row;
+    
+    @media (max-width: 768px) {
+         flex-wrap: wrap;
+    }
 `;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    
     margin: 10px 20px;
     width: 50%;
+    
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const Label = styled.label`
