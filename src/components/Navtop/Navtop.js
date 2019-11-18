@@ -39,7 +39,7 @@ const Navtop = () => {
     return (
         <NavPanel>
             <Phone>Меню</Phone>
-            <NavBlock><Link to="/for-service">Регистрация</Link>
+            <NavBlock><Link to="/reg">Регистрация</Link>
                 <Link to="/login">Вход</Link>
             </NavBlock>
            {/* <NavBlock><NavLink to="/login">Вход</NavLink></NavBlock>*/}
