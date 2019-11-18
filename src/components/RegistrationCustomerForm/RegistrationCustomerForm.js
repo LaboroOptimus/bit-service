@@ -293,7 +293,7 @@ class RegistrationCustomerForm extends React.Component {
         return(
             <Wrapper>
                 <FormWrapper>
-                    <Title>Регистрация новой компании</Title>
+                    <Title>Регистрация нового клиента</Title>
                     <Row>
                         <Container>
                             <Label>Введите имя и фамилию</Label>

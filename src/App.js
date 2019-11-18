@@ -11,6 +11,7 @@ import NewRequestPage from "./components/NewRequestPage/NewRequestPage";
 import FindServicePage from "./components/FindServicePage/FindServicePage";
 import MyRequestPage from "./components/MyRequestsPage/MyRequestsPage";
 import RegistrationCompanyPage from "./components/RegistrationCompanyPage/RegistrationCompanyPage";
+import RegRouter from "./components/RegRouter/RegRouter";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
             <Route path='/registration-customer' component={RegistrationCustomerPage}/>
             <Route path='/registration-company' component={RegistrationCompanyPage}/>
             <Route path='/map' component={MapPage}/>
+            <Route path='/reg' component={RegRouter}/>
             <Route path='/forgot-pass' component={ForgotpassPage}/>
             <Route path='/profile' component={ProfilePage}/>
             <Route path='/request' component={NewRequestPage}/>
