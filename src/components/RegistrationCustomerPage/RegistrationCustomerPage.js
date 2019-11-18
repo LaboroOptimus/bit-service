@@ -1,21 +1,21 @@
 import React from 'react'
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import RegistrationCustomerForm from "../RegistrationCustomerForm/RegistrationCustomerForm";
 import Navigation from "../Navigation/Navigation";
 import Navtop from "../Navtop/Navtop";
 import Footer from "../Footer/Footer";
 
 
-class RegistrationPage extends React.Component {
+class RegistrationCustomerPage extends React.Component {
     render(){
         return(
             <React.Fragment>
                 <Navigation/>
                 <Navtop/>
-                <RegistrationForm/>
+                <RegistrationCustomerForm/>
                 <Footer/>
             </React.Fragment>
         )
     }
 }
 
-export default RegistrationPage
+export default RegistrationCustomerPage
