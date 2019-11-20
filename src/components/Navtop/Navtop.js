@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from "styled-components";
 import {NavLink} from 'react-router-dom'
-import user from './assets/user.png';
+import user from '../Navtop/assets/user.png';
 import {connect} from "react-redux";
 import {ReactComponent as Notif} from "./assets/notification.svg";
 import {ReactComponent as Exit} from "./assets/logout.svg";
@@ -149,7 +149,6 @@ const KeyIcon = styled(Key)`
 
 class Navtop extends Component {
     render() {
-        console.log(this.props.isLogin)
         const isLogin = this.props.isLogin;
         return (
             <NavPanel>

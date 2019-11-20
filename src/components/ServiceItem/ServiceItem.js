@@ -222,9 +222,9 @@ class ServiceItem extends React.Component {
                 <Content>
                     <LeftColumn>
                         <ServicePhoto src={servicephoto}/>
-                        <Contact><img src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
-                        <Contact><img src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
-                        <Contact><img src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
+                        <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
+                        <Contact><img alt={'alt'} src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
+                        <Contact><img alt={'alt'} src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
                     </LeftColumn>
 
                     <CenterColumn>
