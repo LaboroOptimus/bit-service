@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from "styled-components";
 import {NavLink} from 'react-router-dom'
 import user from './assets/user.png';
+import {connect} from "react-redux";
 import {ReactComponent as Notif} from "./assets/notification.svg";
 import {ReactComponent as Exit} from "./assets/logout.svg";
 import {ReactComponent as User} from "../Navigation/assets/user.svg";
@@ -32,22 +33,13 @@ const Phone = styled.h4`
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: 400;
-    margin-left: 60px;
-    
+    margin-left: 60px; 
 `;
 
 const NavBlock = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 30px;
-`;
-
-const Link = styled(NavLink)`
-    margin-right: 5px;
-`;
-
-const UserProfile = styled(NavLink)`
-    text-decoration: none;
 `;
 
 const Icon = styled.div`
@@ -156,11 +148,9 @@ const KeyIcon = styled(Key)`
 `;
 
 class Navtop extends Component {
-    state = {
-        isLogin: false
-    }
     render() {
-        const isLogin = this.state.isLogin;
+        console.log(this.props.isLogin)
+        const isLogin = this.props.isLogin;
         return (
             <NavPanel>
                 <Phone>Меню</Phone>
@@ -190,7 +180,7 @@ class Navtop extends Component {
 
                         <LinksContainer to="/login">
                             <UserIcon/>
-                            <LinkText>Вход</LinkText>
+                            <LinkText onClick={this.props.handleLogin}>Вход</LinkText>
                         </LinksContainer>
                     </NavBlock>
 
@@ -200,4 +190,15 @@ class Navtop extends Component {
     }
 }
 
-export default Navtop
+const mapStateToProps = (state) => {
+    return {
+        isLogin: state.root.isLogin
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    handleLogin: () => dispatch({type: "ACTION"})
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navtop)

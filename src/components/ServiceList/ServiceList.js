@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from "styled-components";
-import axios from 'axios'
 import ServiceItem from "../ServiceItem/ServiceItem";
 
 const Wrapper = styled.div`
@@ -13,9 +12,7 @@ class ServiceList extends React.Component {
 
 
     componentDidMount() {
-        axios.get('https://bit-ser.firebaseio.com/company.json').then(response=>{
-            console.log(response)
-        })
+
     }
 
     render() {

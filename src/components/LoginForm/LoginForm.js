@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+
 
 const Wrapper = styled.div`
     display: flex;
@@ -109,7 +109,7 @@ class LoginForm extends React.Component {
         })
     }
 
-    onSubmit = async (e) => {
+    /*onSubmit = async (e) => {
         e.preventDefault();
         const authData = {
             email: this.state.login,
@@ -122,7 +122,7 @@ class LoginForm extends React.Component {
         } catch (e) {
 
         }
-    }
+    }*/
 
     render() {
         return (
@@ -131,7 +131,7 @@ class LoginForm extends React.Component {
                     <Title>Вход на сайт</Title>
                     <Input value={this.state.login} onChange={this.onChangeLogin} placeholder="Email/телефон"/>
                     <Input value={this.state.password} onChange={this.onChangePass} placeholder="Пароль"/>
-                    <Button type="submit" onClick={this.onSubmit}>Войти</Button>
+                    <Button type="submit">Войти</Button>
                     <LinksWrapper>
                     <Container>
                         <LinkDecription>Забыли пароль?</LinkDecription>
