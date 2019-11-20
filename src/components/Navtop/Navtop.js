@@ -1,6 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 import {NavLink} from 'react-router-dom'
+import user from './assets/user.png';
+import {ReactComponent as Notif} from "./assets/notification.svg";
+import {ReactComponent as Exit} from "./assets/logout.svg";
+import {ReactComponent as User} from "../Navigation/assets/user.svg";
+import {ReactComponent as Key} from "../Navigation/assets/key.svg";
 
 const NavPanel = styled.div`
     display: flex;
@@ -11,6 +16,14 @@ const NavPanel = styled.div`
     background: #fff;
     height: 50px;
     box-shadow: 0px 4px 4px rgba(201, 200, 200, 0.15)
+`;
+
+const NotifIcon = styled(Notif)`
+    width: 20px;
+    fill: #AAAAAA;
+    margin-right: 10px;
+    vertical-align: top;
+    margin-top: 3px;
 `;
 
 const Phone = styled.h4`
@@ -31,20 +44,160 @@ const NavBlock = styled.div`
 
 const Link = styled(NavLink)`
     margin-right: 5px;
+`;
 
-`
+const UserProfile = styled(NavLink)`
+    text-decoration: none;
+`;
 
+const Icon = styled.div`
+   position: relative;
+   margin-top: 6px;
+   margin-right: 40px;
+   
+`;
 
-const Navtop = () => {
-    return (
-        <NavPanel>
-            <Phone>Меню</Phone>
-            <NavBlock><Link to="/reg">Регистрация</Link>
-                <Link to="/login">Вход</Link>
-            </NavBlock>
-           {/* <NavBlock><NavLink to="/login">Вход</NavLink></NavBlock>*/}
-        </NavPanel>
-    )
+const IconCount = styled.span`
+    display: block;
+    width: 15px;
+    height: 15px;
+    color: #fff;
+    background-color: #536EFD;
+    border-radius: 50%;
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    right: 3px;
+`;
+
+const UserImg = styled.img`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+`;
+const Profile = styled.div`
+    display: flex;
+    flex-direction: row;  
+    margin-right: 20px;
+    margin-top: 3px;
+`;
+
+const Greet = styled.p`
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+`;
+
+const ExitContainer = styled(NavLink)`
+    margin-top: 7px;
+    text-decoration: none;
+    color: #000;
+`;
+
+const ExitIcon = styled(Exit)`
+    width: 20px;
+    fill: #536EFD;
+    margin-right: 10px;
+    vertical-align: top;
+    margin-top: 3px;
+    margin-right: 0;
+`;
+
+const ExitText = styled.span`
+    margin: 0 0 0 3px;
+    color: #536EFD;
+    font-size: 18px; 
+    
+    :hover {
+    border-bottom: 1px solid #536EFD;
+    }
+    
+`;
+
+const IconContainer = styled(NavLink)`
+    margin-right: 10px;
+`;
+
+const LinksContainer = styled(NavLink)`
+    margin-right: 10px;
+    text-decoration: none;
+    color: #536EFD;
+    font-size: 18px;
+`;
+
+const LinkText = styled.span`
+    border-bottom: 1px solid transparent;
+    
+    :hover {
+        border-bottom: 1px solid #536EFD;
+    }
+`;
+
+const UserIcon = styled(User)`
+    width: 14px;
+    fill: #536EFD;
+    margin-right: 10px;
+    vertical-align: top;
+    margin-top: 5px;
+    margin-right: 3px;
+`;
+
+const KeyIcon = styled(Key)`
+    width: 14px;
+    fill: #536EFD;
+    margin-right: 10px;
+    vertical-align: top;
+    margin-top: 5px;
+    margin-right: 1px;
+`;
+
+class Navtop extends Component {
+    state = {
+        isLogin: false
+    }
+    render() {
+        const isLogin = this.state.isLogin;
+        return (
+            <NavPanel>
+                <Phone>Меню</Phone>
+                {isLogin ? (
+                    <Profile>
+                        <NavLink to={'/profile'}><UserImg src={user}/></NavLink>
+                        <Greet>Привет, Игорь!</Greet>
+                        <IconContainer to={'/'}>
+                            <Icon>
+                                <IconCount>2</IconCount>
+                                <NotifIcon/>
+                            </Icon>
+                        </IconContainer>
+                        <ExitContainer to={'/'}>
+                            <ExitIcon/>
+                            <ExitText>Выйти</ExitText>
+                        </ExitContainer>
+                    </Profile>
+                ):
+                (
+
+                    <NavBlock>
+                        <LinksContainer to="/reg">
+                            <KeyIcon/>
+                            <LinkText>Регистрация</LinkText>
+                        </LinksContainer>
+
+                        <LinksContainer to="/login">
+                            <UserIcon/>
+                            <LinkText>Вход</LinkText>
+                        </LinksContainer>
+                    </NavBlock>
+
+                )}
+            </NavPanel>
+        )
+    }
 }
 
 export default Navtop
