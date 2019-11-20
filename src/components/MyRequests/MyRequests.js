@@ -236,10 +236,10 @@ class MyRequests extends React.Component {
                                 <CreationDate> 16.11.19 </CreationDate>
                             </StatusContainer>
                             <Contact><img
-                                src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
+                                src={email} alt={'alt'}/><ContactDescription>email@service.ru</ContactDescription></Contact>
                             <Contact><img
-                                src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
-                            <Contact><img src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
+                                src={phone} alt={'alt'}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
+                            <Contact><img src={map} alt={'alt'}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
 
                         </LeftColumn>
 
@@ -268,10 +268,10 @@ class MyRequests extends React.Component {
                                 <CreationDate> 16.11.19 </CreationDate>
                             </StatusContainer>
                             <Contact><img
-                                src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
+                                src={email} alt={'alt'}/><ContactDescription>email@service.ru</ContactDescription></Contact>
                             <Contact><img
-                                src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
-                            <Contact><img src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
+                                src={phone} alt={'alt'}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
+                            <Contact><img src={map} alt={'alt'}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
 
                         </LeftColumn>
 

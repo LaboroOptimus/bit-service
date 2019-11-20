@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import Navtop from "../Navtop/Navtop";
-import RegistrationCustomerForm from "../RegistrationCustomerForm/RegistrationCustomerForm";
 import Footer from "../Footer/Footer";
 
 const Wrapper = styled.div`

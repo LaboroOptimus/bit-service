@@ -24,24 +24,6 @@ const FormWrapper = styled.form`
     }
 `;
 
-const Select = styled.select`
-    background-color: #fff;
-    padding: 13px 120px 13px 13px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    border: 1px solid #eee;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    outline: 0;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #333333;
-    margin: 10px 0;
-    width: 30%;
-    margin-right: 10px;
-`;
-
 const Input = styled.input`
     background-color: #fff;
     padding: 0px 13px 0px 20px;

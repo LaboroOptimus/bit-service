@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-
+import {connect} from "react-redux";
+import axios from 'axios'
 import fire from "../../config/Fire";
+
 
 const Wrapper = styled.div`
     display: flex;
@@ -10,7 +12,7 @@ const Wrapper = styled.div`
     padding: 100px 30px;
 `;
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
     text-align: center;
     margin-top: 30px;
     margin-bottom: 40px;
@@ -289,7 +291,12 @@ class RegistrationCustomerForm extends React.Component {
        }
    }*/
 
+
+
+
     render(){
+        const {name, city, station, phone,pass,email} = this.props;
+        console.log(name,city,station,phone,pass,email);
         return(
             <Wrapper>
                 <FormWrapper>
@@ -297,31 +304,31 @@ class RegistrationCustomerForm extends React.Component {
                     <Row>
                         <Container>
                             <Label>Введите имя и фамилию</Label>
-                            <Input placeholder={'Иван Иванов'}/>
+                            <Input value={name} onChange={this.props.handleChangeName} placeholder={'Иван Иванов'}/>
                         </Container>
                         <Container>
                             <Label>Введите телефон</Label>
-                            <Input placeholder={'+7(800)000-00-00'}/>
+                            <Input value={phone} onChange={this.props.handleChangePhone} placeholder={'+7(800)000-00-00'}/>
                         </Container>
                     </Row>
                     <Row>
                         <Container>
                             <Label>Введите город</Label>
-                            <Input placeholder={'Москва'}/>
+                            <Input value={city} onChange={this.props.handleChangeCity} placeholder={'Москва'}/>
                         </Container>
                         <Container>
                             <Label>Введите ближайшее метро</Label>
-                            <Input placeholder={'Планерная'}/>
+                            <Input value={station} onChange={this.props.handleChangeStation} placeholder={'Планерная'}/>
                         </Container>
                     </Row>
                     <Row>
                         <Container>
                             <Label>Введите email</Label>
-                            <Input placeholder={'service@mail.ru'}/>
+                            <Input value={email} onChange={this.props.handleChangeEmail} placeholder={'service@mail.ru'}/>
                         </Container>
                         <Container>
                             <Label>Введите пароль</Label>
-                            <Input type='password'/>
+                            <Input value={pass} onChange={this.props.handleChangePass} type='password'/>
                         </Container>
                     </Row>
                     <Row>
@@ -334,17 +341,43 @@ class RegistrationCustomerForm extends React.Component {
                         <Container>
                             <Links>
                                 <LinkDecription>Уже зарегистрированы?</LinkDecription>
-                                <Link to={'/'}>Войти на сайт</Link>
+                                <Link to={'/login'}>Войти на сайт</Link>
                             </Links>
                         </Container>
                     </Row>
                     <Row>
-                        <Button>Зарегистрироваться</Button>
+                        <Button onClick={this.props.submitHandler}
+                        >Зарегистрироваться</Button>
                     </Row>
                 </FormWrapper>
+                {/*<button onClick={this.testFunc}>тест</button>*/}
             </Wrapper>
         )
     }
 }
 
-export default RegistrationCustomerForm
+const mapStateToProps = (state) => {
+    return {
+        isLogin: state.root.isLogin,
+        name: state.root.name,
+        city: state.root.city,
+        email: state.root.email,
+        pass: state.root.pass,
+        station: state.root.station,
+        phone: state.root.phone,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    submitHandler: (e) => {dispatch({type:'SUBMIT'})},
+    handleChangeName:(e) => dispatch({type: "CHANGE_NAME", payload: e.target.value}),
+    handleChangeCity:(e) => dispatch({type: "CHANGE_CITY", payload: e.target.value}),
+    handleChangeEmail:(e) => dispatch({type: "CHANGE_EMAIL", payload: e.target.value}),
+    handleChangePass:(e) => dispatch({type: "CHANGE_PASS", payload: e.target.value}),
+    handleChangeStation:(e) => dispatch({type: "CHANGE_STATION", payload: e.target.value}),
+    handleChangePhone:(e) => dispatch({type: "CHANGE_PHONE", payload: e.target.value})
+});
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(RegistrationCustomerForm)
