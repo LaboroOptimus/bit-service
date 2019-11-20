@@ -14,8 +14,6 @@ import {ReactComponent as Key} from "../Navigation/assets/key.svg";
 import {ReactComponent as Question} from "../Navigation/assets/question.svg";
 import closeicon from "../Navigation/assets/close_img.png";
 
-
-
 const LocationIcon = styled(Location)`
     width: 20px;
     fill: #b2b2b2;
