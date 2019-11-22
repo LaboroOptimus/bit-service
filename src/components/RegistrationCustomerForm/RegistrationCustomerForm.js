@@ -2,8 +2,19 @@ import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {changeName, changeCity,changeEmail,changePass,changePhone,changeStation,submit} from '../../redux/action-creators.js'
-
+import {Redirect} from 'react-router-dom';
+import {store} from '../../redux/store'
+import {
+    changeCheckbox,
+    changeCity,
+    changeEmail,
+    changeName,
+    changePass,
+    changePhone,
+    changeStation,
+    submit,
+    redirect
+} from '../../redux/action-creators.js'
 
 
 const Wrapper = styled.div`
@@ -164,20 +175,46 @@ const Checkbox = styled.input`
    }
 `;
 
+const Error = styled.span`
+    background: #f66;
+    color: #fff;
+    padding: 5px 5px 5px 15px;
+    text-align: left;
+    margin-top: 10px;
+    border-radius: 20px;
+`;
+
+/*store.subscribe(() => {
+    if(store.getState().root.isRegistrationSuccess){
+        return <Redirect to={'/login'}/>
+    }
+    //console.log(store.getState());
+});*/
+
 function RegistrationCustomerForm(props) {
-    const {name, city, station, phone, pass, email} = props;
+
+    if(props.isRegistrationSuccess){
+        return <Redirect to={'/login'}/>
+    }
+    console.log(props.isRegistrationSuccess);
+    const {name, city, station, phone, pass, email, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck, mustCheckFields,isRegistrationSuccess} = props;
     return (
+
         <Wrapper>
+            {isRegistrationSuccess ? <Redirect to={'/login'}/> : (
             <FormWrapper>
                 <Title>Регистрация нового клиента</Title>
                 <Row>
                     <Container>
                         <Label>Введите имя и фамилию</Label>
                         <Input value={name} onChange={props.onChangeName} placeholder={'Иван Иванов'}/>
+                        {mustCheckFields && !isNameValid ? <Error>Введите корректное имя и фамилию!</Error> : null}
                     </Container>
                     <Container>
                         <Label>Введите телефон</Label>
                         <Input value={phone} onChange={props.handleChangePhone} placeholder={'+7(800)000-00-00'}/>
+                        {mustCheckFields && !isPhoneValid ? <Error>Введите корректный телефон! </Error> : null}
+
                     </Container>
                 </Row>
                 <Row>
@@ -194,6 +231,7 @@ function RegistrationCustomerForm(props) {
                     <Container>
                         <Label>Введите email</Label>
                         <Input value={email} onChange={props.handleChangeEmail} placeholder={'service@mail.ru'}/>
+                        {mustCheckFields && !isEmailValid ? <Error>Введите корректный email!</Error> : null}
                     </Container>
                     <Container>
                         <Label>Введите пароль</Label>
@@ -203,10 +241,11 @@ function RegistrationCustomerForm(props) {
                 <Row>
                     <Container>
                         <CheckboxGroup>
-                            <Checkbox id='phone_email' type='checkbox'/>
+                            <Checkbox id='phone_email' type='checkbox' onClick={() => props.handleCheckboxChange()}/>
                             <CheckboxLabel htmlFor={'phone_email'}>Согласен на обработку персональных
                                 данных</CheckboxLabel>
                         </CheckboxGroup>
+                        {mustCheckFields && !isAgreementCheck ? <Error>Вы должны принять соглашение</Error> : null}
                     </Container>
                     <Container>
                         <Links>
@@ -216,11 +255,13 @@ function RegistrationCustomerForm(props) {
                     </Container>
                 </Row>
                 <Row>
-                    <Button onClick={() => props.submitHandler(name,city,email,pass,station, phone)}
+                    <Button
+                        onClick={() => props.submitHandler(name, city, email, pass, station, phone, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck)}
                     >Зарегистрироваться</Button>
+
                 </Row>
             </FormWrapper>
-            {/*<button onClick={this.testFunc}>тест</button>*/}
+            )}
         </Wrapper>
     )
 }
@@ -234,19 +275,27 @@ const mapStateToProps = (state) => {
         pass: state.root.pass,
         station: state.root.station,
         phone: state.root.phone,
+        isEmailValid: state.root.isEmailValid,
+        isNameValid: state.root.isNameValid,
+        isPhoneValid: state.root.isPhoneValid,
+        isAgreementCheck: state.root.isAgreementCheck,
+        mustCheckFields: state.root.mustCheckFields,
+        isRegistrationSuccess: state.root.isRegistrationSuccess
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    submitHandler: (name,city,email,pass,station, phone) => {dispatch(submit(name,city,email,pass,station, phone))},
-    onChangeName:(e) => dispatch(changeName(e)),
-    handleChangeCity:(e) => dispatch(changeCity(e)),
-    handleChangeEmail:(e) => dispatch(changeEmail(e)),
-    handleChangePass:(e) => dispatch(changePass(e)),
-    handleChangeStation:(e) => dispatch(changeStation(e)),
-    handleChangePhone:(e) => dispatch(changePhone(e))
+    submitHandler: (name, city, email, pass, station, phone, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck) => {
+        dispatch(submit(name, city, email, pass, station, phone, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck))
+    },
+    onChangeName: (e) => dispatch(changeName(e)),
+    handleChangeCity: (e) => dispatch(changeCity(e)),
+    handleChangeEmail: (e) => dispatch(changeEmail(e)),
+    handleChangePass: (e) => dispatch(changePass(e)),
+    handleChangeStation: (e) => dispatch(changeStation(e)),
+    handleChangePhone: (e) => dispatch(changePhone(e)),
+    handleCheckboxChange: () => dispatch(changeCheckbox()),
 });
 
 
-
-export default connect(mapStateToProps,mapDispatchToProps)(RegistrationCustomerForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationCustomerForm)

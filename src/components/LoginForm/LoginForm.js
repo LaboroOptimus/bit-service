@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-
+import {connect} from "react-redux";
+import {clearReg} from '../../redux/action-creators'
+import {store} from "../../redux/store";
 
 const Wrapper = styled.div`
     display: flex;
@@ -92,22 +94,11 @@ const Container = styled.div`
 
 
 class LoginForm extends React.Component {
-    state = {
-        login: '',
-        password: '',
-    };
 
-    onChangeLogin = (e) => {
-        this.setState({
-            login: e.target.value
-        })
+    componentDidMount() {
+        store.dispatch(clearReg());
     }
 
-    onChangePass = (e) => {
-        this.setState({
-            password: e.target.value
-        })
-    }
 
     /*onSubmit = async (e) => {
         e.preventDefault();
@@ -129,8 +120,8 @@ class LoginForm extends React.Component {
             <Wrapper>
                 <FormWrapper>
                     <Title>Вход на сайт</Title>
-                    <Input value={this.state.login} onChange={this.onChangeLogin} placeholder="Email/телефон"/>
-                    <Input value={this.state.password} onChange={this.onChangePass} placeholder="Пароль"/>
+                    <Input placeholder="Email/телефон"/>
+                    <Input  placeholder="Пароль"/>
                     <Button type="submit">Войти</Button>
                     <LinksWrapper>
                     <Container>
@@ -152,4 +143,15 @@ class LoginForm extends React.Component {
     }
 }
 
-export default LoginForm
+const mapStateToProps = (state) => {
+    return {
+        isRegistrationSuccess: state.root.isRegistrationSuccess
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    clearRegistrationSuccess: dispatch(clearReg())
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

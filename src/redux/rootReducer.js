@@ -1,4 +1,14 @@
-import {CHANGE_NAME,CHANGE_CITY,CHANGE_EMAIL,CHANGE_PASS,CHANGE_PHONE,CHANGE_STATION, SUBMIT} from "./actions";
+import {
+    CHANGE_NAME,
+    CHANGE_CITY,
+    CHANGE_EMAIL,
+    CHANGE_PASS,
+    CHANGE_PHONE,
+    CHANGE_STATION,
+    CHANGE_CHECKBOX,
+    SUBMIT,
+    CHECK_FIELDS, SUCCESS_REGISTRATION, CLEAR_REG
+} from "./actions";
 
 const initialState = {
     isLogin: false,
@@ -9,19 +19,37 @@ const initialState = {
     email: '',
     pass: '',
     uid:'',
+    isEmailValid: false,
+    isPhoneValid: false,
+    isNameValid: false,
+    isAgreementCheck: false,
+    mustCheckFields: false,
+    isRegistrationSuccess: false
 };
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
+        case CHECK_FIELDS:
+            return {
+                ...state,
+                mustCheckFields: true
+            };
+        case CHANGE_CHECKBOX:
+            return {
+                ...state,
+                isAgreementCheck: !state.isAgreementCheck
+            };
         case CHANGE_NAME:
             return {
                 ...state,
-                name: action.payload
+                name: action.payload.value,
+                isNameValid: action.payload.check
             };
         case CHANGE_PHONE:
             return {
                 ...state,
-                phone: action.payload
+                phone: action.payload.value,
+                isPhoneValid: action.payload.check
             };
         case CHANGE_CITY:
             return {
@@ -36,7 +64,8 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_EMAIL:
             return {
                 ...state,
-                email: action.payload
+                email: action.payload.value,
+                isEmailValid: action.payload.check
             };
         case CHANGE_PASS:
             return {
@@ -44,20 +73,39 @@ export default function rootReducer(state = initialState, action) {
                 pass: action.payload
             };
         case SUBMIT:
-            console.log(state.state);
+            const newState = {
+                ...state,
+                name: '',
+                email: '',
+                phone: '',
+                city: '',
+                station: '',
+                pass: '',
+            };
         return {
-            name: '',
+            newState
+            /*name: '',
             email: '',
             phone: '',
             city: '',
             station: '',
             pass: '',
-            ...state
+            isRegistrationSuccess:true,
+            ...state*/
         };
-
+        case SUCCESS_REGISTRATION:
+            return {
+                ...state,
+                isRegistrationSuccess: true
+            };
+        case CLEAR_REG:
+            return {
+                ...state,
+                isRegistrationSuccess: false
+            };
         default:
             return {
-                state
+                ...state
             }
     }
 }
