@@ -11,7 +11,7 @@ import {
 } from './actions'
 import fire from "../config/Fire";
 import axios from "axios";
-import {validationEmail, validationName, validationPhone} from '../utils/validation'
+import {validationEmail, validationName, validationPass, validationPhone} from '../utils/validation'
 
 export const submit = (name, city, email, pass, station, phone, isEmailValid, isNameValid, isPhoneValid, isAgreementCheck) => {
     if (isNameValid && isEmailValid && isAgreementCheck && isPhoneValid) {
@@ -75,9 +75,10 @@ export const changePhone = (e) => {
 };
 export const changePass = (e) => {
     const value = e.target.value;
+    const check = validationPass(value);
     return {
         type: CHANGE_PASS,
-        payload: value
+        payload: {value, check}
     }
 };
 

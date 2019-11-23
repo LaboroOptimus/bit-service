@@ -182,14 +182,8 @@ const Error = styled.span`
     text-align: left;
     margin-top: 10px;
     border-radius: 20px;
+    font-size: 13px;
 `;
-
-/*store.subscribe(() => {
-    if(store.getState().root.isRegistrationSuccess){
-        return <Redirect to={'/login'}/>
-    }
-    //console.log(store.getState());
-});*/
 
 function RegistrationCustomerForm(props) {
 
@@ -197,7 +191,8 @@ function RegistrationCustomerForm(props) {
         return <Redirect to={'/login'}/>
     }
     console.log(props.isRegistrationSuccess);
-    const {name, city, station, phone, pass, email, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck, mustCheckFields,isRegistrationSuccess} = props;
+    const {name, city, station, phone, pass, email, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck, mustCheckFields,isPassValid,
+        isRegistrationSuccess} = props;
     return (
 
         <Wrapper>
@@ -236,6 +231,7 @@ function RegistrationCustomerForm(props) {
                     <Container>
                         <Label>Введите пароль</Label>
                         <Input value={pass} onChange={props.handleChangePass} type='password'/>
+                        {mustCheckFields && !isAgreementCheck ? <Error>Пароль должен содеражть больше 6 символов!</Error> : null}
                     </Container>
                 </Row>
                 <Row>
@@ -279,6 +275,7 @@ const mapStateToProps = (state) => {
         isNameValid: state.root.isNameValid,
         isPhoneValid: state.root.isPhoneValid,
         isAgreementCheck: state.root.isAgreementCheck,
+        isPassValid: state.root.isPassValid,
         mustCheckFields: state.root.mustCheckFields,
         isRegistrationSuccess: state.root.isRegistrationSuccess
     }
