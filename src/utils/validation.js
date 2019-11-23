@@ -11,3 +11,12 @@ export const validationPhone = (value) => {
     let re =/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/;
     return re.test(String(value).toLowerCase());
 }
+
+export const validationPass = (value) => {
+   if(value.length <= 6){
+       return false
+   }
+   else {
+       return true
+   }
+}

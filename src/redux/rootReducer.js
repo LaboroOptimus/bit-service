@@ -24,7 +24,8 @@ const initialState = {
     isNameValid: false,
     isAgreementCheck: false,
     mustCheckFields: false,
-    isRegistrationSuccess: false
+    isRegistrationSuccess: false,
+    isPassValid: false,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -70,7 +71,8 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_PASS:
             return {
                 ...state,
-                pass: action.payload
+                pass: action.payload.value,
+                isPassValid: action.payload.check
             };
         case SUBMIT:
             const newState = {
