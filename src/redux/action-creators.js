@@ -6,7 +6,9 @@ import {
     CHANGE_PASS,
     CHANGE_PHONE,
     CHANGE_STATION,
-    CHECK_FIELDS, CLEAR_REG,
+    CHECK_FIELDS,
+    CLEAR_REG,
+    LOGIN,
     SUBMIT
 } from './actions'
 import fire from "../config/Fire";
@@ -49,7 +51,6 @@ export const changeCheckbox = () => {
 
 export const changeName = (e) => {
     const value = e.target.value;
-
     const check = validationName(value);
 
     return {
@@ -103,7 +104,36 @@ export const clearReg = () => {
     return {
         type: CLEAR_REG
     }
-}
+};
+
+export const login = (e, email, pass) => {
+    e.preventDefault();
+   /* console.log(email, pass);*/
+   /* let result = {
+        isError: null,
+        errorMessage: '',
+        errorCode: '',
+        uid: ''
+    };*/
+
+    /*fire.auth().signInWithEmailAndPassword(email, pass).then((response) => {
+        let uid = response.user.uid;
+        let isError = false;
+    }).catch((error,uid,isError) =>{
+        let errorMessage = error.message;
+        let errorCode = error.code;
+       // console.log('uid', uid);
+    }).finally((uid,isError,errorMessage,errorCode) =>{
+        console.log(uid,isError,errorMessage,errorCode);
+
+    });*/
+    return {
+        type: LOGIN,
+        payload: {email, pass}
+    }
+
+};
+
 
 
 

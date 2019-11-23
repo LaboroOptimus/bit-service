@@ -1,5 +1,5 @@
 export const validationName = (value) => {
-    return !(value.length < 2 || value.length > 10);
+    return !(value.length < 2 || value.length > 25);
 }
 
 export const validationEmail = (value) => {
@@ -13,10 +13,5 @@ export const validationPhone = (value) => {
 }
 
 export const validationPass = (value) => {
-   if(value.length <= 6){
-       return false
-   }
-   else {
-       return true
-   }
+   return value.length > 6;
 }
