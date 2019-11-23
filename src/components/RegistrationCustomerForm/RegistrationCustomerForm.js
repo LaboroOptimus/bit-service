@@ -188,7 +188,7 @@ const Error = styled.span`
 function RegistrationCustomerForm(props) {
 
     if(props.isRegistrationSuccess){
-        return <Redirect to={'/login'}/>
+        return <Redirect to={'/registration-success'}/>
     }
     console.log(props.isRegistrationSuccess);
     const {name, city, station, phone, pass, email, isEmailValid, isPhoneValid, isNameValid, isAgreementCheck, mustCheckFields,isPassValid,

@@ -2,8 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {clearReg} from '../../redux/action-creators'
-import {store} from "../../redux/store";
+import {changeEmail, changePass, login} from "../../redux/action-creators";
 
 const Wrapper = styled.div`
     display: flex;
@@ -92,64 +91,56 @@ const Container = styled.div`
     margin-left: ${props=>props.marginLeft};
 `;
 
+const Error = styled.span`
+    background: #f66;
+    color: #fff;
+    padding: 5px 5px 5px 15px;
+    text-align: left;
+    margin-top: 10px;
+    border-radius: 20px;
+    font-size: 13px;
+`;
 
-class LoginForm extends React.Component {
 
-    componentDidMount() {
-        store.dispatch(clearReg());
-    }
-
-
-    /*onSubmit = async (e) => {
-        e.preventDefault();
-        const authData = {
-            email: this.state.login,
-            password: this.state.password,
-            returnSecureToken: true
-        }
-        try {
-            const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD9_bt5G55PgVsoh3M20ZKAwe6MhroAOK8', authData);
-            console.log(response.data)
-        } catch (e) {
-
-        }
-    }*/
-
-    render() {
-        return (
-            <Wrapper>
-                <FormWrapper>
-                    <Title>Вход на сайт</Title>
-                    <Input placeholder="Email/телефон"/>
-                    <Input  placeholder="Пароль"/>
-                    <Button type="submit">Войти</Button>
-                    <LinksWrapper>
+function LoginForm(props) {
+    const {email, pass, isLogin, isLoginError, loginErrorMessage} = props;
+    return (
+        <Wrapper>
+            <FormWrapper>
+                <Title>Вход на сайт</Title>
+                <Input onChange={props.onChangeEmail} value={email} placeholder="Email"/>
+                <Input onChange={props.onChangePass} value={pass}  type='password' placeholder="Пароль"/>
+                {isLoginError ? <Error>{loginErrorMessage}</Error>:null}
+                <Button onClick={(e)=> props.onLogin(e,email,pass)}>Войти</Button>
+                <LinksWrapper>
                     <Container>
                         <LinkDecription>Забыли пароль?</LinkDecription>
                         <LinkDecription>Нет аккаунта?</LinkDecription>
-
                     </Container>
-
                     <Container marginLeft={'15px'}>
                         <Link to={'/forgotpass'}>Восстановление пароля</Link>
                         <Link to={'/registration'}>Зарегистрироваться</Link>
                     </Container>
-                    </LinksWrapper>
-
-                </FormWrapper>
-            </Wrapper>
-        )
-    }
+                </LinksWrapper>
+            </FormWrapper>
+        </Wrapper>
+    )
 }
 
 const mapStateToProps = (state) => {
     return {
-        isRegistrationSuccess: state.root.isRegistrationSuccess
+        email: state.login.email,
+        pass: state.login.pass,
+        isLogin: state.login.isLogin,
+        isLoginError: state.login.isLoginError,
+        loginErrorMessage: state.login.loginErrorMessage
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    clearRegistrationSuccess: dispatch(clearReg())
+    onChangeEmail: (e) => dispatch(changeEmail(e)),
+    onChangePass: (e) => dispatch(changePass(e)),
+    onLogin:(e,name,pass)=> dispatch(login(e,name,pass))
 });
 
 
