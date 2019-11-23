@@ -12,6 +12,7 @@ import FindServicePage from "./components/FindServicePage/FindServicePage";
 import MyRequestPage from "./components/MyRequestsPage/MyRequestsPage";
 import RegistrationCompanyPage from "./components/RegistrationCompanyPage/RegistrationCompanyPage";
 import RegRouter from "./components/RegRouter/RegRouter";
+import RegSuccessPage from "./components/RegSuccessPage/RegSuccessPage";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path='/login' component={LoginPage}/>
             <Route path='/registration-customer' component={RegistrationCustomerPage}/>
             <Route path='/registration-company' component={RegistrationCompanyPage}/>
+            <Route path='/registration-success' component={RegSuccessPage}/>
             <Route path='/map' component={MapPage}/>
             <Route path='/reg' component={RegRouter}/>
             <Route path='/forgot-pass' component={ForgotpassPage}/>

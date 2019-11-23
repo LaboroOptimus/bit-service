@@ -136,7 +136,6 @@ class LoginForm extends React.Component {
                     </Container>
                     </LinksWrapper>
 
-
                 </FormWrapper>
             </Wrapper>
         )
