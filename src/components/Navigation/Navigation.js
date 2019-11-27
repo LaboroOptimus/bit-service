@@ -2,6 +2,7 @@ import React from 'react'
 import './Navigation.css'
 import LogNav from "../LogNav/LogNav";
 import NotLogNav from "../NotLogNav/NotLogNav";
+import {isLogin} from "../../utils/isLogin";
 
 /*
 
@@ -34,15 +35,10 @@ import NotLogNav from "../NotLogNav/NotLogNav";
 
 
 class Navigation extends React.Component {
-    state = {
-        isLogin: false
-    }
-
     render() {
-        const isLogin = this.state.isLogin;
         return (
             <React.Fragment>
-                {isLogin ? <LogNav/> : <NotLogNav/>}
+                {isLogin() ? <LogNav/> : <NotLogNav/>}
             </React.Fragment>
         )
     }

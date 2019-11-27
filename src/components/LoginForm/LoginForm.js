@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {changeEmail, changePass, login} from "../../redux/action-creators";
+import {Redirect} from 'react-router-dom';
 
 const Wrapper = styled.div`
     display: flex;
@@ -106,6 +107,7 @@ function LoginForm(props) {
     const {email, pass, isLogin, isLoginError, loginErrorMessage} = props;
     return (
         <Wrapper>
+            {isLogin ? <Redirect to={'/profile'}/> : (
             <FormWrapper>
                 <Title>Вход на сайт</Title>
                 <Input onChange={props.onChangeEmail} value={email} placeholder="Email"/>
@@ -122,7 +124,7 @@ function LoginForm(props) {
                         <Link to={'/registration'}>Зарегистрироваться</Link>
                     </Container>
                 </LinksWrapper>
-            </FormWrapper>
+            </FormWrapper>)}
         </Wrapper>
     )
 }

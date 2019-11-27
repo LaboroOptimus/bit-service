@@ -1,4 +1,4 @@
-import {CHANGE_EMAIL, CHANGE_PASS, LOGIN, LOGIN_SUCCESS, LOGIN_ERROR} from './actions'
+import {CHANGE_EMAIL, CHANGE_PASS, LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, EXIT} from './actions'
 
 const initialState = {
     email: '',
@@ -44,6 +44,11 @@ export default function loginReducer(state = initialState, action) {
             return {
                 ...state,
             };
+        case EXIT:
+            return {
+                ...state,
+                isLogin: false
+            }
         default :
             return {
                 ...state
