@@ -7,6 +7,9 @@ import {ReactComponent as Notif} from "./assets/notification.svg";
 import {ReactComponent as Exit} from "./assets/logout.svg";
 import {ReactComponent as User} from "../Navigation/assets/user.svg";
 import {ReactComponent as Key} from "../Navigation/assets/key.svg";
+import {exit} from "../../redux/action-creators";
+import {isLogin} from "../../utils/isLogin";
+import {changePass} from "../../redux/action-creators";
 
 const NavPanel = styled.div`
     display: flex;
@@ -149,11 +152,10 @@ const KeyIcon = styled(Key)`
 
 class Navtop extends Component {
     render() {
-        const isLogin = this.props.isLogin;
         return (
             <NavPanel>
                 <Phone>Меню</Phone>
-                {isLogin ? (
+                {isLogin() ? (
                     <Profile>
                         <NavLink to={'/profile'}><UserImg src={user}/></NavLink>
                         <Greet>Привет, Игорь!</Greet>
@@ -165,7 +167,7 @@ class Navtop extends Component {
                         </IconContainer>
                         <ExitContainer to={'/'}>
                             <ExitIcon/>
-                            <ExitText>Выйти</ExitText>
+                            <ExitText onClick={this.props.onExit}>Выйти</ExitText>
                         </ExitContainer>
                     </Profile>
                 ):
@@ -179,7 +181,7 @@ class Navtop extends Component {
 
                         <LinksContainer to="/login">
                             <UserIcon/>
-                            <LinkText onClick={this.props.handleLogin}>Вход</LinkText>
+                            <LinkText>Вход</LinkText>
                         </LinksContainer>
                     </NavBlock>
 
@@ -189,15 +191,9 @@ class Navtop extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isLogin: state.root.isLogin
-    }
-};
-
 const mapDispatchToProps = dispatch => ({
-    handleLogin: () => dispatch({type: "ACTION"})
+    onExit: () => dispatch(exit()),
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navtop)
+export default connect(null, mapDispatchToProps)(Navtop)

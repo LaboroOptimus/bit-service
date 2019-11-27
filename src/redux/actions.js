@@ -18,3 +18,4 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const SET_USER_SESSION = 'SET_USER_SESSION';
+export const EXIT = 'EXIT';

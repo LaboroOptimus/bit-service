@@ -9,7 +9,8 @@ import {
     CHECK_FIELDS,
     CLEAR_REG,
     LOGIN,
-    SUBMIT
+    SUBMIT,
+    EXIT
 } from './actions'
 import fire from "../config/Fire";
 import axios from "axios";
@@ -17,7 +18,9 @@ import {validationEmail, validationName, validationPass, validationPhone} from '
 
 export const submit = (name, city, email, pass, station, phone, isEmailValid, isNameValid, isPhoneValid, isAgreementCheck) => {
     if (isNameValid && isEmailValid && isAgreementCheck && isPhoneValid) {
-        const data = {name, city, pass, email, station, phone};
+        const date = new Date();
+        const dateOfReg = `${date.getDate()} ` + `${(date.getMonth() + 1)} ` + `${date.getFullYear()}`;
+        const data = {name, city, pass, email, station, phone, dateOfReg};
         fire.auth().createUserWithEmailAndPassword(email, pass)
             .then((response) => {
                 console.log('отправлено 1');
@@ -131,8 +134,14 @@ export const login = (e, email, pass) => {
         type: LOGIN,
         payload: {email, pass}
     }
-
 };
+
+export const exit = () => {
+    localStorage.setItem('userId', null);
+    return {
+        type: EXIT
+    }
+}
 
 
 
