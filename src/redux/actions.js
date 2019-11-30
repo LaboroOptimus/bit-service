@@ -19,3 +19,8 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const SET_USER_SESSION = 'SET_USER_SESSION';
 export const EXIT = 'EXIT';
+
+/* USER */
+
+export const LOAD_PROFILE = 'LOAD_PROFILE'; // для асинхронного вызова следующего экшна
+export const LOAD_USER_PROFILE = 'LOAD_USER_PROFILE';

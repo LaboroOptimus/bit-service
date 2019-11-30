@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from "styled-components";
+import {connect} from 'react-redux'
+import Loader from "../Loader/Loader";
 
 const Wrapper = styled.div`
-    padding: 30px;
+    padding: ${props => props.padding};
     display: flex;
     flex-direction: column;
 `;
@@ -13,15 +15,15 @@ const Title = styled.h3`
 
 const Container = styled.div`
     display: flex;
-    flex-direction: ${props=>props.flexDirection || 'row'};
-    justify-content: ${props=>props.justifyContent || 'flex-start'};
-    width: ${props=>props.width || 'auto'}
-    align-self: ${props=>props.alignSelf}
+    flex-direction: ${props => props.flexDirection || 'row'};
+    justify-content: ${props => props.justifyContent || 'flex-start'};
+    width: ${props => props.width || 'auto'}
+    align-self: ${props => props.alignSelf}
 `;
 
 const ImageContainer = styled.div`
     width: 10%;
-`
+`;
 
 const Img = styled.img`
 `;
@@ -38,8 +40,8 @@ const Input = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #333333;
-    margin: ${props=> props.margin || '0'};
-    width: ${props=>props.width};
+    margin: ${props => props.margin || '0'};
+    width: ${props => props.width};
     height: 50px;
 `;
 
@@ -49,7 +51,7 @@ const SubTitle = styled.h3`
 
 const Button = styled.button`
     position: absolute;
-    display: ${props=> props.display || 'none'};
+    display: ${props => props.display || 'none'};
     right: 160px;
     bottom: 230px;
     color: #fff;
@@ -75,53 +77,55 @@ const Button = styled.button`
 `;
 
 
-
 class Profile extends React.Component {
-
-    state = {
-        changedProfile : false,
-    }
-
-    onChangeProfile = () => {
-        this.setState({
-            changedProfile:true,
-        })
-    }
 
     render() {
         return (
-            <Wrapper>
-                <Title>Профиль</Title>
-                <Container>
-                    <ImageContainer>
-                        <Img src={'http://placehold.it/100x100'}/>
-                    </ImageContainer>
+            <Wrapper padding={!this.props.isLoad ? '300px 30px' : '30px'}>
+                {!this.props.isLoad ? <Loader/> :
+                    (
+                        <React.Fragment>
+                            <Title>Профиль</Title>
+                            <Container>
+                                <ImageContainer>
+                                    <Img src={'http://placehold.it/100x100'}/>
+                                </ImageContainer>
 
+                                <Container flexDirection={'column'} width={'80%'}>
+                                    <SubTitle>Контактная информация</SubTitle>
+                                    <Input value={this.props.userName}/>
+                                    <Container justifyContent={'space-between'}>
+                                        <Input margin={'10px 0'} value={this.props.userCity}/>
+                                        <Input margin={'10px 0'} value={this.props.userEmail}/>
+                                        <Input margin={'10px 0'} value={this.props.userPhone}/>
+                                        <Button>Сохранить изменения</Button>
+                                    </Container>
 
-                    <Container flexDirection={'column'} width={'80%'}>
-                        <SubTitle>Контактная информация</SubTitle>
-                        <Input onChange={this.onChangeProfile} value={'Смирнов Игорь Витальевич'}/>
-                        <Container justifyContent={'space-between'}>
-                            <Input onChange={this.onChangeProfile} margin={'10px 0'} value={'Москва'}/>
-                            <Input onChange={this.onChangeProfile} margin={'10px 0'} value={'igor.smirnov@yandex.ru'}/>
-                            <Input onChange={this.onChangeProfile} margin={'10px 0'} value={'+7(926)925-87-13'}/>
-                            <Button display={this.state.changedProfile ? 'block' : 'none'}>Сохранить изменения</Button>
-                        </Container>
-
-                        <SubTitle>Уведомления</SubTitle>
-                        <p><input type='checkbox'/> Уведомление по email</p>
-                        <p><input type='checkbox'/> Уведомление по SMS</p>
-                        <p><input type='checkbox'/> Получать новости по email</p>
-
-
-
-
-                    </Container>
-                </Container>
+                                    <SubTitle>Уведомления</SubTitle>
+                                    <p><input type='checkbox'/> Уведомление по email</p>
+                                    <p><input type='checkbox'/> Уведомление по SMS</p>
+                                    <p><input type='checkbox'/> Получать новости по email</p>
+                                </Container>
+                            </Container>
+                        </React.Fragment>)}
             </Wrapper>
 
         )
     }
 }
 
-export default Profile
+const mapStateToProps = (state) => {
+    return {
+        userName: state.profile.userName,
+        userEmail: state.profile.userEmail,
+        userPhone: state.profile.userPhone,
+        userCity: state.profile.userCity,
+        isLoad: state.profile.isLoad
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
