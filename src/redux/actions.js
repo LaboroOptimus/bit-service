@@ -24,3 +24,16 @@ export const EXIT = 'EXIT';
 
 export const LOAD_PROFILE = 'LOAD_PROFILE'; // для асинхронного вызова следующего экшна
 export const LOAD_USER_PROFILE = 'LOAD_USER_PROFILE';
+
+/* REQUEST */
+
+export const LOAD_USER_INFO = 'LOAD_USER_INFO';
+export const SET_USER_INFO = 'SET_USER_INFO';
+export const CHANGE_TYPE = 'CHANGE_TYPE';
+export const CHANGE_MODEL = 'CHANGE_MODEL';
+export const CHANGE_BRAND = 'CHANGE_BRAND';
+export const CHANGE_DESCRIPTION = 'CHANGE_DESCRIPTION';
+export const CHANGE_EMAIL_NOTIFICATION = 'CHANGE_EMAIL_NOTIFICATION';
+export const CHANGE_PHONE_NOTIFICATION = 'CHANGE_PHONE_NOTIFICATION';
+export const ADD_REQUEST = 'ADD_REQUEST';
+export const ADD_REQUEST_SUCCESS = 'ADD_REQUEST_SUCCESS';
