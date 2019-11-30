@@ -151,7 +151,8 @@ const KeyIcon = styled(Key)`
 
 class Navtop extends Component {
     render() {
-        console.log(isLogin());
+        console.log('Navtop', isLogin());
+        console.log('Navtop', this.props.name);
         return (
             <NavPanel>
                 <Phone>Меню</Phone>

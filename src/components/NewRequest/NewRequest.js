@@ -1,6 +1,16 @@
 import React from 'react'
 import styled from "styled-components";
-
+import {connect} from 'react-redux';
+import {
+    addRequest,
+    changeBrand,
+    changeDescription,
+    changeModel,
+    changeType,
+    emailNotification,
+    loadUserInfo,
+    phoneNotification
+} from "../../redux/user-action-creators";
 
 const Wrapper = styled.div`
     padding: 100px 30px;
@@ -160,7 +170,12 @@ const Checkbox = styled.input`
 
 
 class NewRequest extends React.Component {
+    componentDidMount() {
+        this.props.onLoad();
+    }
+
     render() {
+        const {email, station, phone, type, model, desc, brand,name} = this.props;
         return (
             <Wrapper>
                 <Title>Создание заявки на ремонт</Title>
@@ -173,21 +188,25 @@ class NewRequest extends React.Component {
                     <Container justifyContent={'flex-start'}>
                         <FormGroup>
                             <FormLabel htmlFor={'type'}>Тип техники</FormLabel>
-                            <Input name={'type'} placeholder={'Ноутбук'}/>
+                            <Input onChange={this.props.onChangeType} value={type} name={'type'}
+                                   placeholder={'Ноутбук'}/>
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'type'}>Марка техники</FormLabel>
-                            <Input name={'company'} placeholder={'Asus'}/>
+                            <Input onChange={this.props.onChangeBrand} value={brand} name={'company'}
+                                   placeholder={'Asus'}/>
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'type'}>Модель техники</FormLabel>
-                            <Input name={'model'} placeholder={'Модель'}/>
+                            <Input onChange={this.props.onChangeModel} value={model} name={'model'}
+                                   placeholder={'Модель'}/>
                         </FormGroup>
                     </Container>
                     <Container justifyContent={'flex-start'}>
                         <FormGroup width={'40%'}>
                             <FormLabel htmlFor={'problem'}>Опишите проблему</FormLabel>
-                            <Textarea name='problem' resize='none'
+                            <Textarea onChange={this.props.onChangeDescription} value={desc} name='problem'
+                                      resize='none'
                                       placeholder={'Например, не работает кнопка включения'}/>
                         </FormGroup>
                         <FormGroup>
@@ -199,42 +218,69 @@ class NewRequest extends React.Component {
                     <Container justifyContent={'flex-start'}>
                         <FormGroup>
                             <FormLabel htmlFor={'phone'}>Телефон</FormLabel>
-                            <Input name='phone' placeholder={'Телефон'}/>
+                            <Input name='phone' placeholder={'Введите телефон'} value={phone}/>
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'email'}>Email</FormLabel>
-                            <Input name='email' placeholder={'igor@mail.ru'}/>
+                            <Input name='email' placeholder={'Введите email'} value={email}/>
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'metro'}>Ближайшее метро</FormLabel>
-                            <Input name='metro' placeholder={'Планерная'}/>
+                            <Input name='metro' placeholder={'Введите метро'} value={station}/>
                         </FormGroup>
                     </Container>
 
                     <Container>
                         <FormGroup width={'30%'}>
                             <CheckboxGroup>
-                                <Checkbox id='phone_email' type='checkbox'/>
+                                <Checkbox onClick={() => this.props.handleEmailNotification()} id='phone_email'
+                                          type='checkbox'/>
                                 <CheckboxLabel htmlFor={'phone_email'}>Уведомление по почте</CheckboxLabel>
                             </CheckboxGroup>
 
                             <CheckboxGroup>
-                                <Checkbox id='phone_note' type='checkbox'/>
+                                <Checkbox onClick={() => this.props.handlePhoneNotification()} id='phone_note'
+                                          type='checkbox'/>
                                 <CheckboxLabel htmlFor={'phone_note'}>Уведомление по телефону</CheckboxLabel>
                             </CheckboxGroup>
                         </FormGroup>
 
                         <FormGroup>
-                            <Button>Отправить заявку</Button>
+                            <Button
+                                onClick={(e) => this.props.onRequestAdd(e, station, phone, email, type, brand, desc, model,name)}>Отправить
+                                заявку</Button>
                         </FormGroup>
                     </Container>
-
-
-
                 </FormWrapper>
             </Wrapper>
         )
     }
 }
 
-export default NewRequest
+const mapStateToProps = (state) => {
+    return {
+        station: state.request.station,
+        phone: state.request.phone,
+        email: state.request.email,
+        type: state.request.type,
+        brand: state.request.brand,
+        desc: state.request.description,
+        model: state.request.model,
+        name: state.login.name
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoad: () => dispatch(loadUserInfo()),
+        onChangeType: (e) => dispatch(changeType(e)),
+        onChangeModel: (e) => dispatch(changeModel(e)),
+        onChangeBrand: (e) => dispatch(changeBrand(e)),
+        onChangeDescription: (e) => dispatch(changeDescription(e)),
+        handleEmailNotification: () => dispatch(emailNotification()),
+        handlePhoneNotification: () => dispatch(phoneNotification()),
+        onRequestAdd: (e, station, phone, email, type, brand, desc, model,name) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,name)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewRequest)
