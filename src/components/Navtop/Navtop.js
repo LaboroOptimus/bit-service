@@ -9,7 +9,6 @@ import {ReactComponent as User} from "../Navigation/assets/user.svg";
 import {ReactComponent as Key} from "../Navigation/assets/key.svg";
 import {exit} from "../../redux/action-creators";
 import {isLogin} from "../../utils/isLogin";
-import {changePass} from "../../redux/action-creators";
 
 const NavPanel = styled.div`
     display: flex;
@@ -152,42 +151,52 @@ const KeyIcon = styled(Key)`
 
 class Navtop extends Component {
     render() {
+        console.log(isLogin());
         return (
             <NavPanel>
                 <Phone>Меню</Phone>
                 {isLogin() ? (
-                    <Profile>
-                        <NavLink to={'/profile'}><UserImg src={user}/></NavLink>
-                        <Greet>Привет, Игорь!</Greet>
-                        <IconContainer to={'/'}>
-                            <Icon>
-                                <IconCount>2</IconCount>
-                                <NotifIcon/>
-                            </Icon>
-                        </IconContainer>
-                        <ExitContainer to={'/'}>
-                            <ExitIcon/>
-                            <ExitText onClick={this.props.onExit}>Выйти</ExitText>
-                        </ExitContainer>
-                    </Profile>
-                ):
-                (
+                        <Profile>
+                            {!this.props.isLoad ? null :
+                                (<React.Fragment>
+                                    <NavLink to={'/profile'}><UserImg src={user}/></NavLink>
+                                    <Greet>Привет, {this.props.name.split(' ')[0]}</Greet>
+                                    <IconContainer to={'/'}>
+                                        <Icon>
+                                            <IconCount>2</IconCount>
+                                            <NotifIcon/>
+                                        </Icon>
+                                    </IconContainer>
+                                </React.Fragment>)}
+                            <ExitContainer to={'/'}>
+                                <ExitIcon/>
+                                <ExitText onClick={this.props.onExit}>Выйти</ExitText>
+                            </ExitContainer>
+                        </Profile>
+                    ) :
+                    (
+                        <NavBlock>
+                            <LinksContainer to="/reg">
+                                <KeyIcon/>
+                                <LinkText>Регистрация</LinkText>
+                            </LinksContainer>
 
-                    <NavBlock>
-                        <LinksContainer to="/reg">
-                            <KeyIcon/>
-                            <LinkText>Регистрация</LinkText>
-                        </LinksContainer>
+                            <LinksContainer to="/login">
+                                <UserIcon/>
+                                <LinkText>Вход</LinkText>
+                            </LinksContainer>
+                        </NavBlock>
 
-                        <LinksContainer to="/login">
-                            <UserIcon/>
-                            <LinkText>Вход</LinkText>
-                        </LinksContainer>
-                    </NavBlock>
-
-                )}
+                    )}
             </NavPanel>
         )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        name: state.profile.userName,
+        isLoad: state.profile.isLoad,
     }
 }
 
@@ -196,4 +205,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(null, mapDispatchToProps)(Navtop)
+export default connect(mapStateToProps, mapDispatchToProps)(Navtop)

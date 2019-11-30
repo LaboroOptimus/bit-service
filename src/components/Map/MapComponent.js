@@ -4,15 +4,9 @@ import { YMaps,Map,Placemark,Clusterer } from 'react-yandex-maps';
 import {mapData} from './mapData'
 import Loader from "../Loader/Loader";
 
-
-
 /*const Star = styled(FontAwesomeIcon)`
     color: #fff;
 `;*/
-
-
-
-
 
 
 const Wrapper = styled.div`
@@ -20,9 +14,7 @@ const Wrapper = styled.div`
     width: 100%;
 `;
 
-
 const mapState = { center: [55.748651510892834,37.62457701114701], zoom: 10 };
-
 
 class MapComponent extends React.Component {
     state = {
