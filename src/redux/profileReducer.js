@@ -12,8 +12,6 @@ const initialState = {
 export default function loginReducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_USER_PROFILE:
-          /*  console.log('получил', action.payload)*/
-            console.log(action.payload.name);
             return {
                 userName: action.payload.name,
                 userPhone: action.payload.phone,
