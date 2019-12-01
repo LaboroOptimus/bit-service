@@ -64,6 +64,7 @@ export function* workerLoadProfile() {
 
 /* LOAD PROFILE */
 
+/* NEW REQUEST */
 export function* watchAddRequest() {
     yield takeEvery('ADD_REQUEST', workerAddRequest);
 }
@@ -85,6 +86,7 @@ export function* workerAddRequest(data) {
                     email: data.payload.email,
                     date: today,
                     uid: uid,
+                    status: 'active',
                 });
             }
         );
@@ -99,6 +101,7 @@ export function* workerAddRequest(data) {
                     email: data.payload.email,
                     date: today,
                     uid: uid,
+                    status: 'active',
                 });
             }
         );
@@ -107,6 +110,7 @@ export function* workerAddRequest(data) {
         console.log(e);
     }
 }
+/* NEW REQUEST */
 
 export function* watchRegistrationSuccess() {
     yield takeEvery('SUBMIT', workerRegistrationSuccess);

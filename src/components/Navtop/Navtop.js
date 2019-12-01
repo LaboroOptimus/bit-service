@@ -8,6 +8,7 @@ import {ReactComponent as Exit} from "./assets/logout.svg";
 import {ReactComponent as User} from "../Navigation/assets/user.svg";
 import {ReactComponent as Key} from "../Navigation/assets/key.svg";
 import {exit} from "../../redux/action-creators";
+import {loadProfile} from "../../redux/user-action-creators";
 import {isLogin} from "../../utils/isLogin";
 
 const NavPanel = styled.div`
@@ -150,9 +151,12 @@ const KeyIcon = styled(Key)`
 `;
 
 class Navtop extends Component {
+
+    componentDidMount() {
+        this.props.onLoadProfile();
+    }
+
     render() {
-        console.log('Navtop', isLogin());
-        console.log('Navtop', this.props.name);
         return (
             <NavPanel>
                 <Phone>Меню</Phone>
@@ -199,10 +203,11 @@ const mapStateToProps = (state) => {
         name: state.profile.userName,
         isLoad: state.profile.isLoad,
     }
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     onExit: () => dispatch(exit()),
+    onLoadProfile: () => dispatch(loadProfile())
 });
 
 
