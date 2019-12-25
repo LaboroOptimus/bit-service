@@ -196,7 +196,7 @@ function RegistrationCustomerForm(props) {
     return (
 
         <Wrapper>
-            {isRegistrationSuccess ? <Redirect to={'/login'}/> : (
+            {isRegistrationSuccess && <Redirect to={'/login'}/>}
             <FormWrapper>
                 <Title>Регистрация нового клиента</Title>
                 <Row>
@@ -231,7 +231,7 @@ function RegistrationCustomerForm(props) {
                     <Container>
                         <Label>Введите пароль</Label>
                         <Input value={pass} onChange={props.handleChangePass} type='password'/>
-                        {mustCheckFields && !isAgreementCheck ? <Error>Пароль должен содеражть больше 6 символов!</Error> : null}
+                        {mustCheckFields && !isPassValid ? <Error>Пароль должен содеражть больше 6 символов!</Error> : null}
                     </Container>
                 </Row>
                 <Row>
@@ -257,7 +257,7 @@ function RegistrationCustomerForm(props) {
 
                 </Row>
             </FormWrapper>
-            )}
+
         </Wrapper>
     )
 }
