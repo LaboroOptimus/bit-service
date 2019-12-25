@@ -31,6 +31,7 @@ const initialState = {
     emailNotification: false,
     phoneNotification: false,
     mustCheckFields: false,
+    isRequestSuccess: false,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -115,6 +116,14 @@ export default function loginReducer(state = initialState, action) {
                 station: '',
                 emailNotification: false,
                 phoneNotification: false,
+                isEmailCheck: true,
+                isStationCheck: true,
+                isPhoneCheck: true,
+                isDescriptionCheck: false,
+                isModelCheck: false,
+                isBrandCheck: false,
+                isTypeCheck: false,
+                isRequestSuccess: true
             };
         case ADD_REQUEST_CHECK_FIELDS:
             return {
