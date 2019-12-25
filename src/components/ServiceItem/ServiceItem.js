@@ -7,6 +7,16 @@ import star from './assets/star.png'
 import map from './assets/map.png'
 import phone from './assets/phone.png'
 import email from './assets/email.png'
+import {ReactComponent as Plus} from "./assets/add.svg";
+import {formatAddress, formatPhone, formatPrice} from "../../utils/format";
+import Stars from "./assets/Stars";
+
+const PlusIcon = styled(Plus)`
+    fill: #368594;
+    width: 15px;
+    height: 15px;
+    text-anchor:middle;
+`;
 
 const Name = styled.h3`
     font-size: 28px;
@@ -22,6 +32,22 @@ const Name = styled.h3`
 const ShieldPro = styled.img`
     width: 35px;
     height: 35px;
+`;
+
+const YetContainer = styled.div`
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 6px;
+`
+
+const Yet = styled(NavLink)`
+    color: #368594;
+    text-decoration: none;
+    
+    text-align: left;  
+    :hover {
+    border-bottom: 1px dashed;
+    }
 `;
 
 const NameContainer = styled.div`
@@ -97,9 +123,9 @@ const PriceValue = styled.span`
     }
 `;
 
-const Stars = styled.div`
+/*const Stars = styled.div`
     margin-left: 5px;
-`;
+`;*/
 
 const LeftColumn = styled.div`
     display: flex;
@@ -189,7 +215,47 @@ const AdvantagesItem = styled.div`
     margin-bottom: 10px;
 `;
 
-const Button = styled(NavLink)`
+
+const PrimaryButton = styled(NavLink)`
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff; 
+    background-color: #368594;
+    
+  :hover {
+    background-color: #99DDDE;
+    color: #368594;
+  }
+    
+    @media (max-width: 768px) {
+       margin-right: 0;
+       margin: 5px 0px;
+    }
+`;
+
+const SecondaryButton = styled(NavLink)`
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #368594; 
+    background-color: #99DDDE;
+    margin-right: 20px;
+    
+    :hover {
+        background-color: #368594;
+        color: #fff;
+    }
+    
+    @media (max-width: 768px) {
+       margin-right: 0;
+       margin: 5px 0px;
+    }
+`
+
+/*const Button = styled(NavLink)`
     background: ${props => props.backgroundColor}; 
     border-radius: 5px;
     color: ${props => props.color}; 
@@ -202,29 +268,7 @@ const Button = styled(NavLink)`
        margin-right: 0;
        margin: 5px 0px;
     }
-`;
-
-/*
-data = [
-  {
-    serviceId: 104,
-    serviceUrl: www.remont.ru/104,
-    serviceName: РемБытТех,
-    servicePhoto: file,
-    serviceDescription: Какое-то описание,
-    serviceRating: 4,
-    serviceAdress: [],
-    servicePhone: [],
-    serviceStation: [],
-    serviceAdvantages: [],
-    servicePrices: [],
-    isSafeDeal: true,
-  },
-{},
-]
-
-
-*/
+`;*/
 
 
 class ServiceItem extends React.Component {
@@ -234,13 +278,15 @@ class ServiceItem extends React.Component {
                 <NameContainer>
                     {this.props.prostatus && <ShieldPro src={shieldpro}/>}
                     <Name>{this.props.name}</Name>
-                    <Stars>
+                    <Stars rating={this.props.rating}/>
+
+                   {/* <Stars>
                         <Star src={star}/>
                         <Star src={star}/>
                         <Star src={star}/>
                         <Star src={star}/>
                         <Star src={star}/>
-                    </Stars>
+                    </Stars>*/}
                 </NameContainer>
                 <Content>
                     <LeftColumn>
@@ -254,10 +300,12 @@ class ServiceItem extends React.Component {
                                 </>
                             )
                         })}
-                        /*TODO: Сделать функцию форматирования адресов */
-                        {this.props.address.length > 2 && <a>Еще {this.props.address.length - 2} адреса</a>}
+                        {this.props.address.length > 2 &&
+                        <YetContainer><PlusIcon/> <Yet to={'/'}>
+                          Еще {this.props.address.length - 2} {formatAddress(this.props.address.length - 2)}
+                        </Yet></YetContainer>}
 
-                        {this.props.phone.map((e,index)=>{
+                        {this.props.phone.map((e, index) => {
                             return (
                                 <>
                                     {index < 2 ? (<Contact index={index}><img alt={'alt'} src={phone}/>
@@ -266,8 +314,11 @@ class ServiceItem extends React.Component {
                                 </>
                             )
                         })}
-                        /*TODO: Сделать функцию форматирования телефон(а/ов)*/
-                        {this.props.phone.length > 2 && <a>Еще {this.props.phone.length - 2} телефон</a>}
+                        {this.props.phone.length > 2 &&
+
+                        <YetContainer><PlusIcon/> <Yet
+                            to={'/'}>Еще {this.props.phone.length - 2} {formatPhone(this.props.phone.length - 2)}
+                        </Yet></YetContainer>}
                         <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
 
 
@@ -300,13 +351,14 @@ class ServiceItem extends React.Component {
                             )
                         })}
 
-                        {this.props.prices.length > 5 ? <p>Смотреть еще {this.props.prices.length - 5} цен</p> : null}
+                        {this.props.prices.length > 5 ? <YetContainer><PlusIcon/> <Yet to={'/'}> Смотреть
+                            еще {this.props.prices.length - 5} {formatPrice(this.props.prices.length - 5)}</Yet></YetContainer> : null}
 
                         <Link>
-                            <Button marginRight={'20px'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to={'/'}> На
-                                страницу сервиса </Button>
-                            <Button color={'#fff'} backgroundColor={'#6A7BFF'} to={'/'}> Заказать ремонт
-                                техники </Button>
+                            <SecondaryButton to={'/'}> На
+                                страницу сервиса </SecondaryButton>
+                            <PrimaryButton to={'/'}> Заказать ремонт
+                                техники </PrimaryButton>
                         </Link>
                     </RightColumn>
                 </Content>
