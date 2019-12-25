@@ -111,25 +111,6 @@ export const clearReg = () => {
 
 export const login = (e, email, pass) => {
     e.preventDefault();
-   /* console.log(email, pass);*/
-   /* let result = {
-        isError: null,
-        errorMessage: '',
-        errorCode: '',
-        uid: ''
-    };*/
-
-    /*fire.auth().signInWithEmailAndPassword(email, pass).then((response) => {
-        let uid = response.user.uid;
-        let isError = false;
-    }).catch((error,uid,isError) =>{
-        let errorMessage = error.message;
-        let errorCode = error.code;
-       // console.log('uid', uid);
-    }).finally((uid,isError,errorMessage,errorCode) =>{
-        console.log(uid,isError,errorMessage,errorCode);
-
-    });*/
     return {
         type: LOGIN,
         payload: {email, pass}

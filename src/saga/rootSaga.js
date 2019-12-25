@@ -8,7 +8,8 @@ import {
     LOGIN_ERROR,
     LOGIN_SUCCESS,
     SET_USER_INFO,
-    SUCCESS_REGISTRATION
+    SUCCESS_REGISTRATION,
+    ADD_REQUEST_CHECK_FIELDS
 } from '../redux/actions'
 import fire from "../config/Fire";
 
@@ -73,42 +74,54 @@ export function* workerAddRequest(data) {
     const uid = localStorage.getItem('userId');
     const time = new Date();
     const today = time.getDate() + '/' + (time.getMonth() + 1);
+    const isValidate = data.payload.isValidate;
+    console.log(isValidate);
+    //const {isStationCheck,isModelCheck, isTypeCheck,isEmailCheck,isPhoneCheck,isDescriptionCheck} = data.payload;
+    //console.log(isStationCheck,isModelCheck, isTypeCheck,isEmailCheck,isPhoneCheck,isDescriptionCheck);
 
-    try {
-        yield call(() => {
-                return fire.database().ref('users/' + uid + '/requests').push({
-                    type: data.payload.type,
-                    brand: data.payload.brand,
-                    model: data.payload.model,
-                    desc: data.payload.desc,
-                    station: data.payload.station,
-                    phone: data.payload.phone,
-                    email: data.payload.email,
-                    date: today,
-                    uid: uid,
-                    status: 'active',
-                });
-            }
-        );
-        yield call(() => {
-                return fire.database().ref('requests/').push({
-                    type: data.payload.type,
-                    brand: data.payload.brand,
-                    model: data.payload.model,
-                    desc: data.payload.desc,
-                    station: data.payload.station,
-                    phone: data.payload.phone,
-                    email: data.payload.email,
-                    date: today,
-                    uid: uid,
-                    status: 'active',
-                });
-            }
-        );
-        yield put({type: ADD_REQUEST_SUCCESS});
-    } catch (e) {
-        console.log(e);
+    if(isValidate){
+        try {
+            yield call(() => {
+                    return fire.database().ref('users/' + uid + '/requests').push({
+                        type: data.payload.type,
+                        brand: data.payload.brand,
+                        model: data.payload.model,
+                        desc: data.payload.desc,
+                        station: data.payload.station,
+                        phone: data.payload.phone,
+                        email: data.payload.email,
+                        date: today,
+                        uid: uid,
+                        status: 'active',
+                    });
+                }
+            );
+            yield call(() => {
+                    return fire.database().ref('requests/').push({
+                        type: data.payload.type,
+                        brand: data.payload.brand,
+                        model: data.payload.model,
+                        desc: data.payload.desc,
+                        station: data.payload.station,
+                        phone: data.payload.phone,
+                        email: data.payload.email,
+                        date: today,
+                        uid: uid,
+                        status: 'active',
+                    });
+                }
+            );
+            yield put({type: ADD_REQUEST_SUCCESS});
+        } catch (e) {
+            console.log(e);
+        }
     }
+    else {
+        yield put({type: ADD_REQUEST_CHECK_FIELDS});
+    }
+
+
+
 }
 /* NEW REQUEST */
 

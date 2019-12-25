@@ -8,10 +8,33 @@ export const validationEmail = (value) => {
 }
 
 export const validationPhone = (value) => {
-    let re =/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/;
+    //let re =/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/;
+    //let re = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
+    let re = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;
     return re.test(String(value).toLowerCase());
 }
 
 export const validationPass = (value) => {
    return value.length > 6;
+}
+/* тип техники,  марка техники,  модель техники, описание, станция метро*/
+
+export const validationTechType = (value) => {
+    return value.length > 5
+};
+
+export const validationTechBrand = (value) => {
+    return value.length > 2
+};
+
+export const validationTechModel = (value) => {
+    return value.length > 5
+}
+
+export const validationDescription = value => {
+    return value.length > 8
+}
+
+export const validationStation = value => {
+    return value.length > 5
 }

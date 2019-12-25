@@ -14,6 +14,7 @@ const initialState = {
 export default function loginReducer(state = initialState, action) {
     switch (action.type) {
         case CHANGE_EMAIL:
+            console.log(action.payload)
             return {
                 ...state,
                 email: action.payload.value,
