@@ -14,6 +14,7 @@ import {
     loadUserInfo,
     phoneNotification
 } from "../../redux/user-action-creators";
+import {Redirect} from 'react-router-dom';
 
 
 const Wrapper = styled.div`
@@ -192,11 +193,12 @@ class NewRequest extends React.Component {
 
         const {
             email, station, phone, type, model, desc, brand,
-            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck,isRequestSuccess
         } = this.props;
 
         return (
             <Wrapper>
+                {isRequestSuccess && <Redirect to={'/'}/>}
                 <Title>Создание заявки на ремонт</Title>
                 <Subtitle>Постарайтесь как можно подробней описать заявку : тип техники, марку, модель.
                     По возможности, прикрепите фото.<br/> Чем точнее Вы опишите заявку - тем точнее сервисные центры
@@ -303,7 +305,8 @@ const mapStateToProps = (state) => {
         isPhoneCheck: state.request.isPhoneCheck,
         isStationCheck: state.request.isStationCheck,
         isBrandCheck: state.request.isBrandCheck,
-        mustCheckFields: state.request.mustCheckFields
+        mustCheckFields: state.request.mustCheckFields,
+        isRequestSuccess: state.request.isRequestSuccess
     }
 };
 

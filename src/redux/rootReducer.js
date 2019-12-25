@@ -86,14 +86,6 @@ export default function rootReducer(state = initialState, action) {
             };
         return {
             newState
-            /*name: '',
-            email: '',
-            phone: '',
-            city: '',
-            station: '',
-            pass: '',
-            isRegistrationSuccess:true,
-            ...state*/
         };
         case SUCCESS_REGISTRATION:
             return {
