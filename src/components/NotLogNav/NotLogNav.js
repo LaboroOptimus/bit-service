@@ -110,21 +110,6 @@ const ToggleIcon = styled.img`
     height: 20px !important;
     margin-top: 10px;
 `;
-/*
-*
-Регистрация
-Вход для клиента
-Вход для компании
-
-Найти сервис
-Найти сервис на карте
-Заявка на ремонт
-
-Главная
-Контакты
-Как это работает?
-*
-* */
 
 function NotLogNav() {
     return (

@@ -56,13 +56,13 @@ const Description = styled.p`
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 16px;
+    color: #000000;
 `;
 
 const PriceItem = styled.div`
     width: 100%;
-    background-color: ${props=> props.backgroundColor};
+    background-color: ${props => props.backgroundColor};
     padding: 10px;
-    margin: 5px 0;
     display: flex;
     
     @media (max-width: 768px) {
@@ -84,7 +84,7 @@ const ServicePhoto = styled.img`
 `;
 
 const PriceValue = styled.span`
-    background-color: #FF71A1;
+    background-color: #70C294;
     border-radius: 50px;
     padding: 3px 10px;
     font-weight: 500;
@@ -145,7 +145,7 @@ const RightColumn = styled.div`
 
 const Star = styled.img`
    padding-top: 12px;
-`
+`;
 
 const Link = styled.div`
     display: flex;
@@ -184,15 +184,15 @@ const AdvantagesItem = styled.div`
     color: #fff;
     font-size: 16px;
     font-weight: 500;
-    background-color: ${props=>props.backgroundColor};
+    background-color: ${props => props.backgroundColor};
     border-radius: 50px;
     margin-bottom: 10px;
 `;
 
 const Button = styled(NavLink)`
-    background: ${props=> props.backgroundColor}; 
+    background: ${props => props.backgroundColor}; 
     border-radius: 5px;
-    color: ${props=> props.color}; 
+    color: ${props => props.color}; 
     font-size: 15px;
     padding: 10px 20px;
     text-decoration: none;
@@ -204,13 +204,36 @@ const Button = styled(NavLink)`
     }
 `;
 
+/*
+data = [
+  {
+    serviceId: 104,
+    serviceUrl: www.remont.ru/104,
+    serviceName: РемБытТех,
+    servicePhoto: file,
+    serviceDescription: Какое-то описание,
+    serviceRating: 4,
+    serviceAdress: [],
+    servicePhone: [],
+    serviceStation: [],
+    serviceAdvantages: [],
+    servicePrices: [],
+    isSafeDeal: true,
+  },
+{},
+]
+
+
+*/
+
+
 class ServiceItem extends React.Component {
-    render(){
+    render() {
         return (
             <Container>
                 <NameContainer>
-                    <ShieldPro src={shieldpro}/>
-                    <Name>РемБытТех</Name>
+                    {this.props.prostatus && <ShieldPro src={shieldpro}/>}
+                    <Name>{this.props.name}</Name>
                     <Stars>
                         <Star src={star}/>
                         <Star src={star}/>
@@ -222,47 +245,68 @@ class ServiceItem extends React.Component {
                 <Content>
                     <LeftColumn>
                         <ServicePhoto src={servicephoto}/>
+                        {this.props.address.map((e, index) => {
+                            return (
+                                <>
+                                    {index < 2 ? (<Contact index={index}><img alt={'alt'} src={map}/>
+                                        <ContactDescription>{e}</ContactDescription>
+                                    </Contact>) : null}
+                                </>
+                            )
+                        })}
+                        /*TODO: Сделать функцию форматирования адресов */
+                        {this.props.address.length > 2 && <a>Еще {this.props.address.length - 2} адреса</a>}
+
+                        {this.props.phone.map((e,index)=>{
+                            return (
+                                <>
+                                    {index < 2 ? (<Contact index={index}><img alt={'alt'} src={phone}/>
+                                        <ContactDescription>{e}</ContactDescription>
+                                    </Contact>) : null}
+                                </>
+                            )
+                        })}
+                        /*TODO: Сделать функцию форматирования телефон(а/ов)*/
+                        {this.props.phone.length > 2 && <a>Еще {this.props.phone.length - 2} телефон</a>}
                         <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
-                        <Contact><img alt={'alt'} src={phone}/><ContactDescription>8(800)000-00-00</ContactDescription></Contact>
-                        <Contact><img alt={'alt'} src={map}/><ContactDescription>ул. Ленина д.5</ContactDescription></Contact>
+
+
                     </LeftColumn>
 
                     <CenterColumn>
-                        <AdvantagesItem backgroundColor={'#31DBC4'}>Рейтинг: 4.5 из 5</AdvantagesItem>
-                        <AdvantagesItem backgroundColor={'#6F80FF'}>Бесплатная диагностика</AdvantagesItem>
-                        <AdvantagesItem backgroundColor={'#FF71A1'}>Гарантия - 3 года</AdvantagesItem>
-                        <AdvantagesItem backgroundColor={'#31DBC4'}>Безопасная сделка</AdvantagesItem>
+                        {this.props.advantages.map((e, index) => {
+                            return (
+                                <AdvantagesItem
+                                    backgroundColor={index === 0 ? '#E6DDDE' : index === 1 ? '#F5C6B4' : index === 2 ? '#F9DC8E' : 'transparent'}
+                                    index={index}>{e}
+                                </AdvantagesItem>
+                            )
+                        })}
                     </CenterColumn>
                     <RightColumn>
                         <Description>
-                            Пять столетий спустя Lorem Ipsum испытал всплеск популярности с выпуском сухого переноса листов Letraset в.
-                            Эти листы надписи можно потереть на любом месте и были быстро приняты художники-графики,
-                            принтеры, архитекторов и рекламодателей для их профессионального
+                            {this.props.description}
                         </Description>
+                        {this.props.prices.map((e, index) => {
+                            return (
+                                <>
+                                    {index < 5 ? (<PriceItem
+                                        backgroundColor={index % 2 === 0 ? 'transparent' : 'rgb(230, 221, 222, 0.2)'}>
+                                        <PriceName>{e.title}</PriceName>
+                                        <PriceValue>от {e.price} рублей</PriceValue>
+                                    </PriceItem>) : null}
 
-                        <PriceItem backgroundColor={'rgb(49, 219, 196, 0.26)'}>
-                            <PriceName>ремонт ноутбука</PriceName>
-                            <PriceValue> от 500 рублей</PriceValue>
-                        </PriceItem>
+                                </>
+                            )
+                        })}
 
-                        <PriceItem backgroundColor={'#fff'}>
-                            <PriceName >ремонт ноутбука</PriceName>
-                            <PriceValue> от 500 рублей</PriceValue>
-                        </PriceItem>
-
-                        <PriceItem backgroundColor={'rgb(49, 219, 196, 0.26)'}>
-                            <PriceName>ремонт ноутбука</PriceName>
-                            <PriceValue> от 500 рублей</PriceValue>
-                        </PriceItem>
-
-                        <PriceItem backgroundColor={'#fff'}>
-                            <PriceName>ремонт ноутбука</PriceName>
-                            <PriceValue> от 500 рублей</PriceValue>
-                        </PriceItem>
+                        {this.props.prices.length > 5 ? <p>Смотреть еще {this.props.prices.length - 5} цен</p> : null}
 
                         <Link>
-                            <Button marginRight={'20px'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to={'/'}> На страницу сервиса </Button>
-                            <Button color={'#fff'} backgroundColor={'#6A7BFF'} to={'/'}> Заказать ремонт техники </Button>
+                            <Button marginRight={'20px'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to={'/'}> На
+                                страницу сервиса </Button>
+                            <Button color={'#fff'} backgroundColor={'#6A7BFF'} to={'/'}> Заказать ремонт
+                                техники </Button>
                         </Link>
                     </RightColumn>
                 </Content>

@@ -1,12 +1,30 @@
 import React from 'react'
 import styled from "styled-components";
 import ServiceItem from "../ServiceItem/ServiceItem";
+import {data} from "./data";
 
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
 
+/*data = [
+    {
+        serviceId: 104,
+        serviceUrl: www.remont.ru/104,
+        serviceName: РемБытТех,
+        servicePhoto: file,
+        serviceDescription: Какое-то описание,
+        serviceRating: 4,
+        serviceAdress: [],
+        servicePhone: [],
+        serviceStation: [],
+        serviceAdvantages: [],
+        servicePrices: [],
+        isSafeDeal: true,
+    },
+    {},
+]*/
 
 class ServiceList extends React.Component {
 
@@ -18,7 +36,27 @@ class ServiceList extends React.Component {
     render() {
         return (
             <Wrapper>
-                <ServiceItem/>
+                {data.map((e, index) => {
+                    return (
+                        <ServiceItem
+                            index={index}
+                            id={e.id}
+                            url={e.url}
+                            name={e.serviceName}
+                            description={e.serviceDescription}
+                            rating={e.serviceRating}
+                            address={e.serviceAddress}
+                            phone={e.servicePhone}
+                            station={e.serviceStation}
+                            advantages={e.serviceAdvantages}
+                            email={e.serviceEmail}
+                            prices={e.servicePrices}
+                            city={e.city}
+                            safedeal={e.isSafeDeal}
+                            prostatus={e.isProStatus}
+                        />
+                    )
+                })}
             </Wrapper>
         )
     }

@@ -85,14 +85,13 @@ const Container = styled.div`
 `;
 
 const SortText = styled.span`
-    color: #969696;
+    color: #3249FF;
     font-size: 17px;
     line-height: 19px
 `;
 
 const SortItem = styled.a`
     color: #3249FF;
-    //border-bottom: 1px solid #3249FF;
     font-weight: normal;
     font-size: 17px;
     line-height: 18px;
