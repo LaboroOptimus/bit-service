@@ -5,12 +5,16 @@ import {
     addRequest,
     changeBrand,
     changeDescription,
+    changeEmail,
     changeModel,
+    changePhone,
+    changeStation,
     changeType,
     emailNotification,
     loadUserInfo,
     phoneNotification
 } from "../../redux/user-action-creators";
+
 
 const Wrapper = styled.div`
     padding: 100px 30px;
@@ -168,6 +172,16 @@ const Checkbox = styled.input`
    }
 `;
 
+const Error = styled.span`
+    background: #f66;
+    color: #fff;
+    padding: 5px 5px 5px 15px;
+    text-align: left;
+    margin-top: 10px;
+    border-radius: 20px;
+    font-size: 13px;
+`;
+
 
 class NewRequest extends React.Component {
     componentDidMount() {
@@ -175,7 +189,12 @@ class NewRequest extends React.Component {
     }
 
     render() {
-        const {email, station, phone, type, model, desc, brand,name} = this.props;
+
+        const {
+            email, station, phone, type, model, desc, brand,
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck
+        } = this.props;
+
         return (
             <Wrapper>
                 <Title>Создание заявки на ремонт</Title>
@@ -190,16 +209,19 @@ class NewRequest extends React.Component {
                             <FormLabel htmlFor={'type'}>Тип техники</FormLabel>
                             <Input onChange={this.props.onChangeType} value={type} name={'type'}
                                    placeholder={'Ноутбук'}/>
+                            {mustCheckFields && !isTypeCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'type'}>Марка техники</FormLabel>
                             <Input onChange={this.props.onChangeBrand} value={brand} name={'company'}
                                    placeholder={'Asus'}/>
+                            {mustCheckFields && !isBrandCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'type'}>Модель техники</FormLabel>
                             <Input onChange={this.props.onChangeModel} value={model} name={'model'}
                                    placeholder={'Модель'}/>
+                            {mustCheckFields && !isModelCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                     </Container>
                     <Container justifyContent={'flex-start'}>
@@ -208,6 +230,7 @@ class NewRequest extends React.Component {
                             <Textarea onChange={this.props.onChangeDescription} value={desc} name='problem'
                                       resize='none'
                                       placeholder={'Например, не работает кнопка включения'}/>
+                            {mustCheckFields && !isDescriptionCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
                             <input style={{'marginTop': '35px', 'marginLeft': '20px'}} type={'file'}/>
@@ -218,15 +241,21 @@ class NewRequest extends React.Component {
                     <Container justifyContent={'flex-start'}>
                         <FormGroup>
                             <FormLabel htmlFor={'phone'}>Телефон</FormLabel>
-                            <Input name='phone' placeholder={'Введите телефон'} value={phone}/>
+                            <Input onChange={this.props.onChangePhone} name='phone' placeholder={'Введите телефон'}
+                                   value={phone}/>
+                            {mustCheckFields && !isPhoneCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'email'}>Email</FormLabel>
-                            <Input name='email' placeholder={'Введите email'} value={email}/>
+                            <Input onChange={this.props.onChangeEmail} name='email' placeholder={'Введите email'}
+                                   value={email}/>
+                            {mustCheckFields && !isEmailCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor={'metro'}>Ближайшее метро</FormLabel>
-                            <Input name='metro' placeholder={'Введите метро'} value={station}/>
+                            <Input onChange={this.props.onChangeStation} name='metro' placeholder={'Введите метро'}
+                                   value={station}/>
+                            {mustCheckFields && !isStationCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                     </Container>
 
@@ -247,7 +276,8 @@ class NewRequest extends React.Component {
 
                         <FormGroup>
                             <Button
-                                onClick={(e) => this.props.onRequestAdd(e, station, phone, email, type, brand, desc, model,name)}>Отправить
+                                onClick={(e) => this.props.onRequestAdd(e, station, phone, email, type, brand, desc, model,
+                                    isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)}>Отправить
                                 заявку</Button>
                         </FormGroup>
                     </Container>
@@ -266,7 +296,14 @@ const mapStateToProps = (state) => {
         brand: state.request.brand,
         desc: state.request.description,
         model: state.request.model,
-        name: state.login.name
+        isDescriptionCheck: state.request.isDescriptionCheck,
+        isModelCheck: state.request.isModelCheck,
+        isTypeCheck: state.request.isTypeCheck,
+        isEmailCheck: state.request.isEmailCheck,
+        isPhoneCheck: state.request.isPhoneCheck,
+        isStationCheck: state.request.isStationCheck,
+        isBrandCheck: state.request.isBrandCheck,
+        mustCheckFields: state.request.mustCheckFields
     }
 };
 
@@ -277,9 +314,14 @@ const mapDispatchToProps = (dispatch) => {
         onChangeModel: (e) => dispatch(changeModel(e)),
         onChangeBrand: (e) => dispatch(changeBrand(e)),
         onChangeDescription: (e) => dispatch(changeDescription(e)),
+        onChangeEmail: (e) => dispatch(changeEmail(e)),
+        onChangePhone: (e) => dispatch(changePhone(e)),
+        onChangeStation: (e) => dispatch(changeStation(e)),
         handleEmailNotification: () => dispatch(emailNotification()),
         handlePhoneNotification: () => dispatch(phoneNotification()),
-        onRequestAdd: (e, station, phone, email, type, brand, desc, model,name) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,name)),
+        onRequestAdd: (e, station, phone, email, type, brand, desc, model,
+                       isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)),
     }
 };
 
