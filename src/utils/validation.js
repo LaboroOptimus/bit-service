@@ -38,3 +38,11 @@ export const validationDescription = value => {
 export const validationStation = value => {
     return value.length > 5
 }
+export const validationImage = type => {
+    if(type === 'png' || type === 'jpg' || type === 'jpeg'){
+        return true;
+    }
+    else {
+        return false
+    }
+}

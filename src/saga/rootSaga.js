@@ -9,6 +9,8 @@ import {
     LOGIN_SUCCESS,
     SET_USER_INFO,
     SUCCESS_REGISTRATION,
+    CHANGE_FILE_REQUEST,
+    CHANGE_FILE_REQUEST_ASYNC,
     ADD_REQUEST_CHECK_FIELDS
 } from '../redux/actions'
 import fire from "../config/Fire";
@@ -66,6 +68,18 @@ export function* workerLoadProfile() {
 
 /* LOAD PROFILE */
 
+/* CHANGE FILE */
+export function* watchChangeFileRequest() {
+    yield takeEvery(CHANGE_FILE_REQUEST, workerChangeFileRequest);
+}
+export function* workerChangeFileRequest(data) {
+    //console.log(data);
+    // превью фотки в заявке
+    yield put({type:'PREVIEW_FILE', payload: data})
+}
+
+/* CHANGE FILE */
+
 /* NEW REQUEST */
 export function* watchAddRequest() {
     yield takeEvery('ADD_REQUEST', workerAddRequest);
@@ -77,7 +91,7 @@ export function* workerAddRequest(data) {
     const today = time.getDate() + '/' + (time.getMonth() + 1);
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
-    console.log(data.payload)
+
 
     if(isValidate){
         try {
@@ -92,6 +106,7 @@ export function* workerAddRequest(data) {
                         email: data.payload.email,
                         emailNotification: data.payload.emailNotification,
                         phoneNotification: data.payload.phoneNotification,
+                        file: data.payload.file,
                         date: today,
                         uid: uid,
                         status: 'active',
@@ -109,6 +124,7 @@ export function* workerAddRequest(data) {
                         email: data.payload.email,
                         emailNotification: data.payload.emailNotification,
                         phoneNotification: data.payload.phoneNotification,
+                        file: data.payload.file,
                         date: today,
                         uid: uid,
                         status: 'active',
@@ -172,6 +188,7 @@ export default function* rootSaga() {
         watchLogin(),
         watchLoadProfile(),
         watchUserInfo(),
-        watchAddRequest()
+        watchAddRequest(),
+        watchChangeFileRequest()
     ])
 }

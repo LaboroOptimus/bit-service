@@ -7,11 +7,12 @@ import {
     CHANGE_EMAIL_REQUEST,
     CHANGE_PHONE_REQUEST,
     CHANGE_STATION_REQUEST,
+    CHANGE_FILE_REQUEST,
     LOAD_PROFILE,
     LOAD_USER_INFO,
     ADD_REQUEST
 } from "./actions";
-
+import {store} from "./store";
 import {validationStation,validationPhone,validationEmail,validationDescription,validationTechBrand,validationTechModel,validationTechType} from "../utils/validation";
 
 export const loadProfile = () => {
@@ -91,6 +92,18 @@ export const changeStation = (e) => {
     }
 };
 
+export const changeFile = (file) => {
+    //console.log('file', file.name.split(".").splice(-1,1)[0]);
+   return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = () => {
+            resolve(store.dispatch({type:CHANGE_FILE_REQUEST, payload: {file: reader.result, fileType: file.name.split(".").splice(-1,1)[0]}}))
+        };
+        reader.readAsDataURL(file);
+        reader.onerror = reject;
+    })
+};
+
 export const phoneNotification = () => {
     return {
         type: CHANGE_PHONE_NOTIFICATION
@@ -103,18 +116,16 @@ export const emailNotification = () => {
     }
 };
 
-function validateRequest(a,b,c,d,e,f) {
-    return a&&b&&c&&d&&e&&f;
+function validateRequest(a,b,c,d,e,f,g) {
+    return a&&b&&c&&d&&e&&f&&g;
 }
 
 export const addRequest = (e, station, phone, email, type, brand, desc, model,
-                           isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification) => {
+                           isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification,file,isFileType) => {
     e.preventDefault();
-    console.log('action', isStationCheck);
-    const isValidate = validateRequest(isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)
+    const isValidate = validateRequest(isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,isFileType);
     return {
         type: ADD_REQUEST,
-        payload: {station, phone, email, type, brand, desc, model, isValidate,emailNotification,phoneNotification}
-       // payload: {station, phone, email, type, brand, desc, model,isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck}
+        payload: {station, phone, email, type, brand, desc, model, isValidate,emailNotification,phoneNotification,file}
     }
 };

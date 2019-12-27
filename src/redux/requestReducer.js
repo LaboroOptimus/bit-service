@@ -1,17 +1,20 @@
 import {
-    CHANGE_EMAIL_REQUEST,
-    CHANGE_PHONE_REQUEST,
-    CHANGE_STATION_REQUEST,
+    ADD_REQUEST_CHECK_FIELDS,
+    ADD_REQUEST_SUCCESS,
     CHANGE_BRAND,
     CHANGE_DESCRIPTION,
-    CHANGE_MODEL,
-    CHANGE_TYPE,
-    SET_USER_INFO,
     CHANGE_EMAIL_NOTIFICATION,
+    CHANGE_EMAIL_REQUEST,
+    CHANGE_FILE_REQUEST,
+    CHANGE_FILE_REQUEST_ASYNC,
+    CHANGE_MODEL,
     CHANGE_PHONE_NOTIFICATION,
-    ADD_REQUEST_SUCCESS,
-    ADD_REQUEST_CHECK_FIELDS
+    CHANGE_PHONE_REQUEST,
+    CHANGE_STATION_REQUEST,
+    CHANGE_TYPE,
+    SET_USER_INFO
 } from "./actions";
+import {validationImage} from "../utils/validation";
 
 const initialState = {
     type: '',
@@ -27,6 +30,8 @@ const initialState = {
     email: '',
     isEmailCheck: true,
     station: '',
+    file: null,
+    isFileType: true,
     isStationCheck: true,
     emailNotification: false,
     phoneNotification: false,
@@ -81,8 +86,6 @@ export default function loginReducer(state = initialState, action) {
             };
 
         case CHANGE_PHONE_REQUEST:
-            console.log('phone', action.payload.validate)
-            console.log('phone value: ', action.payload.value)
             return {
                 ...state,
                 phone: action.payload.value,
@@ -90,7 +93,6 @@ export default function loginReducer(state = initialState, action) {
             };
 
         case CHANGE_STATION_REQUEST:
-            console.log('station', action.payload.validate)
             return {
                 ...state,
                 station: action.payload.value,
@@ -98,11 +100,24 @@ export default function loginReducer(state = initialState, action) {
             };
 
         case CHANGE_EMAIL_REQUEST:
-            console.log('email', action.payload.validate)
             return {
                 ...state,
                 email: action.payload.value,
                 isEmailCheck: action.payload.validate,
+            };
+        case CHANGE_FILE_REQUEST:
+            console.log(validationImage(action.payload.fileType));
+            return {
+                ...state,
+                file:action.payload.file,
+                isFileType: validationImage(action.payload.fileType)
+            };
+
+        case CHANGE_FILE_REQUEST_ASYNC:
+            console.log(action.payload)
+            return {
+                ...state,
+                file: action.payload
             };
 
         case ADD_REQUEST_SUCCESS:

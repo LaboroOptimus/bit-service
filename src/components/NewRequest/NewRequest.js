@@ -9,6 +9,7 @@ import {
     changeModel,
     changePhone,
     changeStation,
+    changeFile,
     changeType,
     emailNotification,
     loadUserInfo,
@@ -191,16 +192,13 @@ class NewRequest extends React.Component {
     }
 
     render() {
-
         const {
-            email, station, phone, type, model, desc, brand,emailNotification,phoneNotification,
-            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck,isRequestSuccess
+            email, station, phone, type, model, desc, brand,emailNotification,phoneNotification,file,isFileType,
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck
         } = this.props;
 
         return (
             <Wrapper>
-               {/* {isRequestSuccess && <Redirect to={'/'}/>}*/}
-               {/* {!isRequestSuccess &&  history.push('/test')}*/}
                 <Title>Создание заявки на ремонт</Title>
                 <Subtitle>Постарайтесь как можно подробней описать заявку : тип техники, марку, модель.
                     По возможности, прикрепите фото.<br/> Чем точнее Вы опишите заявку - тем точнее сервисные центры
@@ -237,7 +235,8 @@ class NewRequest extends React.Component {
                             {mustCheckFields && !isDescriptionCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
-                            <input style={{'marginTop': '35px', 'marginLeft': '20px'}} type={'file'}/>
+                            <input style={{'marginTop': '35px', 'marginLeft': '20px'}} type='file' onChange={this.props.onChangeFile}/>
+                            {!isFileType ? <Error>Фото должно быть в формате .png, .jpeg или .jpg!</Error> : null}
                         </FormGroup>
 
                     </Container>
@@ -281,7 +280,7 @@ class NewRequest extends React.Component {
                         <FormGroup>
                             <Button
                                 onClick={(e) => this.props.onRequestAdd(e, station, phone, email, type, brand, desc, model,
-                                    isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification)}>Отправить
+                                    isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification,file,isFileType)}>Отправить
                                 заявку</Button>
                         </FormGroup>
                     </Container>
@@ -300,6 +299,7 @@ const mapStateToProps = (state) => {
         brand: state.request.brand,
         desc: state.request.description,
         model: state.request.model,
+        file: state.request.file,
         isDescriptionCheck: state.request.isDescriptionCheck,
         isModelCheck: state.request.isModelCheck,
         isTypeCheck: state.request.isTypeCheck,
@@ -310,7 +310,9 @@ const mapStateToProps = (state) => {
         mustCheckFields: state.request.mustCheckFields,
         isRequestSuccess: state.request.isRequestSuccess,
         emailNotification: state.request.emailNotification,
-        phoneNotification: state.request.phoneNotification
+        phoneNotification: state.request.phoneNotification,
+        isFileType: state.request.isFileType
+
     }
 };
 
@@ -323,12 +325,13 @@ const mapDispatchToProps = (dispatch) => {
         onChangeDescription: (e) => dispatch(changeDescription(e)),
         onChangeEmail: (e) => dispatch(changeEmail(e)),
         onChangePhone: (e) => dispatch(changePhone(e)),
+        onChangeFile: (e) => changeFile(e.target.files[0]),
         onChangeStation: (e) => dispatch(changeStation(e)),
         handleEmailNotification: () => dispatch(emailNotification()),
         handlePhoneNotification: () => dispatch(phoneNotification()),
         onRequestAdd: (e, station, phone, email, type, brand, desc, model,
-                       isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,
-            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification)),
+                       isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification,file,isFileType) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification,file,isFileType)),
     }
 };
 
