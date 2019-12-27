@@ -184,7 +184,10 @@ const Error = styled.span`
     border-radius: 20px;
     font-size: 13px;
 `;
-
+const Image = styled.img`
+    height: 200px;
+    width: 206px;
+`;
 
 class NewRequest extends React.Component {
     componentDidMount() {
@@ -235,6 +238,7 @@ class NewRequest extends React.Component {
                             {mustCheckFields && !isDescriptionCheck ? <Error>Проверьте правильность поля</Error> : null}
                         </FormGroup>
                         <FormGroup>
+                            {file !== null && isFileType && <Image src={file}/>}
                             <input style={{'marginTop': '35px', 'marginLeft': '20px'}} type='file' onChange={this.props.onChangeFile}/>
                             {!isFileType ? <Error>Фото должно быть в формате .png, .jpeg или .jpg!</Error> : null}
                         </FormGroup>
