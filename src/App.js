@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css'
 import MainPage from "./components/MainPage/MainPage";
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {Router, Route, Switch} from 'react-router-dom'
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegistrationCustomerPage from "./components/RegistrationCustomerPage/RegistrationCustomerPage";
 import MapPage from "./components/MapPage/MapPage";
@@ -15,12 +15,13 @@ import RegRouter from "./components/RegRouter/RegRouter";
 import RegSuccessPage from "./components/RegSuccessPage/RegSuccessPage";
 import PublicRoute from "./router/PublicRoute";
 import PrivateRoute from "./router/PrivateRoute";
+import {history} from './router/history'
 
 
 
 function App() {
     return (
-        <BrowserRouter>
+        <Router history={history}>
         <Switch>
             {/*<Route exact path='/' component={MainPage}/>
             <Route path='/login' component={LoginPage}/>
@@ -48,7 +49,7 @@ function App() {
             <PublicRoute restricted={false} path='/find-service' component={FindServicePage}/>
             <PrivateRoute path='/profile' component={ProfilePage}/>
         </Switch>
-        </BrowserRouter>
+        </Router>
     );
 }
 

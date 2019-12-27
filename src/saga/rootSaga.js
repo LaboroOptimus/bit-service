@@ -12,6 +12,7 @@ import {
     ADD_REQUEST_CHECK_FIELDS
 } from '../redux/actions'
 import fire from "../config/Fire";
+import {history} from '../router/history'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -76,8 +77,7 @@ export function* workerAddRequest(data) {
     const today = time.getDate() + '/' + (time.getMonth() + 1);
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
-    //const {isStationCheck,isModelCheck, isTypeCheck,isEmailCheck,isPhoneCheck,isDescriptionCheck} = data.payload;
-    //console.log(isStationCheck,isModelCheck, isTypeCheck,isEmailCheck,isPhoneCheck,isDescriptionCheck);
+    console.log(data.payload)
 
     if(isValidate){
         try {
@@ -90,6 +90,8 @@ export function* workerAddRequest(data) {
                         station: data.payload.station,
                         phone: data.payload.phone,
                         email: data.payload.email,
+                        emailNotification: data.payload.emailNotification,
+                        phoneNotification: data.payload.phoneNotification,
                         date: today,
                         uid: uid,
                         status: 'active',
@@ -105,6 +107,8 @@ export function* workerAddRequest(data) {
                         station: data.payload.station,
                         phone: data.payload.phone,
                         email: data.payload.email,
+                        emailNotification: data.payload.emailNotification,
+                        phoneNotification: data.payload.phoneNotification,
                         date: today,
                         uid: uid,
                         status: 'active',
@@ -112,6 +116,8 @@ export function* workerAddRequest(data) {
                 }
             );
             yield put({type: ADD_REQUEST_SUCCESS});
+            history.push('/')
+
         } catch (e) {
             console.log(e);
         }
@@ -119,8 +125,6 @@ export function* workerAddRequest(data) {
     else {
         yield put({type: ADD_REQUEST_CHECK_FIELDS});
     }
-
-
 
 }
 /* NEW REQUEST */
