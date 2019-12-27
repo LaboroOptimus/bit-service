@@ -106,7 +106,6 @@ export default function loginReducer(state = initialState, action) {
                 isEmailCheck: action.payload.validate,
             };
         case CHANGE_FILE_REQUEST:
-            console.log(validationImage(action.payload.fileType));
             return {
                 ...state,
                 file:action.payload.file,
@@ -114,7 +113,6 @@ export default function loginReducer(state = initialState, action) {
             };
 
         case CHANGE_FILE_REQUEST_ASYNC:
-            console.log(action.payload)
             return {
                 ...state,
                 file: action.payload
