@@ -15,6 +15,7 @@ import {
     phoneNotification
 } from "../../redux/user-action-creators";
 import {Redirect} from 'react-router-dom';
+import {history} from "../../router/history";
 
 
 const Wrapper = styled.div`
@@ -192,13 +193,14 @@ class NewRequest extends React.Component {
     render() {
 
         const {
-            email, station, phone, type, model, desc, brand,
+            email, station, phone, type, model, desc, brand,emailNotification,phoneNotification,
             isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,mustCheckFields,isBrandCheck,isRequestSuccess
         } = this.props;
 
         return (
             <Wrapper>
-                {isRequestSuccess && <Redirect to={'/'}/>}
+               {/* {isRequestSuccess && <Redirect to={'/'}/>}*/}
+               {/* {!isRequestSuccess &&  history.push('/test')}*/}
                 <Title>Создание заявки на ремонт</Title>
                 <Subtitle>Постарайтесь как можно подробней описать заявку : тип техники, марку, модель.
                     По возможности, прикрепите фото.<br/> Чем точнее Вы опишите заявку - тем точнее сервисные центры
@@ -279,7 +281,7 @@ class NewRequest extends React.Component {
                         <FormGroup>
                             <Button
                                 onClick={(e) => this.props.onRequestAdd(e, station, phone, email, type, brand, desc, model,
-                                    isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)}>Отправить
+                                    isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification)}>Отправить
                                 заявку</Button>
                         </FormGroup>
                     </Container>
@@ -306,7 +308,9 @@ const mapStateToProps = (state) => {
         isStationCheck: state.request.isStationCheck,
         isBrandCheck: state.request.isBrandCheck,
         mustCheckFields: state.request.mustCheckFields,
-        isRequestSuccess: state.request.isRequestSuccess
+        isRequestSuccess: state.request.isRequestSuccess,
+        emailNotification: state.request.emailNotification,
+        phoneNotification: state.request.phoneNotification
     }
 };
 
@@ -323,8 +327,8 @@ const mapDispatchToProps = (dispatch) => {
         handleEmailNotification: () => dispatch(emailNotification()),
         handlePhoneNotification: () => dispatch(phoneNotification()),
         onRequestAdd: (e, station, phone, email, type, brand, desc, model,
-                       isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,
-            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)),
+                       isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification) => dispatch(addRequest(e, station, phone, email, type, brand, desc, model,
+            isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification)),
     }
 };
 

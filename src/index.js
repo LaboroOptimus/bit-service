@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom';
+//import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux'
 import {store} from '../src/redux/store'
+import {history} from "./router/history";
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
             <App/>
-        </BrowserRouter>
     </Provider>
 );
 

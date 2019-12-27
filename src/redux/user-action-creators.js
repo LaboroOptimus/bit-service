@@ -108,13 +108,13 @@ function validateRequest(a,b,c,d,e,f) {
 }
 
 export const addRequest = (e, station, phone, email, type, brand, desc, model,
-                           isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck) => {
+                           isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck,emailNotification,phoneNotification) => {
     e.preventDefault();
     console.log('action', isStationCheck);
     const isValidate = validateRequest(isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck)
     return {
         type: ADD_REQUEST,
-        payload: {station, phone, email, type, brand, desc, model, isValidate}
+        payload: {station, phone, email, type, brand, desc, model, isValidate,emailNotification,phoneNotification}
        // payload: {station, phone, email, type, brand, desc, model,isStationCheck, isModelCheck, isTypeCheck, isEmailCheck, isPhoneCheck, isDescriptionCheck}
     }
 };
