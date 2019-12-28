@@ -14,6 +14,7 @@ import {
     ADD_REQUEST_CHECK_FIELDS
 } from '../redux/actions'
 import fire from "../config/Fire";
+import {randomInteger} from "../utils/randomNumm";
 import {history} from '../router/history'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -91,6 +92,7 @@ export function* workerAddRequest(data) {
     const today = time.getDate() + '/' + (time.getMonth() + 1);
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
+    const id = randomInteger(1000,100000)
 
 
     if(isValidate){
@@ -109,7 +111,9 @@ export function* workerAddRequest(data) {
                         file: data.payload.file,
                         date: today,
                         uid: uid,
-                        status: 'active',
+                        id: id,
+                        status: 'активна',
+                        answers: 0
                     });
                 }
             );
@@ -127,12 +131,14 @@ export function* workerAddRequest(data) {
                         file: data.payload.file,
                         date: today,
                         uid: uid,
-                        status: 'active',
+                        id: id,
+                        status: 'активна',
+                        answers: 0
                     });
                 }
             );
             yield put({type: ADD_REQUEST_SUCCESS});
-            history.push('/')
+            history.push('/my-requests')
 
         } catch (e) {
             console.log(e);
