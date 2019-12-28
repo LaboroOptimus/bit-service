@@ -145,6 +145,33 @@ export function* workerAddRequest(data) {
 }
 /* NEW REQUEST */
 
+/* LOAD REQUESTS */
+export function * watchLoadRequests() {
+    yield takeEvery('LOAD_REQUESTS', workerLoadRequests)
+}
+
+export function * workerLoadRequests () {
+    let uid = localStorage.getItem('userId');
+    let data;
+    try {
+        let f1 = fire.database().ref(`/users/${uid}/requests`);
+        let userData = yield call(() => {
+            return f1.once('value').then(function (snapshot) {
+                //let index = Object.keys(snapshot.val());
+                data = snapshot.val();
+                //user = snapshot.val()[index[0]];
+            })
+        });
+        yield put({type: 'LOAD_REQUESTS_SUCCESS', payload: data})
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+/* LOAD REQUESTS */
+
 export function* watchRegistrationSuccess() {
     yield takeEvery('SUBMIT', workerRegistrationSuccess);
 }
@@ -189,6 +216,7 @@ export default function* rootSaga() {
         watchLoadProfile(),
         watchUserInfo(),
         watchAddRequest(),
-        watchChangeFileRequest()
+        watchChangeFileRequest(),
+        watchLoadRequests()
     ])
 }

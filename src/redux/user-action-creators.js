@@ -10,7 +10,8 @@ import {
     CHANGE_FILE_REQUEST,
     LOAD_PROFILE,
     LOAD_USER_INFO,
-    ADD_REQUEST
+    ADD_REQUEST,
+    LOAD_REQUESTS
 } from "./actions";
 import {store} from "./store";
 import {validationStation,validationPhone,validationEmail,validationDescription,validationTechBrand,validationTechModel,validationTechType} from "../utils/validation";
@@ -129,3 +130,9 @@ export const addRequest = (e, station, phone, email, type, brand, desc, model,
         payload: {station, phone, email, type, brand, desc, model, isValidate,emailNotification,phoneNotification,file}
     }
 };
+
+export const loadRequest = () => {
+    return {
+        type: LOAD_REQUESTS
+    }
+}

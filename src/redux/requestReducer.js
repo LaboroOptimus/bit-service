@@ -12,7 +12,9 @@ import {
     CHANGE_PHONE_REQUEST,
     CHANGE_STATION_REQUEST,
     CHANGE_TYPE,
-    SET_USER_INFO
+    SET_USER_INFO,
+    LOAD_REQUESTS,
+    LOAD_REQUESTS_SUCCESS
 } from "./actions";
 import {validationImage} from "../utils/validation";
 
@@ -37,6 +39,7 @@ const initialState = {
     phoneNotification: false,
     mustCheckFields: false,
     isRequestSuccess: false,
+    requestItems:[],
 };
 
 
@@ -128,6 +131,7 @@ export default function loginReducer(state = initialState, action) {
                 phone: '',
                 email: '',
                 station: '',
+                file: null,
                 emailNotification: false,
                 phoneNotification: false,
                 isEmailCheck: true,
@@ -143,6 +147,17 @@ export default function loginReducer(state = initialState, action) {
             return {
                 ...state,
                 mustCheckFields: true
+            };
+
+        case LOAD_REQUESTS_SUCCESS:
+            //console.log(typeof action.payload);
+            let arr = [];
+            for(let key in action.payload){
+                arr.push(action.payload[key])
+            }
+            return {
+                ...state,
+                requestItems: arr
             };
         default:
             return {

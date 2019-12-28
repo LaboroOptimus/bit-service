@@ -1,8 +1,5 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
-import email from "../ServiceItem/assets/email.png";
-import phone from "../ServiceItem/assets/phone.png";
-import map from "../ServiceItem/assets/map.png";
 import {NavLink} from "react-router-dom";
 
 const RequestItem = styled.div`
@@ -169,9 +166,11 @@ const Image = styled.img`
     height: 120px;
 `;
 
-class MyRequestItem extends React.Component {
-    render(){
-        return(
+class MyRequestItem extends Component {
+
+
+    render() {
+        return (
             <RequestItem>
                 <LeftColumn width={'33%'}>
                     <RequestName>Заявка № {this.props.id}</RequestName>
@@ -188,7 +187,7 @@ class MyRequestItem extends React.Component {
                     </Description>
                     <ButtonsContainer>
                         <Button color={'#fff'} backgroundColor={'#6A7BFF'} to='/'>Смотреть отклики
-                            <ButtonCount>3</ButtonCount>
+                            <ButtonCount>{this.props.answers}</ButtonCount>
                         </Button>
                         <Button textAlign={'center'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to='/'>Отменить
                             заявку</Button>
