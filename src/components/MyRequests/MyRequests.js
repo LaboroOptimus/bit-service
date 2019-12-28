@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
 import MyRequestItem from "./MyRequestItem";
-/*import {data} from "./data";*/
 import {loadRequest} from "../../redux/user-action-creators";
 import {connect} from 'react-redux';
 import Loader from "../Loader/Loader";
@@ -78,8 +77,8 @@ class MyRequests extends React.Component {
                 {data.length > 0 ? (
                 <Container>
                     {data.map((e,index) => {
-                        return (<MyRequestItem key={index} id={index} status={e.status} date={e.date} name={e.brand + '' + e.model}
-                                               problem={e.desc} photo={e.file} answers={e.answers ? e.answers : '0'}/>)
+                        return (<MyRequestItem key={index} id={e.id} status={e.status} date={e.date} name={e.type + ' ' + e.brand + ' ' + e.model}
+                                               problem={e.desc} photo={e.file ? e.file : 'https://via.placeholder.com/150'} answers={e.answers ? e.answers : '0'}/>)
                     })}
                 </Container>) : (<Loader/>)
                 }
