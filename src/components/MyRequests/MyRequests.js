@@ -1,12 +1,15 @@
 import React from 'react'
 import styled from "styled-components";
 import MyRequestItem from "./MyRequestItem";
-import {data} from "./data";
+/*import {data} from "./data";*/
+import {loadRequest} from "../../redux/user-action-creators";
+import {connect} from 'react-redux';
+import Loader from "../Loader/Loader";
 
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 100px 30px;
+    padding: 100px 30px 180px 30px;
     background-color: #FCFCFE;
 `;
 
@@ -55,7 +58,14 @@ const SortText = styled.span`
 `;
 
 class MyRequests extends React.Component {
+
+    componentDidMount() {
+        this.props.onRequestsLoad()
+    }
+
     render() {
+        const data = this.props.requestItems;
+        console.log(data)
         return (
             <Wrapper>
                 <Title>Мои заявки</Title>
@@ -65,16 +75,29 @@ class MyRequests extends React.Component {
                     <SortItem>активные</SortItem>
                     <SortItem>удаленные</SortItem>
                 </SortContainer>
-
+                {data.length > 0 ? (
                 <Container>
-                    {data.map((e) => {
-                       return(<MyRequestItem id={e.id} status={e.status} date={e.date} name={e.name} problem={e.problem} photo={e.photo} answers={e.answers} />)
+                    {data.map((e,index) => {
+                        return (<MyRequestItem key={index} id={index} status={e.status} date={e.date} name={e.brand + '' + e.model}
+                                               problem={e.desc} photo={e.file} answers={e.answers ? e.answers : '0'}/>)
                     })}
-                </Container>
-
+                </Container>) : (<Loader/>)
+                }
             </Wrapper>
         )
     }
 }
 
-export default MyRequests
+const mapStateToProps = (state) => {
+    return {
+        requestItems: state.request.requestItems
+    }
+};
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onRequestsLoad: () => dispatch(loadRequest()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyRequests)

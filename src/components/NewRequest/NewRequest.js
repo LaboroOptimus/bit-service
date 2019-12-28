@@ -15,8 +15,6 @@ import {
     loadUserInfo,
     phoneNotification
 } from "../../redux/user-action-creators";
-import {Redirect} from 'react-router-dom';
-import {history} from "../../router/history";
 
 
 const Wrapper = styled.div`
