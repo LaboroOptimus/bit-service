@@ -16,7 +16,7 @@ import RegSuccessPage from "./components/RegSuccessPage/RegSuccessPage";
 import PublicRoute from "./router/PublicRoute";
 import PrivateRoute from "./router/PrivateRoute";
 import {history} from './router/history'
-import RequestPage from "./components/RequestPage/RequestPage";
+import AnswerPage from "./components/AnswerPage/AnswerPage";
 
 function App() {
     return (
@@ -45,7 +45,7 @@ function App() {
             <PublicRoute restricted={false} path='/forgot-pass' component={ForgotpassPage}/>
             <PrivateRoute path='/request' component={NewRequestPage}/>
             <PrivateRoute restricted={false} path='/my-requests' component={MyRequestPage} exact/>
-            <PrivateRoute restricted={false} path='/my-requests/:id' component={RequestPage} />
+            <PrivateRoute restricted={false} path='/my-requests/:id' component={AnswerPage} />
             <PublicRoute restricted={false} path='/find-service' component={FindServicePage}/>
             <PrivateRoute path='/profile' component={ProfilePage}/>
         </Switch>

@@ -279,14 +279,6 @@ class ServiceItem extends React.Component {
                     {this.props.prostatus && <ShieldPro src={shieldpro}/>}
                     <Name>{this.props.name}</Name>
                     <Stars rating={this.props.rating}/>
-
-                   {/* <Stars>
-                        <Star src={star}/>
-                        <Star src={star}/>
-                        <Star src={star}/>
-                        <Star src={star}/>
-                        <Star src={star}/>
-                    </Stars>*/}
                 </NameContainer>
                 <Content>
                     <LeftColumn>
