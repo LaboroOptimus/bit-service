@@ -16,6 +16,7 @@ import {
 import fire from "../config/Fire";
 import {randomInteger} from "../utils/randomNumm";
 import {history} from '../router/history'
+import {formatHours,formatMinutes} from "../utils/format";
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -91,6 +92,7 @@ export function* workerAddRequest(data) {
     const uid = localStorage.getItem('userId');
     const time = new Date();
     const today = time.getDate() + '/' + (time.getMonth() + 1);
+    const now = formatHours(time.getHours()) + ':' + formatMinutes(time.getMinutes());
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
     const id = randomInteger(1000, 100000)
@@ -111,6 +113,7 @@ export function* workerAddRequest(data) {
                         phoneNotification: data.payload.phoneNotification,
                         file: data.payload.file,
                         date: today,
+                        time: now,
                         uid: uid,
                         id: id,
                         status: 'активна',
@@ -131,6 +134,7 @@ export function* workerAddRequest(data) {
                         phoneNotification: data.payload.phoneNotification,
                         file: data.payload.file,
                         date: today,
+                        time: now,
                         uid: uid,
                         id: id,
                         status: 'активна',
@@ -162,7 +166,7 @@ export function* workerLoadRequests() {
     let data;
     try {
         let f1 = fire.database().ref(`/users/${uid}/requests`);
-        let userData = yield call(() => {
+        yield call(() => {
             return f1.once('value').then(function (snapshot) {
                 //let index = Object.keys(snapshot.val());
                 data = snapshot.val();

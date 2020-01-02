@@ -36,3 +36,21 @@ export const formatPrice = (numm) => {
         return 'цен'
     }
 };
+
+export const formatMinutes = (minutes) => {
+    if(minutes >= 0 && minutes <=9){
+        return '0' + minutes
+    }
+    else {
+        return minutes
+    }
+}
+
+export const formatHours = (hours) => {
+    if(hours >=0 && hours <= 9){
+        return '0' + hours;
+    }
+    else {
+        return hours
+    }
+}
