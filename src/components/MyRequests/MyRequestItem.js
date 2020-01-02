@@ -74,21 +74,6 @@ const CreationDate = styled.span`
     line-height: 24px;
 `;
 
-const Contact = styled.div`
-    display: flex;
-    margin: 5px 0;
-    
-     @media (max-width: 768px) {
-       justify-content: center;
-    }
-`;
-
-const ContactDescription = styled.p`
-    margin: 0 0 0 5px;
-    font-size: 16px;
-    font-weight: normal;
-`;
-
 const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
@@ -186,7 +171,7 @@ class MyRequestItem extends Component {
                         {this.props.problem}
                     </Description>
                     <ButtonsContainer>
-                        <Button color={'#fff'} backgroundColor={'#6A7BFF'} to='/'>Смотреть отклики
+                        <Button color={'#fff'} backgroundColor={'#6A7BFF'} to={`/my-requests/${this.props.id}`}>Смотреть отклики
                             <ButtonCount>{this.props.answers}</ButtonCount>
                         </Button>
                         <Button textAlign={'center'} color={'#4C60FF'} backgroundColor={'#E1E5FF'} to='/'>Отменить

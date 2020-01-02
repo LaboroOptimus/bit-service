@@ -2,18 +2,18 @@ import React from 'react'
 import Navigation from "../Navigation/Navigation";
 import Navtop from "../Navtop/Navtop";
 import Footer from "../Footer/Footer";
-import Request from "../Request/Request";
+import Answer from "../Answer/Answer";
 
-function RequestPage(props) {
+function AnswerPage(props) {
 
     return(
         <React.Fragment>
             <Navigation/>
             <Navtop/>
-            <Request id={props.match.params.id}/>
+            <Answer id={props.match.params.id}/>
             <Footer/>
         </React.Fragment>
     )
 }
 
-export default RequestPage
+export default AnswerPage
