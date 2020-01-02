@@ -1,6 +1,9 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects'
 import {
+    ADD_REQUEST_CHECK_FIELDS,
     ADD_REQUEST_SUCCESS,
+    CHANGE_FILE_REQUEST,
+    LOAD_ANSWERS,
     LOAD_PROFILE,
     LOAD_USER_INFO,
     LOAD_USER_PROFILE,
@@ -8,10 +11,7 @@ import {
     LOGIN_ERROR,
     LOGIN_SUCCESS,
     SET_USER_INFO,
-    SUCCESS_REGISTRATION,
-    CHANGE_FILE_REQUEST,
-    CHANGE_FILE_REQUEST_ASYNC,
-    ADD_REQUEST_CHECK_FIELDS
+    SUCCESS_REGISTRATION
 } from '../redux/actions'
 import fire from "../config/Fire";
 import {randomInteger} from "../utils/randomNumm";
@@ -73,10 +73,11 @@ export function* workerLoadProfile() {
 export function* watchChangeFileRequest() {
     yield takeEvery(CHANGE_FILE_REQUEST, workerChangeFileRequest);
 }
+
 export function* workerChangeFileRequest(data) {
     //console.log(data);
     // превью фотки в заявке
-    yield put({type:'PREVIEW_FILE', payload: data})
+    yield put({type: 'PREVIEW_FILE', payload: data})
 }
 
 /* CHANGE FILE */
@@ -92,10 +93,10 @@ export function* workerAddRequest(data) {
     const today = time.getDate() + '/' + (time.getMonth() + 1);
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
-    const id = randomInteger(1000,100000)
+    const id = randomInteger(1000, 100000)
 
 
-    if(isValidate){
+    if (isValidate) {
         try {
             yield call(() => {
                     return fire.database().ref('users/' + uid + '/requests').push({
@@ -143,20 +144,20 @@ export function* workerAddRequest(data) {
         } catch (e) {
             console.log(e);
         }
-    }
-    else {
+    } else {
         yield put({type: ADD_REQUEST_CHECK_FIELDS});
     }
 
 }
+
 /* NEW REQUEST */
 
 /* LOAD REQUESTS */
-export function * watchLoadRequests() {
+export function* watchLoadRequests() {
     yield takeEvery('LOAD_REQUESTS', workerLoadRequests)
 }
 
-export function * workerLoadRequests () {
+export function* workerLoadRequests() {
     let uid = localStorage.getItem('userId');
     let data;
     try {
@@ -175,8 +176,57 @@ export function * workerLoadRequests () {
     }
 }
 
-
 /* LOAD REQUESTS */
+
+
+/* LOAD ANSWERS */
+
+export function* watchLoadAnswers() {
+    yield takeEvery(LOAD_ANSWERS, workerLoadAnswers)
+}
+
+export function* workerLoadAnswers(data) {
+    let uid = localStorage.getItem('userId');
+    let request;
+    let index;
+
+   /* console.log('saga');
+    console.log(typeof data.payload);
+*/
+    try {
+        let f1 = fire.database().ref(`/users/${uid}/requests`);
+        yield call(() => {
+            return f1.orderByChild('id').equalTo(+data.payload).once('value').then(function (snapshot) {
+                index = Object.keys(snapshot.val())[0];
+                request = snapshot.val();
+               /* console.log(request);
+                console.log(index);
+                console.log(request[index]);*/
+            })
+        });
+        yield put({type: 'LOAD_REQUEST_SUCCESS', payload: request[index]})
+    } catch (e) {
+        console.log(e)
+    }
+
+   /* try {
+        let f1 = fire.database().ref(`/users/${uid}/requests/${index}/answers`);
+        yield call(() => {
+            return f1.once('value').then(function (snapshot)  {
+                request = snapshot.val();
+                //console.log('answers', request);
+                //console.log(index);
+            })
+        });
+        yield put({type: 'TEST'})
+    } catch (e) {
+        console.log(e)
+    }*/
+
+/*TODO: тут сделать структуру объекта answers, так как сейчас это число. Предусмотреть изменение в других местах*/
+}
+
+/* LOAD ANSWERS */
 
 export function* watchRegistrationSuccess() {
     yield takeEvery('SUBMIT', workerRegistrationSuccess);
@@ -223,6 +273,7 @@ export default function* rootSaga() {
         watchUserInfo(),
         watchAddRequest(),
         watchChangeFileRequest(),
-        watchLoadRequests()
+        watchLoadRequests(),
+        watchLoadAnswers()
     ])
 }

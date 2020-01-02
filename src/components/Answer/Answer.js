@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 import calendar from './assets/calendar.png'
 import time from './assets/clock.png'
@@ -11,6 +11,8 @@ import phone from '../ServiceItem/assets/phone.png'
 import email from '../ServiceItem/assets/email.png'
 import service from './assets/service.jpg'
 import {NavLink} from "react-router-dom";
+import {connect} from 'react-redux';
+import {loadAnswers} from "../../redux/user-action-creators";
 
 const Wrapper = styled.div`
     padding: 100px 30px 180px 30px;
@@ -236,112 +238,165 @@ const AnswerTitle = styled.span`
     font-style: normal;
 `;
 
-function Answer(props) {
-    //console.log(props.id)
-    return (
-        <Wrapper>
-            <Container>
-                <Row>
-                    <Title>Заявка №{props.id}</Title>
-                    <StatusContainer>
-                        <Status>активна</Status>
-                        <Cancel>отменить заявку</Cancel>
-                    </StatusContainer>
-                </Row>
+const Filter = styled.a`
+    color: #3249FF;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 18px;
+    margin: 0 10px;
+    border-bottom: 1px dashed transparent;   
+    
+    :hover {
+        border-bottom: 1px dashed;    
+        cursor: pointer;
+    }
+`;
 
-                <Row>
-                    <DateContainer>
-                        <DateIcon src={calendar}/>
-                        <DateValue>30/12/2019</DateValue>
-                    </DateContainer>
+const FilterContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    font-size: 17px;
+    line-height: 18px;
+`;
 
-                    <DateContainer>
-                        <DateIcon src={time}/>
-                        <DateValue>15:25</DateValue>
-                    </DateContainer>
+class Answer extends Component {
+    componentDidMount() {
+        this.props.onLoadAnswers(this.props.id)
+    }
 
-                </Row>
+    render() {
+        const request = this.props.request;
+        console.log(this.props.isRequestLoad);
+        //console.log(this.props.request);
 
-                <Row>
-                    <Image src={'https://via.placeholder.com/300x300'}/>
+        return (
+            <Wrapper>
+                <Container>
+                    {this.props.isRequestLoad && (
+                        <>
+                    <Row>
+                        <Title>Заявка №{this.props.id}</Title>
+                        <StatusContainer>
+                             <Status>{request.status}</Status>
+                            <Cancel>отменить заявку</Cancel>
+                        </StatusContainer>
+                    </Row>
+
+                    <Row>
+                        <DateContainer>
+                            <DateIcon src={calendar}/>
+                            <DateValue>{request.date}</DateValue>
+                        </DateContainer>
+
+                        <DateContainer>
+                            <DateIcon src={time}/>
+                            <DateValue>15:25</DateValue>
+                        </DateContainer>
+
+                    </Row>
+
+                    <Row>
+                        <Image src={request.file}/>
+                        <Column>
+                            <RequestTitle>{request.type + ' ' + request.brand + ' ' + request.model}</RequestTitle>
+                            <RequestDesc>{request.desc}</RequestDesc>
+                        </Column>
+                    </Row>
+                        </>
+                        )}
+
+                    <SecondTitle>Предложения сервисных центров</SecondTitle>
+                    <FilterContainer>
+                        <span>Сортировка: </span>
+                        <Filter>по рейтингу</Filter>
+                        <Filter>по цене</Filter>
+                        <Filter>по дате</Filter>
+                    </FilterContainer>
+
                     <Column>
-                        <RequestTitle>Ноутбук Apple MacBook Pro</RequestTitle>
-                        <RequestDesc>Классический «Lorem ipsum dolor sit amet…» проход отнести к ремиксов римского
-                            философа
-                            Цицерона 45 г. до н.э. текст De Finibus Bonorum et Malorum («О крайностями добра и
-                            зла»).</RequestDesc>
+                        <AnswerItem>
+                            <ContentColumn>
+                                <Row>
+                                    <ShieldPro src={shieldpro}/>
+                                    <ServiceName>РемБытТех</ServiceName>
+                                    <Stars rating={5}/>
+                                </Row>
+
+                                <AnswerMessage><AnswerTitle>сообщение от сервиса: </AnswerTitle>“для любого епсилон
+                                    большего
+                                    нуля найдется дельта такое, что для всех таких, что модуль
+                                    разности х и а больше нуля и меньше дельта выполнятся неравенство f(x) - A по модулю
+                                    меньше епсилон”</AnswerMessage>
+                                <Contact>
+                                    <img src={map}/>
+                                    <ContactDescription>ул. Строителей, 2б</ContactDescription>
+                                </Contact>
+
+                                <Contact>
+                                    <img src={phone}/>
+                                    <ContactDescription>8(800) 000-00-00</ContactDescription>
+                                </Contact>
+
+                                <Contact>
+                                    <img src={email}/>
+                                    <ContactDescription>www.rem-bit-teh.ru</ContactDescription>
+                                </Contact>
+                                <div>
+                                    <Link to={'/'}>На страницу сервиса</Link>
+                                </div>
+                            </ContentColumn>
+
+                            <ContentColumn>
+                                <PriceTitle>Стоимость ремонта</PriceTitle>
+                                <PriceItem>
+                                    диагностика ноутбука
+                                    <PriceValue>0 р.</PriceValue>
+                                </PriceItem>
+                                <PriceItemReverse>
+                                    покупка оригинальных запчастей
+                                    <PriceValue>5000 р.</PriceValue>
+                                </PriceItemReverse>
+                                <PriceItem>
+                                    замена дисплея
+                                    <PriceValue>500 р.</PriceValue>
+                                </PriceItem>
+                                <Row>
+                                    <TotalPrice>5500 рублей</TotalPrice>
+                                    <PrimaryButton to={'/'}>Заказать ремонт</PrimaryButton>
+                                </Row>
+
+                                <AdvantagesContainer>
+                                    <Advantages><img src={shield}/><AdvantagesValue>Гарантия - 3
+                                        года</AdvantagesValue></Advantages>
+                                    <Advantages><img src={pack}/><AdvantagesValue>Доставим до сервиса и
+                                        обратно</AdvantagesValue></Advantages>
+                                </AdvantagesContainer>
+
+                            </ContentColumn>
+                            <ContentColumn>
+                                <ServicePhoto src={service}/>
+                            </ContentColumn>
+                        </AnswerItem>
                     </Column>
-                </Row>
-
-                <SecondTitle>Предложения сервисных центров</SecondTitle>
-
-                <Column>
-                    <AnswerItem>
-                        <ContentColumn>
-                            <Row>
-                                <ShieldPro src={shieldpro}/>
-                                <ServiceName>РемБытТех</ServiceName>
-                                <Stars rating={5}/>
-                            </Row>
-
-                            <AnswerMessage><AnswerTitle>сообщение от сервиса: </AnswerTitle>“для любого епсилон большего
-                                нуля найдется дельта такое, что для всех таких, что модуль
-                                разности х и а больше нуля и меньше дельта выполнятся неравенство f(x) - A по модулю
-                                меньше епсилон”</AnswerMessage>
-                            <Contact>
-                                <img src={map}/>
-                                <ContactDescription>ул. Строителей, 2б</ContactDescription>
-                            </Contact>
-
-                            <Contact>
-                                <img src={phone}/>
-                                <ContactDescription>8(800) 000-00-00</ContactDescription>
-                            </Contact>
-
-                            <Contact>
-                                <img src={email}/>
-                                <ContactDescription>www.rem-bit-teh.ru</ContactDescription>
-                            </Contact>
-                            <div>
-                                <Link to={'/'}>На страницу сервиса</Link>
-                            </div>
-                        </ContentColumn>
-
-                        <ContentColumn>
-                            <PriceTitle>Стоимость ремонта</PriceTitle>
-                            <PriceItem>
-                                диагностика ноутбука
-                                <PriceValue>0 р.</PriceValue>
-                            </PriceItem>
-                            <PriceItemReverse>
-                                покупка оригинальных запчастей
-                                <PriceValue>5000 р.</PriceValue>
-                            </PriceItemReverse>
-                            <PriceItem>
-                                замена дисплея
-                                <PriceValue>500 р.</PriceValue>
-                            </PriceItem>
-                            <Row>
-                                <TotalPrice>5500 рублей</TotalPrice>
-                                <PrimaryButton to={'/'}>Заказать ремонт</PrimaryButton>
-                            </Row>
-
-                            <AdvantagesContainer>
-                                <Advantages><img src={shield}/><AdvantagesValue>Гарантия - 3
-                                    года</AdvantagesValue></Advantages>
-                                <Advantages><img src={pack}/><AdvantagesValue>Доставим до сервиса и
-                                    обратно</AdvantagesValue></Advantages>
-                            </AdvantagesContainer>
-
-                        </ContentColumn>
-                        <ContentColumn>
-                            <ServicePhoto src={service}/>
-                        </ContentColumn>
-                    </AnswerItem>
-                </Column>
-            </Container>
-        </Wrapper>
-    )
+                </Container>
+            </Wrapper>
+        )
+    }
 }
 
-export default Answer
+const mapStateToProps = state => {
+    return {
+        request: state.answer.request,
+        isRequestLoad: state.answer.isRequestLoad
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLoadAnswers: (id) => dispatch(loadAnswers(id))
+    }
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Answer)
