@@ -13,6 +13,8 @@ import service from './assets/service.jpg'
 import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
 import {loadAnswers} from "../../redux/user-action-creators";
+import call from './assets/call.png';
+import emailIco from './assets/email.png'
 
 const Wrapper = styled.div`
     padding: 100px 30px 180px 30px;
@@ -260,6 +262,35 @@ const FilterContainer = styled.div`
     line-height: 18px;
 `;
 
+const RequestContact = styled.span`
+    font-size: 25px;
+    font-weight: bold;
+    
+`;
+
+const RequestContactColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 22%;
+    margin-top: 10px;
+`;
+
+const RequestNotifImg = styled.img`
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+`;
+
+const RequestNotifDesc = styled.span`
+    color: #368594;
+    font-size: 18px;
+    line-height: 19px;
+`;
+
+
+
 class Answer extends Component {
     componentDidMount() {
         this.props.onLoadAnswers(this.props.id)
@@ -268,43 +299,66 @@ class Answer extends Component {
     render() {
         const request = this.props.request;
         console.log(this.props.isRequestLoad);
-        //console.log(this.props.request);
+        console.log(request)
 
         return (
             <Wrapper>
                 <Container>
                     {this.props.isRequestLoad && (
                         <>
-                    <Row>
-                        <Title>Заявка №{this.props.id}</Title>
-                        <StatusContainer>
-                             <Status>{request.status}</Status>
-                            <Cancel>отменить заявку</Cancel>
-                        </StatusContainer>
-                    </Row>
+                            <Row>
+                                <Title>Заявка №{this.props.id}</Title>
+                                <StatusContainer>
+                                    <Status>{request.status}</Status>
+                                    <Cancel>отменить заявку</Cancel>
+                                </StatusContainer>
+                            </Row>
 
-                    <Row>
-                        <DateContainer>
-                            <DateIcon src={calendar}/>
-                            <DateValue>{request.date}</DateValue>
-                        </DateContainer>
+                            <Row>
+                                <DateContainer>
+                                    <DateIcon src={calendar}/>
+                                    <DateValue>{request.date}</DateValue>
+                                </DateContainer>
 
-                        <DateContainer>
-                            <DateIcon src={time}/>
-                            <DateValue>15:25</DateValue>
-                        </DateContainer>
+                                <DateContainer>
+                                    <DateIcon src={time}/>
+                                    <DateValue>15:25</DateValue>
+                                </DateContainer>
 
-                    </Row>
+                            </Row>
 
-                    <Row>
-                        <Image src={request.file}/>
-                        <Column>
-                            <RequestTitle>{request.type + ' ' + request.brand + ' ' + request.model}</RequestTitle>
-                            <RequestDesc>{request.desc}</RequestDesc>
-                        </Column>
-                    </Row>
+                            <Row>
+                                <Image src={request.file}/>
+                                <Column>
+                                    <RequestTitle>{request.type + ' ' + request.brand + ' ' + request.model}</RequestTitle>
+                                    <RequestDesc>{request.desc}</RequestDesc>
+
+                                    <Row>
+                                        {request.phoneNotification &&
+                                        <RequestContactColumn>
+                                            <RequestContact>{this.props.phone}</RequestContact>
+                                            <Row>
+                                                <RequestNotifImg src={call}/>
+                                                <RequestNotifDesc>уведомления по телефону включены</RequestNotifDesc>
+                                            </Row>
+                                        </RequestContactColumn>}
+                                        {request.emailNotification &&
+                                            <RequestContactColumn>
+                                            <RequestContact>{this.props.email}</RequestContact>
+                                            <Row>
+                                                <RequestNotifImg src={emailIco}/>
+                                                <RequestNotifDesc>уведомления по email включены</RequestNotifDesc>
+                                            </Row>
+                                        </RequestContactColumn>}
+                                    </Row>
+
+
+                                </Column>
+                            </Row>
+
+
                         </>
-                        )}
+                    )}
 
                     <SecondTitle>Предложения сервисных центров</SecondTitle>
                     <FilterContainer>
@@ -399,4 +453,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Answer)
+export default connect(mapStateToProps, mapDispatchToProps)(Answer)
