@@ -60,10 +60,27 @@ export default function rootReducer(state = initialState, action) {
                 isAgreementCheck: !state.isAgreementCheck,
             };
         case 'CHECK_COMPANY_FIELDS':
-            console.log('проверить поля')
-            console.log(state.isPassValid, state.isAgreementCheck, state.isCityValid, state.isNameValid, state.isPhoneValid, state.isCompanyValid,state.isEmailValid)
+            //console.log(state.isPassValid, state.isAgreementCheck, state.isCityValid, state.isNameValid, state.isPhoneValid, state.isCompanyValid,state.isEmailValid)
             return {
+                ...state,
                 mustCheckFields: true,
+            };
+        case 'SUBMIT_COMPANY':
+            return {
+                name: '',
+                company: '',
+                city: '',
+                phone: '',
+                email: '',
+                pass: '',
+                mustCheckFields: false,
+                isAgreementCheck: false,
+                isCompanyValid: false,
+                isNameValid: false,
+                isCityValid: true,
+                isPhoneValid: false,
+                isEmailValid: false,
+                isPassValid: false,
             };
         default:
             return {

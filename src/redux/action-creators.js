@@ -8,12 +8,13 @@ import {
     CHANGE_STATION,
     CHECK_FIELDS,
     CLEAR_REG,
+    EXIT,
     LOGIN,
-    SUBMIT,
-    EXIT
+    SUBMIT
 } from './actions'
 import fire from "../config/Fire";
 import axios from "axios";
+import {history} from '../router/history'
 import {validationEmail, validationName, validationPass, validationPhone} from '../utils/validation'
 
 export const submit = (name, city, email, pass, station, phone, isEmailValid, isNameValid, isPhoneValid, isAgreementCheck) => {
@@ -130,7 +131,7 @@ export const changeCompanyName = (e) => {
     const check = validationName(value);
     return {
         type: 'CHANGE_COMPANY_NAME',
-        payload: {value,check}
+        payload: {value, check}
     }
 };
 
@@ -140,7 +141,7 @@ export const changeCompany = (e) => {
     const check = validationName(value);
     return {
         type: 'CHANGE_COMPANY',
-        payload: {value,check}
+        payload: {value, check}
     }
 };
 
@@ -157,7 +158,7 @@ export const changeCompanyPhone = (e) => {
     const check = validationPhone(value);
     return {
         type: 'CHANGE_COMPANY_PHONE',
-        payload: {value,check}
+        payload: {value, check}
     }
 };
 
@@ -166,7 +167,7 @@ export const changeCompanyEmail = (e) => {
     const check = validationEmail(value);
     return {
         type: 'CHANGE_COMPANY_EMAIL',
-        payload: {value,check}
+        payload: {value, check}
     }
 };
 
@@ -175,7 +176,7 @@ export const changeCompanyPass = (e) => {
     const check = validationPass(value);
     return {
         type: 'CHANGE_COMPANY_PASS',
-        payload: {value,check}
+        payload: {value, check}
     }
 };
 
@@ -185,13 +186,13 @@ export const changeCompanyCheckbox = (e) => {
     }
 };
 
-export const onCompanyRegistration = (e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid) => {
+export const onCompanyRegistration = (e, name, company, phone, email, city, pass, isAgreementCheck, isCompanyValid, isNameValid, isCityValid, isPhoneValid, isEmailValid, isPassValid) => {
     e.preventDefault();
     if (isAgreementCheck && isCompanyValid && isNameValid && isCityValid && isPhoneValid && isEmailValid && isPassValid) {
         const date = new Date();
         const dateOfReg = `${date.getDate()} ` + `${(date.getMonth() + 1)} ` + `${date.getFullYear()}`;
         const role = 'company';
-        const data = {name, company, phone, email, city, pass, dateOfReg,role};
+        const data = {name, company, phone, email, city, pass, dateOfReg, role};
         fire.auth().createUserWithEmailAndPassword(email, pass)
             .then((response) => {
                 console.log('компания создана');
@@ -206,7 +207,7 @@ export const onCompanyRegistration = (e,name,company,phone,email,city,pass, isAg
             .catch((e) => {
                 console.log(e)
             });
-
+        history.push('/registration-success');
         return {
             type: 'SUBMIT_COMPANY',
         }
