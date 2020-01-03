@@ -12,9 +12,8 @@ import {
     CHANGE_PHONE_REQUEST,
     CHANGE_STATION_REQUEST,
     CHANGE_TYPE,
-    SET_USER_INFO,
-    LOAD_REQUESTS,
-    LOAD_REQUESTS_SUCCESS
+    LOAD_REQUESTS_SUCCESS,
+    SET_USER_INFO
 } from "./actions";
 import {validationImage} from "../utils/validation";
 
@@ -39,7 +38,7 @@ const initialState = {
     phoneNotification: false,
     mustCheckFields: false,
     isRequestSuccess: false,
-    requestItems:[],
+    requestItems: [],
 };
 
 
@@ -111,7 +110,7 @@ export default function loginReducer(state = initialState, action) {
         case CHANGE_FILE_REQUEST:
             return {
                 ...state,
-                file:action.payload.file,
+                file: action.payload.file,
                 isFileType: validationImage(action.payload.fileType)
             };
 
@@ -150,9 +149,8 @@ export default function loginReducer(state = initialState, action) {
             };
 
         case LOAD_REQUESTS_SUCCESS:
-            //console.log(typeof action.payload);
             let arr = [];
-            for(let key in action.payload){
+            for (let key in action.payload) {
                 arr.push(action.payload[key])
             }
             return {
@@ -160,8 +158,24 @@ export default function loginReducer(state = initialState, action) {
                 requestItems: arr
             };
         default:
+
+        case 'FILTER_DELETE_REQUESTS':
             return {
-                ...state
+                ...state,
+            };
+
+        case 'FILTER_ACTIVE_REQUESTS':
+           let newArr =  Array.prototype.sort.call(state.requestItems, function(a) {
+               if(a.status === 'активна') {
+                   return 1
+               }
+               else {
+                   return -1
+               }
+            });
+            return {
+                ...state,
+                requestItems: newArr
             }
     }
 }

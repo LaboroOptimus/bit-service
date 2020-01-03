@@ -143,3 +143,15 @@ export const loadAnswers = (id) => {
         payload: id,
     }
 }
+
+export const filterActive = () => {
+    return {
+        type:'TEST',
+    }
+}
+
+export const filterDelete = () => {
+    return {
+        type: 'TEST'
+    }
+}

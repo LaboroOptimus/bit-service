@@ -20,7 +20,8 @@ export const submit = (name, city, email, pass, station, phone, isEmailValid, is
     if (isNameValid && isEmailValid && isAgreementCheck && isPhoneValid) {
         const date = new Date();
         const dateOfReg = `${date.getDate()} ` + `${(date.getMonth() + 1)} ` + `${date.getFullYear()}`;
-        const data = {name, city, pass, email, station, phone, dateOfReg};
+        const role = 'customer';
+        const data = {name, city, pass, email, station, phone, dateOfReg, role};
         fire.auth().createUserWithEmailAndPassword(email, pass)
             .then((response) => {
                 console.log('отправлено 1');
@@ -122,7 +123,100 @@ export const exit = () => {
     return {
         type: EXIT
     }
-}
+};
+
+export const changeCompanyName = (e) => {
+    const value = e.target.value;
+    const check = validationName(value);
+    return {
+        type: 'CHANGE_COMPANY_NAME',
+        payload: {value,check}
+    }
+};
+
+export const changeCompany = (e) => {
+    const value = e.target.value;
+    // валидация имени компании
+    const check = validationName(value);
+    return {
+        type: 'CHANGE_COMPANY',
+        payload: {value,check}
+    }
+};
+
+export const changeCompanyCity = (e) => {
+    const value = e.target.value;
+    return {
+        type: 'CHANGE_COMPANY_CITY',
+        payload: value
+    }
+};
+
+export const changeCompanyPhone = (e) => {
+    const value = e.target.value;
+    const check = validationPhone(value);
+    return {
+        type: 'CHANGE_COMPANY_PHONE',
+        payload: {value,check}
+    }
+};
+
+export const changeCompanyEmail = (e) => {
+    const value = e.target.value;
+    const check = validationEmail(value);
+    return {
+        type: 'CHANGE_COMPANY_EMAIL',
+        payload: {value,check}
+    }
+};
+
+export const changeCompanyPass = (e) => {
+    const value = e.target.value;
+    const check = validationPass(value);
+    return {
+        type: 'CHANGE_COMPANY_PASS',
+        payload: {value,check}
+    }
+};
+
+export const changeCompanyCheckbox = (e) => {
+    return {
+        type: 'CHANGE_COMPANY_CHECKBOX',
+    }
+};
+
+export const onCompanyRegistration = (e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid) => {
+    e.preventDefault();
+    if (isAgreementCheck && isCompanyValid && isNameValid && isCityValid && isPhoneValid && isEmailValid && isPassValid) {
+        const date = new Date();
+        const dateOfReg = `${date.getDate()} ` + `${(date.getMonth() + 1)} ` + `${date.getFullYear()}`;
+        const role = 'company';
+        const data = {name, company, phone, email, city, pass, dateOfReg,role};
+        fire.auth().createUserWithEmailAndPassword(email, pass)
+            .then((response) => {
+                console.log('компания создана');
+                let uid = response.user.uid;
+                axios.post(`https://bit-ser.firebaseio.com/company/${uid}.json`, data).then(() => {
+                    console.log('занес данные в таблицу компаний')
+                })
+            }).then(() => {
+            console.log('успешно')
+
+        })
+            .catch((e) => {
+                console.log(e)
+            });
+
+        return {
+            type: 'SUBMIT_COMPANY',
+        }
+    } else {
+        return {
+            type: 'CHECK_COMPANY_FIELDS'
+        }
+    }
+};
+
 
 
 

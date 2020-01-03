@@ -64,7 +64,6 @@ export function* workerLoadProfile() {
 
 
     } catch (e) {
-        console.log(e)
     }
 }
 
