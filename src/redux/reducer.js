@@ -4,11 +4,13 @@ import loginReducer from "./loginReducer";
 import profileReducer from "./profileReducer";
 import requestReducer from "./requestReducer"
 import answerReducer from "./answerReducer";
+import regCompanyReducer from "./regCompanyReducer";
 
 export default combineReducers({
     root: rootReducer,
     login: loginReducer,
     profile: profileReducer,
     request: requestReducer,
-    answer: answerReducer
+    answer: answerReducer,
+    regCompany: regCompanyReducer
 })

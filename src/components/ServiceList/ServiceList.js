@@ -8,27 +8,7 @@ const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-/*data = [
-    {
-        serviceId: 104,
-        serviceUrl: www.remont.ru/104,
-        serviceName: РемБытТех,
-        servicePhoto: file,
-        serviceDescription: Какое-то описание,
-        serviceRating: 4,
-        serviceAdress: [],
-        servicePhone: [],
-        serviceStation: [],
-        serviceAdvantages: [],
-        servicePrices: [],
-        isSafeDeal: true,
-    },
-    {},
-]*/
-
 class ServiceList extends React.Component {
-
-
     componentDidMount() {
 
     }

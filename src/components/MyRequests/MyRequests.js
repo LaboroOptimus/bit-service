@@ -4,6 +4,7 @@ import MyRequestItem from "./MyRequestItem";
 import {loadRequest} from "../../redux/user-action-creators";
 import {connect} from 'react-redux';
 import Loader from "../Loader/Loader";
+import {filterActive,filterDelete} from "../../redux/user-action-creators";
 
 const Wrapper = styled.div`
     display: flex;
@@ -71,8 +72,8 @@ class MyRequests extends React.Component {
                 <SortContainer>
                     <SortText>Показывать:</SortText>
                     <SortItem>все</SortItem>
-                    <SortItem>активные</SortItem>
-                    <SortItem>удаленные</SortItem>
+                    <SortItem onClick={this.props.onFilterActive}>активные</SortItem>
+                    <SortItem onClick={this.props.onFilterDelete}>удаленные</SortItem>
                 </SortContainer>
                 {data.length > 0 ? (
                 <Container>
@@ -96,6 +97,8 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
     return {
         onRequestsLoad: () => dispatch(loadRequest()),
+        onFilterDelete: () => dispatch({type: 'FILTER_DELETE_REQUESTS'}),
+        onFilterActive: () => dispatch({type: 'FILTER_ACTIVE_REQUESTS'})
     }
 }
 

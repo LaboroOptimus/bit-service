@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import {connect} from 'react-redux';
+import {onCompanyRegistration, changeCompanyName,changeCompany,changeCompanyCheckbox,changeCompanyCity,changeCompanyEmail,changeCompanyPass,changeCompanyPhone} from "../../redux/action-creators";
 
 const Wrapper = styled.div`
     display: flex;
@@ -162,34 +164,40 @@ const Checkbox = styled.input`
    }
 `;
 
+/*
+*
 
+
+
+
+    isPassValid: true,*/
 
 class RegistrationCompanyForm extends React.Component {
     render() {
+        const {name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid} = this.props;
         return(
             <Wrapper>
-
                 <FormWrapper>
                     <Title>Регистрация новой компании</Title>
                     <Row>
                         <Container>
                             <Label>Введите имя и фамилию</Label>
-                            <Input placeholder={'Иван Иванов'}/>
+                            <Input onChange={this.props.onNameChange} value={name} placeholder={'Иван Иванов'}/>
                         </Container>
                         <Container>
                             <Label>Введите название компании</Label>
-                            <Input placeholder={'Рога и Копыта'}/>
+                            <Input onChange={this.props.onCompanyChange} value={company} placeholder={'Рога и Копыта'}/>
                         </Container>
                     </Row>
 
                     <Row>
                         <Container>
                             <Label>Введите город</Label>
-                            <Input placeholder={'Москва'}/>
+                            <Input onChange={this.props.onCityChange} value={city} placeholder={'Москва'}/>
                         </Container>
                         <Container>
                             <Label>Введите телефон</Label>
-                            <Input placeholder={'8(800)000-00-00'}/>
+                            <Input onChange={this.props.onPhoneChange} value={phone} placeholder={'8(800)000-00-00'}/>
                         </Container>
                     </Row>
 
@@ -197,12 +205,12 @@ class RegistrationCompanyForm extends React.Component {
                     <Row>
                         <Container>
                             <Label>Введите email</Label>
-                            <Input placeholder={'service@mail.ru'}/>
+                            <Input onChange={this.props.onEmailChange} value={email} placeholder={'service@mail.ru'}/>
 
                         </Container>
                         <Container>
                             <Label>Введите пароль</Label>
-                            <Input type='password'/>
+                            <Input onChange={this.props.onPassChange} value={pass} type='password'/>
 
                         </Container>
                     </Row>
@@ -210,7 +218,7 @@ class RegistrationCompanyForm extends React.Component {
                     <Row>
                         <Container>
                             <CheckboxGroup>
-                                <Checkbox id='phone_email' type='checkbox'/>
+                                <Checkbox onClick={() => this.props.onCheckboxChange()} id='phone_email' type='checkbox'/>
                                 <CheckboxLabel htmlFor={'phone_email'}>Согласен на обработку персональных данных</CheckboxLabel>
                             </CheckboxGroup>
                         </Container>
@@ -221,13 +229,10 @@ class RegistrationCompanyForm extends React.Component {
                                 <Link to={'/'}>Войти на сайт</Link>
                             </Links>
                         </Container>
-
                     </Row>
 
                     <Row>
-
-                        <Button>Зарегистрироваться</Button>
-
+                        <Button onClick={(e)=>this.props.onSubmit(e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid)}>Зарегистрироваться</Button>
                     </Row>
                 </FormWrapper>
             </Wrapper>
@@ -236,4 +241,38 @@ class RegistrationCompanyForm extends React.Component {
     }
 }
 
-export default RegistrationCompanyForm
+const mapStateToProps = state => {
+    return {
+        name: state.regCompany.name,
+        company: state.regCompany.company,
+        city: state.regCompany.city,
+        phone: state.regCompany.phone,
+        email: state.regCompany.email,
+        pass: state.regCompany.pass,
+        isAgreementCheck: state.regCompany.isAgreementCheck,
+        isCompanyValid: state.regCompany.isCompanyValid,
+        isNameValid: state.regCompany.isNameValid,
+        isCityValid: state.regCompany.isCityValid,
+        isPhoneValid: state.regCompany.isPhoneValid,
+        isEmailValid: state.regCompany.isEmailValid,
+        isPassValid: state.regCompany.isPassValid,
+        mustCheckFields: state.regCompany.mustCheckFields
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onNameChange:(e) => dispatch(changeCompanyName(e)),
+        onCompanyChange: (e) => dispatch(changeCompany(e)),
+        onCityChange: (e) => dispatch(changeCompanyCity(e)),
+        onPhoneChange: (e) => dispatch(changeCompanyPhone(e)),
+        onEmailChange: (e) => dispatch(changeCompanyEmail(e)),
+        onPassChange: (e) => dispatch(changeCompanyPass(e)),
+        onCheckboxChange: () => dispatch(changeCompanyCheckbox()),
+        onSubmit:(e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid) => {
+            dispatch(onCompanyRegistration(e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationCompanyForm)
