@@ -9,6 +9,7 @@ const initialState = {
     isLoginError: false,
     loginErrorMessage: '',
     uid: '',
+    role: '',
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -25,12 +26,13 @@ export default function loginReducer(state = initialState, action) {
                 pass: action.payload.value,
             };
         case LOGIN_SUCCESS:
-            console.log('успешно залогинен', 'uid:', action.payload);
+            console.log('успешно залогинен', 'uid:', action.payload.uid, 'role: ', action.payload.role);
             return {
                 ...state,
                 isLogin: true,
                 isLoginError: false,
-                uid: action.payload
+                uid: action.payload.uid,
+                role: action.payload.role,
             };
 
         case LOGIN_ERROR:
