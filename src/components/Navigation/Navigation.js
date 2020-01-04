@@ -1,8 +1,9 @@
 import React from 'react'
 import './Navigation.css'
-import LogNav from "../LogNav/LogNav";
+import LoginCustomerNav from "../LoginCustomerNav/LoginCustomerNav";
 import NotLogNav from "../NotLogNav/NotLogNav";
-import {isLogin} from "../../utils/isLogin";
+import {isLogin, isRole} from "../../utils/isLogin";
+import LoginCompanyNav from "../LoginCompanyNav/LoginCompanyNav";
 
 /*
 
@@ -20,7 +21,7 @@ import {isLogin} from "../../utils/isLogin";
 Как это работает?
 
 
-ВОШЕЛ
+ВОШЕЛ ПОЛЬЗОВАТЕЛЬ
 Найти сервис на карте
 Найти сервис
 Заявка на ремонт
@@ -28,7 +29,12 @@ import {isLogin} from "../../utils/isLogin";
 Профиль
 Уведомления
 
-Вход для сервисных центров ?
+ВОШЛА КОМПАНИЯ
+Новые заявки
+Моя компания
+Уведомления
+
+Вход для клиентов
 Контакты
 Выйти из системы
 */
@@ -38,7 +44,10 @@ class Navigation extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {isLogin() ? <LogNav/> : <NotLogNav/>}
+                {/*{isLogin() ? <LoginCustomerNav/> : <NotLogNav/>}*/}
+                {isLogin() && isRole() === 'customer' ? <LoginCustomerNav/> :
+                isLogin() && isRole() === 'company' ? <LoginCompanyNav/>
+                : <NotLogNav/>}
             </React.Fragment>
         )
     }

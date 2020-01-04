@@ -8,3 +8,18 @@ export const isLogin = () => {
     console.log('возвращает:', !!((uid !== 'null' && uid !== '' && uid) || state.login.isLogin));*/
     return !!((uid !== 'null' && uid !== '' && uid) || state.login.isLogin);
 }
+
+export const isRole = () => {
+    const state = store.getState();
+    const role = localStorage.getItem('role');
+
+    if(role === 'customer' || state.role === 'customer'){
+        return 'customer'
+    }
+    else if(role === 'company' || state.role === 'company'){
+        return 'company'
+    }
+    else{
+        return null
+    }
+};
