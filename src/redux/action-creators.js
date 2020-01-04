@@ -197,7 +197,7 @@ export const onCompanyRegistration = (e, name, company, phone, email, city, pass
             .then((response) => {
                 console.log('компания создана');
                 let uid = response.user.uid;
-                axios.post(`https://bit-ser.firebaseio.com/company/${uid}.json`, data).then(() => {
+                axios.post(`https://bit-ser.firebaseio.com/users/${uid}.json`, data).then(() => {
                     console.log('занес данные в таблицу компаний')
                 })
             }).then(() => {

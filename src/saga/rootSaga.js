@@ -251,8 +251,19 @@ export function* workerLogin(data) {
             }
         );
         const uid = newData.user.uid;
+        let role;
+        let f1 = fire.database().ref(`/users/${uid}`);
+        yield call (()=>{
+            return f1.once('value').then(function (snapshot) {
+                data = snapshot.val();
+                let index = Object.keys(snapshot.val())[0];
+                role = data[index].role;
+            })
+        });
+        console.log(role)
         localStorage.setItem('userId', uid);
-        yield put({type: LOGIN_SUCCESS, payload: uid});
+        localStorage.setItem('role', role);
+        yield put({type: LOGIN_SUCCESS, payload: {uid,role}});
     } catch (error) {
         let errorMessage = 'Произошла ошибка';
         if (error.code === 'auth/wrong-password') {
