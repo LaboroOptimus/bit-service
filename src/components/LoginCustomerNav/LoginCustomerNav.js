@@ -110,7 +110,7 @@ const ToggleIcon = styled.img`
 `;
 
 
-function LogNav() {
+function LoginCustomerNav() {
     return (
         <Menu customCrossIcon={<ToggleIcon src={closeicon}/>}>
             <TopStatickBlock>
@@ -181,4 +181,4 @@ function LogNav() {
     )
 }
 
-export default LogNav
+export default LoginCustomerNav
