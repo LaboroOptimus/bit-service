@@ -14,7 +14,8 @@ import RegistrationCompanyPage from "./components/RegistrationCompanyPage/Regist
 import RegRouter from "./components/RegRouter/RegRouter";
 import RegSuccessPage from "./components/RegSuccessPage/RegSuccessPage";
 import PublicRoute from "./router/PublicRoute";
-import PrivateRoute from "./router/PrivateRoute";
+import PrivateCustomerRoute from "./router/PrivateCustomerRoute";
+import PrivateCompanyRoute from "./router/PrivateCompanyRoute";
 import {history} from './router/history'
 import AnswerPage from "./components/AnswerPage/AnswerPage";
 
@@ -43,11 +44,16 @@ function App() {
             <PublicRoute restricted={false} path='/map' component={MapPage}/>
             <PublicRoute restricted={false} path='/reg' component={RegRouter}/>
             <PublicRoute restricted={false} path='/forgot-pass' component={ForgotpassPage}/>
-            <PrivateRoute path='/request' component={NewRequestPage}/>
-            <PrivateRoute restricted={false} path='/my-requests' component={MyRequestPage} exact/>
-            <PrivateRoute restricted={false} path='/my-requests/:id' component={AnswerPage} />
             <PublicRoute restricted={false} path='/find-service' component={FindServicePage}/>
-            <PrivateRoute path='/profile' component={ProfilePage}/>
+
+            <PrivateCustomerRoute path='/request' component={NewRequestPage}/>
+            <PrivateCustomerRoute restricted={false} path='/my-requests' component={MyRequestPage} exact/>
+            <PrivateCustomerRoute restricted={false} path='/my-requests/:id' component={AnswerPage} />
+            <PrivateCustomerRoute path='/profile' component={ProfilePage}/>
+
+          {/*  <PrivateCompanyRoute path='/company' component={ProfilePage}/>*/}
+
+
         </Switch>
         </Router>
     );
