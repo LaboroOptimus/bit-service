@@ -145,6 +145,13 @@ function LoginCompanyNav() {
                 </div>
             </NavLink>
 
+            <NavLink to="/" className="menu-item">
+                <div>
+                    <UserIcon/>
+                    Статистика
+                </div>
+            </NavLink>
+
             <Line/>
             <NavLink to="/login" id="contact" className="menu-item">
                 <div>

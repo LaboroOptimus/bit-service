@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {changeEmail, changePass, login} from "../../redux/action-creators";
 import {Redirect} from 'react-router-dom';
+import {isRole} from "../../utils/isLogin";
 
 const Wrapper = styled.div`
     display: flex;
@@ -107,7 +108,7 @@ function LoginForm(props) {
     const {email, pass, isLogin, isLoginError, loginErrorMessage} = props;
     return (
         <Wrapper>
-            {isLogin ? <Redirect to={'/profile'}/> : (
+            {isLogin && isRole() === 'customer' ? <Redirect to={'/profile'}/> : isLogin && isRole() === 'company' ? <Redirect to={'/company'}/> :(
             <FormWrapper>
                 <Title>Вход на сайт</Title>
                 <Input onChange={props.onChangeEmail} value={email} placeholder="Email"/>

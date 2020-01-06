@@ -18,6 +18,7 @@ import PrivateCustomerRoute from "./router/PrivateCustomerRoute";
 import PrivateCompanyRoute from "./router/PrivateCompanyRoute";
 import {history} from './router/history'
 import AnswerPage from "./components/AnswerPage/AnswerPage";
+import CompanyPage from "./components/CompanyPage/CompanyPage";
 
 function App() {
     return (
@@ -51,7 +52,7 @@ function App() {
             <PrivateCustomerRoute restricted={false} path='/my-requests/:id' component={AnswerPage} />
             <PrivateCustomerRoute path='/profile' component={ProfilePage}/>
 
-          {/*  <PrivateCompanyRoute path='/company' component={ProfilePage}/>*/}
+           <PrivateCompanyRoute path='/company' component={CompanyPage}/>
 
 
         </Switch>

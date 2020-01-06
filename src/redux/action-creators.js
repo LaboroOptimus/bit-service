@@ -121,6 +121,7 @@ export const login = (e, email, pass) => {
 
 export const exit = () => {
     localStorage.setItem('userId', null);
+    localStorage.setItem('role', null);
     return {
         type: EXIT
     }
