@@ -1,5 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from "styled-components";
+import {connect} from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
 const Wrapper = styled.div`
     padding: 30px 100px;
@@ -120,113 +123,181 @@ const Checkbox = styled.input`
    }
 `;
 
-class Company extends Component {
-    constructor(props) {
-        super(props);
+const DeleteIcon = styled(FontAwesomeIcon)`
+    color: #F07554;
+    margin-top: 3px;
+    margin-left: 3px;
+    
+    :hover {
+        cursor: pointer;
     }
+`;
+
+const AddedItem = styled.span`
+   
+`;
+
+function Company(props) {
+    console.log(props.isFreeDiagnostics, props.isDelivery);
+    return (
+        <Wrapper>
+            <Title>Мой профиль </Title>
+            <Row>
+                <Column>
+                    <Img src={'http://placehold.it/200x200'}/>
+                </Column>
+                <Column>
+                    <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
+                        себе?</Question></SubTitle>
+                    <Row>
+                        <Input onChange={props.onChangeCompanyPersonName} width={'60%'} placeholder={'Смирнов Игорь Витальевич'}/>
+                    </Row>
+                    <Row>
+                        <Input onChange={props.onChangeCompanyPersonEmail} width={'40%'} placeholder={'igor@mail.ru'}/>
+                        <Input onChange={props.onChangeCompanyPersonPhone} width={'40%'} placeholder={'89269258713'}/>
+                    </Row>
+                </Column>
+            </Row>
+            <Row>
+                <Column>
+                    <Title>Моя компания</Title>
+                    <SubTitle>Информация о компании</SubTitle>
+                    <Row>
+                        <Input onChange={props.onChangeCompanyName} placeholder={'Название компании'}/>
+                        <Input onChange={props.onChangeCompanyOgrn} placeholder={'ОГРН'}/>
+                        <Input onChange={props.onChangeCompanyInn} placeholder={'ИНН'}/>
+                    </Row>
+                    <SubTitle>Адреса сервисов</SubTitle>
+
+                    {props.address.length !== 0 && props.address.map((e,index) => {
+                        return (
+                            <Row key={index}>
+                                <AddedItem>{e.city},</AddedItem>
+                                <AddedItem>{e.street},</AddedItem>
+                                <AddedItem>{e.house}</AddedItem>
+                                <DeleteIcon icon={faTrashAlt} onClick={()=>props.onRemoveAddress(e.id)}/>
+                            </Row>
+                        )
+                    })}
+
+                    <Row>
+                        <Input onChange={props.onChangeCompanyCity} value={props.companyCity} width={'20%'}
+                               placeholder={'Москва'}/>
+                        <Input onChange={props.onChangeCompanyStreet} value={props.companyStreet} width={'30%'}
+                               placeholder={'ул. Ленина'}/>
+                        <Input onChange={props.onChangeCompanyHouse} value={props.companyHouse} width={'25%'}
+                               placeholder={'дом 5 строение 2'}/>
+                        <Add>
+                            {/* <AddIcon src={plus}/>*/}
+                            <AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>
+                        </Add>
+                    </Row>
 
 
-    render() {
-        return (
-            <Wrapper>
-                <Title>Мой профиль</Title>
-                <Row>
-                    <Column>
-                        <Img src={'http://placehold.it/200x200'}/>
-                    </Column>
-                    <Column>
-                        <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
-                            себе?</Question></SubTitle>
-                        <Row>
-                            <Input width={'40%'} placeholder={'Смирнов Игорь Витальевич'}/>
-                        </Row>
-                        <Row>
-                            <Input width={'30%'} placeholder={'Москва'}/>
-                            <Input width={'30%'} placeholder={'igor@mail.ru'}/>
-                            <Input width={'30%'} placeholder={'89269258713'}/>
-                        </Row>
-                    </Column>
-                </Row>
-                <Row>
-                    <Column>
-                        <Title>Моя компания</Title>
-                        <SubTitle>Информация о компании</SubTitle>
-                        <Row>
-                            <Input placeholder={'Название компании'}/>
-                            <Input placeholder={'ОГРН'}/>
-                            <Input placeholder={'ИНН'}/>
-                        </Row>
-                        <SubTitle>Адреса сервисов</SubTitle>
-                        <Row>
-                            <Input width={'20%'} placeholder={'Москва'}/>
-                            <Input width={'30%'} placeholder={'ул. Ленина'}/>
-                            <Input width={'25%'} placeholder={'дом 5 строение 2'}/>
-                            <Add>
-                                {/* <AddIcon src={plus}/>*/}
-                                <AddValue onClick={this.add}>добавить еще адрес</AddValue>
-                            </Add>
-                        </Row>
+                    <SubTitle>Цены на услуги</SubTitle>
+                    {props.prices.length !== 0 && props.prices.map((e,index) => {
+                        return (
+                            <Row key={index}>
+                                <AddedItem>{e.name}</AddedItem>
+                                <AddedItem>{e.price}</AddedItem>
+                                <DeleteIcon icon={faTrashAlt} onClick={()=>props.onRemovePrice(e.id)}/>
+                            </Row>
+                        )
+                    })}
 
-                        <SubTitle>Цены на услуги</SubTitle>
-                        <Row>
-                            <Input width={'30%'} placeholder={'замена дисплея iphone'}/>
-                            <Input width={'20%'} placeholder={'1000'}/>
 
-                            <Add>
-                                {/* <AddIcon src={plus}/>*/}
-                                <AddValue>добавить еще</AddValue>
-                            </Add>
-                        </Row>
+                    <Row>
+                        <Input width={'30%'}  value={props.serviceName} onChange={props.onChangeServiceName} placeholder={'замена дисплея iphone'}/>
+                        <Input width={'20%'} value={props.servicePrice} onChange={props.onChangeServicePrice} placeholder={'1000'}/>
+                        <Add>
+                            {/* <AddIcon src={plus}/>*/}
+                            <AddValue onClick={()=>props.onAddPrice()}>добавить еще</AddValue>
+                        </Add>
+                    </Row>
 
-                        <Row>
-                            <Column>
-                                <SubTitle>Дополнительная информация</SubTitle>
-                                <CheckboxGroup>
-                                    <Checkbox id='ch1' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch1'}>Бесплатная диагностика</CheckboxLabel>
-                                </CheckboxGroup>
+                    <Row>
+                        <Column>
+                            <SubTitle>Дополнительная информация</SubTitle>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch1' type='checkbox' name={'isFreeDiagnostics'}/>
+                                <CheckboxLabel htmlFor={'ch1'}>Бесплатная диагностика</CheckboxLabel>
+                            </CheckboxGroup>
 
-                                <CheckboxGroup>
-                                    <Checkbox id='ch2' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch2'}>Доставка техники до/после ремонта</CheckboxLabel>
-                                </CheckboxGroup>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch2' type='checkbox' name={'isDelivery'}/>
+                                <CheckboxLabel htmlFor={'ch2'}>Доставка техники до/после ремонта</CheckboxLabel>
+                            </CheckboxGroup>
 
-                                <CheckboxGroup>
-                                    <Checkbox id='ch3' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch3'}>Предоставляем гарантию</CheckboxLabel>
-                                </CheckboxGroup>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch3' type='checkbox' name={'isGuarantee'}/>
+                                <CheckboxLabel htmlFor={'ch3'}>Предоставляем гарантию</CheckboxLabel>
+                            </CheckboxGroup>
 
-                                <CheckboxGroup>
-                                    <Checkbox id='ch4' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch4'}>Работаем с юридическими лицами</CheckboxLabel>
-                                </CheckboxGroup>
-                            </Column>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch4' type='checkbox' name={'isWorkWithLegalEntity'}/>
+                                <CheckboxLabel htmlFor={'ch4'}>Работаем с юридическими лицами</CheckboxLabel>
+                            </CheckboxGroup>
+                        </Column>
 
-                            <Column marginLeft={'50px'}>
-                                <SubTitle>Настройка уведомлений</SubTitle>
-                                <CheckboxGroup>
-                                    <Checkbox id='ch5' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch5'}>Уведомление по email</CheckboxLabel>
-                                </CheckboxGroup>
+                        <Column marginLeft={'50px'}>
+                            <SubTitle>Настройка уведомлений</SubTitle>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch5' type='checkbox' name={'isEmailNotification'}/>
+                                <CheckboxLabel htmlFor={'ch5'}>Уведомление по email</CheckboxLabel>
+                            </CheckboxGroup>
 
-                                <CheckboxGroup>
-                                    <Checkbox id='ch6' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch6'}>Уведомление по SMS</CheckboxLabel>
-                                </CheckboxGroup>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch6' type='checkbox' name={'isPhoneNotification'}/>
+                                <CheckboxLabel htmlFor={'ch6'}>Уведомление по SMS</CheckboxLabel>
+                            </CheckboxGroup>
 
-                                <CheckboxGroup>
-                                    <Checkbox id='ch7' type='checkbox'/>
-                                    <CheckboxLabel htmlFor={'ch7'}>Получать новости по email</CheckboxLabel>
-                                </CheckboxGroup>
+                            <CheckboxGroup>
+                                <Checkbox onChange={props.onChangeCheckbox} id='ch7' type='checkbox' name={'isEmailNews'}/>
+                                <CheckboxLabel htmlFor={'ch7'}>Получать новости по email</CheckboxLabel>
+                            </CheckboxGroup>
 
-                            </Column>
-                        </Row>
-                    </Column>
-                </Row>
-            </Wrapper>
-        )
+                        </Column>
+                    </Row>
+                </Column>
+            </Row>
+        </Wrapper>
+    )
+}
+
+const mapStateToProps = (state) => {
+    return {
+        companyCity: state.company.companyCity,
+        companyHouse: state.company.companyHouse,
+        companyStreet: state.company.companyStreet,
+        address: state.company.address,
+        prices: state.company.prices,
+        serviceName: state.company.serviceName,
+        servicePrice: state.company.servicePrice,
+        isFreeDiagnostics: state.company.isFreeDiagnostics,
+        isDelivery: state.company.isDelivery,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onChangeCompanyCity: (e) => dispatch({type: 'CHANGE_COMPANY_CITY', payload: e.target.value}),
+        onChangeCompanyHouse: (e) => dispatch({type: 'CHANGE_COMPANY_HOUSE', payload: e.target.value}),
+        onChangeCompanyStreet: (e) => dispatch({type: 'CHANGE_COMPANY_STREET', payload: e.target.value}),
+        onChangeServiceName: (e) => dispatch({type: 'CHANGE_SERVICE_NAME', payload: e.target.value}),
+        onChangeServicePrice: (e) => dispatch({type: 'CHANGE_SERVICE_PRICE', payload: e.target.value}),
+        onAddAddress: () => dispatch({type: 'ADD_COMPANY_ADDRESS'}),
+        onAddPrice: () => dispatch({type: 'ADD_COMPANY_PRICE'}),
+        onRemoveAddress : (id) => dispatch({type: 'REMOVE_COMPANY_ADDRESS', payload: id}),
+        onRemovePrice: (id)=> dispatch({type: 'REMOVE_SERVICE_PRICE', payload: id}),
+        onChangeCompanyPersonName: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_NAME', payload: e.target.value}),
+        onChangeCompanyPersonEmail: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_EMAIL', payload: e.target.value}),
+        onChangeCompanyPersonPhone: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_PHONE', payload: e.target.value}),
+        onChangeCompanyName: (e) => dispatch({type: 'CHANGE_COMPANY_NAME', payload: e.target.value}),
+        onChangeCompanyOgrn: (e) => dispatch({type: 'CHANGE_COMPANY_OGRN', payload: e.target.value}),
+        onChangeCompanyInn: (e) => dispatch({type: 'CHANGE_COMPANY_INN', payload: e.target.value}),
+        onChangeCheckbox: (e) => dispatch({type: 'CHANGE_COMPANY_CHECKBOX', payload: e.target})
     }
 }
 
-
-export default Company
+/*TODO: переписать функции по аналогии с сменой чекбокса*/
+export default connect(mapStateToProps, mapDispatchToProps)(Company)
