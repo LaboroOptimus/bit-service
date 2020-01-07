@@ -5,6 +5,7 @@ import profileReducer from "./profileReducer";
 import requestReducer from "./requestReducer"
 import answerReducer from "./answerReducer";
 import regCompanyReducer from "./regCompanyReducer";
+import companyReducer from "./companyReducer";
 
 export default combineReducers({
     root: rootReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     profile: profileReducer,
     request: requestReducer,
     answer: answerReducer,
-    regCompany: regCompanyReducer
+    regCompany: regCompanyReducer,
+    company: companyReducer,
 })
