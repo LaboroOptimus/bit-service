@@ -1,13 +1,17 @@
+import {validationEmail, validationPhone, validationPrice} from '../utils/validation'
+
 const initialState = {
     companyCity:'',
     companyHouse:'',
     companyStreet:'',
-    serviceName: '',
-    servicePrice: '',
+    companyName: '',
     contactPerson: '',
     contactPersonEmail: '',
     contactPersonPhone: '',
-    companyName: '',
+    ogrn: '',
+    inn: '',
+    serviceName: '',
+    servicePrice: '',
     isFreeDiagnostics: false,
     isDelivery: false,
     isGuarantee: false,
@@ -15,59 +19,50 @@ const initialState = {
     isEmailNotification: false,
     isPhoneNotification: false,
     isEmailNews: false,
-    ogrn: '',
-    inn: '',
+
+    isPriceValid: false,
+    isPersonEmailValid: false,
+    isPersonPhoneValid: false,
+
     address: [],
     prices: []
 };
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
+        case 'CHANGE_COMPANY_INFO':
+            if(action.payload.name === 'servicePrice'){
+                return {
+                    ...state,
+                    [action.payload.name]: action.payload.value,
+                    isPriceValid: validationPrice(action.payload.value)
+                }
+            }
+            else if(action.payload.name === 'contactPersonEmail'){
+                return {
+                    ...state,
+                    [action.payload.name]: action.payload.value,
+                    isPersonEmailValid: validationEmail(action.payload.value)
+                }
+            }
+            else if(action.payload.name === 'contactPersonPhone'){
+                return {
+                    ...state,
+                    [action.payload.name]: action.payload.value,
+                    isPersonPhoneValid: validationPhone(action.payload.value)
+                }
+            }
+            else {
+            return {
+                ...state,
+                [action.payload.name]: action.payload.value
+            }}
         case 'CHANGE_COMPANY_CHECKBOX':
             return {
                 ...state,
                 [action.payload.name]: !state[action.payload.name]
             };
-        case 'CHANGE_COMPANY_INN':
-            return {
-                ...state,
-                inn: action.payload
-            };
-        case 'CHANGE_COMPANY_NAME':
-            return {
-                ...state,
-                companyName: action.payload
-            };
-        case 'CHANGE_COMPANY_OGRN':
-            return {
-                ...state,
-                ogrn: action.payload
-            };
-        case 'CHANGE_COMPANY_PERSON_EMAIL':
-            return {
-                ...state,
-                contactPersonEmail: action.payload
-            };
-        case 'CHANGE_COMPANY_PERSON_PHONE':
-            return {
-                ...state,
-                contactPersonPhone: action.payload,
-            };
-        case 'CHANGE_COMPANY_PERSON_NAME':
-            return {
-                ...state,
-                contactPerson: action.payload
-            };
-        case 'CHANGE_SERVICE_NAME':
-            return {
-                ...state,
-                serviceName: action.payload
-            };
-        case 'CHANGE_SERVICE_PRICE':
-            return {
-                ...state,
-                servicePrice: action.payload
-            };
+
 
         case 'ADD_COMPANY_PRICE':
             let priceId;
@@ -150,21 +145,6 @@ export default function companyReducer(state = initialState, action) {
                 companyCity: '',
                 companyHouse: '',
                 companyStreet: ''
-            };
-        case 'CHANGE_COMPANY_CITY':
-            return {
-                ...state,
-                companyCity: action.payload,
-            };
-        case 'CHANGE_COMPANY_STREET':
-            return {
-                ...state,
-                companyStreet: action.payload
-            };
-        case 'CHANGE_COMPANY_HOUSE':
-            return {
-                ...state,
-                companyHouse: action.payload
             };
         default:
             return {
