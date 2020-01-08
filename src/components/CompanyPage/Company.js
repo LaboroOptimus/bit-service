@@ -138,7 +138,7 @@ const AddedItem = styled.span`
 `;
 
 function Company(props) {
-    console.log(props.isFreeDiagnostics, props.isDelivery);
+    console.log(props.isPersonEmailValid, props.isPersonPhoneValid);
     return (
         <Wrapper>
             <Title>Мой профиль </Title>
@@ -150,11 +150,11 @@ function Company(props) {
                     <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
                         себе?</Question></SubTitle>
                     <Row>
-                        <Input onChange={props.onChangeCompanyPersonName} width={'60%'} placeholder={'Смирнов Игорь Витальевич'}/>
+                        <Input onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
                     </Row>
                     <Row>
-                        <Input onChange={props.onChangeCompanyPersonEmail} width={'40%'} placeholder={'igor@mail.ru'}/>
-                        <Input onChange={props.onChangeCompanyPersonPhone} width={'40%'} placeholder={'89269258713'}/>
+                        <Input onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
+                        <Input onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
                     </Row>
                 </Column>
             </Row>
@@ -163,9 +163,9 @@ function Company(props) {
                     <Title>Моя компания</Title>
                     <SubTitle>Информация о компании</SubTitle>
                     <Row>
-                        <Input onChange={props.onChangeCompanyName} placeholder={'Название компании'}/>
-                        <Input onChange={props.onChangeCompanyOgrn} placeholder={'ОГРН'}/>
-                        <Input onChange={props.onChangeCompanyInn} placeholder={'ИНН'}/>
+                        <Input onChange={props.onChangeCompanyInfo} placeholder={'Название компании'} name={'companyName'}/>
+                        <Input onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
+                        <Input onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
                     </Row>
                     <SubTitle>Адреса сервисов</SubTitle>
 
@@ -181,11 +181,11 @@ function Company(props) {
                     })}
 
                     <Row>
-                        <Input onChange={props.onChangeCompanyCity} value={props.companyCity} width={'20%'}
+                        <Input name={'companyCity'} onChange={props.onChangeCompanyInfo} value={props.companyCity} width={'20%'}
                                placeholder={'Москва'}/>
-                        <Input onChange={props.onChangeCompanyStreet} value={props.companyStreet} width={'30%'}
+                        <Input name={'companyStreet'} onChange={props.onChangeCompanyInfo} value={props.companyStreet} width={'30%'}
                                placeholder={'ул. Ленина'}/>
-                        <Input onChange={props.onChangeCompanyHouse} value={props.companyHouse} width={'25%'}
+                        <Input name={'companyHouse'} onChange={props.onChangeCompanyInfo} value={props.companyHouse} width={'25%'}
                                placeholder={'дом 5 строение 2'}/>
                         <Add>
                             {/* <AddIcon src={plus}/>*/}
@@ -207,8 +207,8 @@ function Company(props) {
 
 
                     <Row>
-                        <Input width={'30%'}  value={props.serviceName} onChange={props.onChangeServiceName} placeholder={'замена дисплея iphone'}/>
-                        <Input width={'20%'} value={props.servicePrice} onChange={props.onChangeServicePrice} placeholder={'1000'}/>
+                        <Input name={'serviceName'} width={'30%'}  value={props.serviceName} onChange={props.onChangeCompanyInfo} placeholder={'замена дисплея iphone'}/>
+                        <Input name={'servicePrice'} width={'20%'} value={props.servicePrice} onChange={props.onChangeCompanyInfo} placeholder={'1000'}/>
                         <Add>
                             {/* <AddIcon src={plus}/>*/}
                             <AddValue onClick={()=>props.onAddPrice()}>добавить еще</AddValue>
@@ -275,29 +275,21 @@ const mapStateToProps = (state) => {
         servicePrice: state.company.servicePrice,
         isFreeDiagnostics: state.company.isFreeDiagnostics,
         isDelivery: state.company.isDelivery,
+        isPriceValid: state.company.isPriceValid,
+        isPersonEmailValid: state.company.isPersonEmailValid,
+        isPersonPhoneValid: state.company.isPersonPhoneValid,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onChangeCompanyCity: (e) => dispatch({type: 'CHANGE_COMPANY_CITY', payload: e.target.value}),
-        onChangeCompanyHouse: (e) => dispatch({type: 'CHANGE_COMPANY_HOUSE', payload: e.target.value}),
-        onChangeCompanyStreet: (e) => dispatch({type: 'CHANGE_COMPANY_STREET', payload: e.target.value}),
-        onChangeServiceName: (e) => dispatch({type: 'CHANGE_SERVICE_NAME', payload: e.target.value}),
-        onChangeServicePrice: (e) => dispatch({type: 'CHANGE_SERVICE_PRICE', payload: e.target.value}),
+        onChangeCompanyInfo: (e) => dispatch({type:'CHANGE_COMPANY_INFO', payload: e.target}),
         onAddAddress: () => dispatch({type: 'ADD_COMPANY_ADDRESS'}),
         onAddPrice: () => dispatch({type: 'ADD_COMPANY_PRICE'}),
         onRemoveAddress : (id) => dispatch({type: 'REMOVE_COMPANY_ADDRESS', payload: id}),
         onRemovePrice: (id)=> dispatch({type: 'REMOVE_SERVICE_PRICE', payload: id}),
-        onChangeCompanyPersonName: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_NAME', payload: e.target.value}),
-        onChangeCompanyPersonEmail: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_EMAIL', payload: e.target.value}),
-        onChangeCompanyPersonPhone: (e) => dispatch({type: 'CHANGE_COMPANY_PERSON_PHONE', payload: e.target.value}),
-        onChangeCompanyName: (e) => dispatch({type: 'CHANGE_COMPANY_NAME', payload: e.target.value}),
-        onChangeCompanyOgrn: (e) => dispatch({type: 'CHANGE_COMPANY_OGRN', payload: e.target.value}),
-        onChangeCompanyInn: (e) => dispatch({type: 'CHANGE_COMPANY_INN', payload: e.target.value}),
         onChangeCheckbox: (e) => dispatch({type: 'CHANGE_COMPANY_CHECKBOX', payload: e.target})
     }
-}
-
-/*TODO: переписать функции по аналогии с сменой чекбокса*/
+};
+/* TODO:  загрузка изображения*/
 export default connect(mapStateToProps, mapDispatchToProps)(Company)

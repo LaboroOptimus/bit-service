@@ -46,3 +46,7 @@ export const validationImage = type => {
         return false
     }
 }
+
+export const validationPrice = price => {
+    return price >= 0 && price <= 20000;
+}
