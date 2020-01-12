@@ -3,6 +3,9 @@ import styled from "styled-components";
 import {connect} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import {validationEmail, validationEmptyString, validationPhone,} from "../../utils/validation";
+import {changeCompanyPersonFile,updateCompanyProfile} from '../../redux/user-action-creators'
+import {login} from "../../redux/action-creators";
 
 const Wrapper = styled.div`
     padding: 30px 100px;
@@ -39,6 +42,10 @@ const Input = styled.input`
     height: 50px;
 `;
 
+const File = styled.input`
+    margin-top: 15px;
+`;
+
 const Row = styled.div`
     display: flex;
     flex-direction: row;
@@ -46,6 +53,8 @@ const Row = styled.div`
 
 const Img = styled.img`
     margin-right: 30px;
+    height: 200px;
+    width: 200px;
 `;
 
 const Column = styled.div`
@@ -137,24 +146,60 @@ const AddedItem = styled.span`
    
 `;
 
+const Error = styled.span`
+    background: #f66;
+    color: #fff;
+    padding: 5px 5px 5px 15px;
+    text-align: left;
+    margin-top: 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    width: ${props=>props.width};
+`;
+
+const Button = styled.button`
+    color: #fff;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 50px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    justify-content: center;
+    padding: 10px 40px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 17px;
+    font-weight: bold;
+    height: 55px;
+    align-self: center;
+    background: #368594;
+    box-shadow: 0px 4px 6px rgba(106, 123, 255, 0.1);
+`;
+
 function Company(props) {
-    console.log(props.isPersonEmailValid, props.isPersonPhoneValid);
     return (
         <Wrapper>
-            <Title>Мой профиль </Title>
+            <Title>Мой профиль</Title>
             <Row>
                 <Column>
-                    <Img src={'http://placehold.it/200x200'}/>
+                    <Img src={props.contactPersonPhoto}/>
+                    <File type={'file'} onChange={props.onChangeFile}/>
                 </Column>
                 <Column>
                     <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
                         себе?</Question></SubTitle>
                     <Row>
-                        <Input onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
+                        <Input data-validation-func={validationEmptyString} data-validation={'isPersonNameValid'} onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
                     </Row>
                     <Row>
-                        <Input onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
-                        <Input onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
+                        <Input data-validation-func={validationEmail} data-validation={'isPersonEmailValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
+                        <Input data-validation-func={validationPhone} data-validation={'isPersonPhoneValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
                     </Row>
                 </Column>
             </Row>
@@ -163,9 +208,9 @@ function Company(props) {
                     <Title>Моя компания</Title>
                     <SubTitle>Информация о компании</SubTitle>
                     <Row>
-                        <Input onChange={props.onChangeCompanyInfo} placeholder={'Название компании'} name={'companyName'}/>
-                        <Input onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
-                        <Input onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
+                        <Input data-validation={'isCompanyNameValid'} onChange={props.onChangeCompanyInfo} placeholder={'Название компании'} name={'companyName'}/>
+                        <Input data-validation={'isOgrnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
+                        <Input data-validation={'isInnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
                     </Row>
                     <SubTitle>Адреса сервисов</SubTitle>
 
@@ -181,18 +226,19 @@ function Company(props) {
                     })}
 
                     <Row>
-                        <Input name={'companyCity'} onChange={props.onChangeCompanyInfo} value={props.companyCity} width={'20%'}
+                        <Input data-validation={'isCompanyAddressValid'} name={'companyCity'} onChange={props.onChangeCompanyInfo} value={props.companyCity} width={'20%'}
                                placeholder={'Москва'}/>
-                        <Input name={'companyStreet'} onChange={props.onChangeCompanyInfo} value={props.companyStreet} width={'30%'}
+                        <Input data-validation={'isCompanyStreetValid'} name={'companyStreet'} onChange={props.onChangeCompanyInfo} value={props.companyStreet} width={'30%'}
                                placeholder={'ул. Ленина'}/>
-                        <Input name={'companyHouse'} onChange={props.onChangeCompanyInfo} value={props.companyHouse} width={'25%'}
+                        <Input data-validation={'isCompanyHouseValid'} name={'companyHouse'} onChange={props.onChangeCompanyInfo} value={props.companyHouse} width={'25%'}
                                placeholder={'дом 5 строение 2'}/>
+
                         <Add>
-                            {/* <AddIcon src={plus}/>*/}
                             <AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>
                         </Add>
                     </Row>
-
+                    {props.mustCheckNewAddress && !(props.isCompanyHouseValid && props.isCompanyStreetValid && props.isCompanyAddressValid) &&
+                    <Error width={'20%'}>Проверьте правильность адреса!</Error>}
 
                     <SubTitle>Цены на услуги</SubTitle>
                     {props.prices.length !== 0 && props.prices.map((e,index) => {
@@ -207,13 +253,15 @@ function Company(props) {
 
 
                     <Row>
-                        <Input name={'serviceName'} width={'30%'}  value={props.serviceName} onChange={props.onChangeCompanyInfo} placeholder={'замена дисплея iphone'}/>
-                        <Input name={'servicePrice'} width={'20%'} value={props.servicePrice} onChange={props.onChangeCompanyInfo} placeholder={'1000'}/>
+                        <Input data-validation={'isServiceNameValid'} name={'serviceName'} width={'30%'}  value={props.serviceName} onChange={props.onChangeCompanyInfo} placeholder={'замена дисплея iphone'}/>
+                        <Input data-validation={'isServicePriceValid'} name={'servicePrice'} width={'20%'} value={props.servicePrice} onChange={props.onChangeCompanyInfo} placeholder={'1000'}/>
                         <Add>
                             {/* <AddIcon src={plus}/>*/}
                             <AddValue onClick={()=>props.onAddPrice()}>добавить еще</AddValue>
                         </Add>
                     </Row>
+
+                    {props.mustCheckNewPrice && !(props.isServiceNameValid && props.isServicePriceValid) && <Error width={'20%'}>Проверьте правильность полей!</Error>}
 
                     <Row>
                         <Column>
@@ -255,8 +303,10 @@ function Company(props) {
                                 <Checkbox onChange={props.onChangeCheckbox} id='ch7' type='checkbox' name={'isEmailNews'}/>
                                 <CheckboxLabel htmlFor={'ch7'}>Получать новости по email</CheckboxLabel>
                             </CheckboxGroup>
-
                         </Column>
+                    </Row>
+                    <Row>
+                    <Button onClick={props.onUpdateCompanyProfile}>Отправить данные</Button>
                     </Row>
                 </Column>
             </Row>
@@ -278,6 +328,17 @@ const mapStateToProps = (state) => {
         isPriceValid: state.company.isPriceValid,
         isPersonEmailValid: state.company.isPersonEmailValid,
         isPersonPhoneValid: state.company.isPersonPhoneValid,
+        isPersonPhotoValid: state.company.isPersonPhotoValid,
+
+        isCompanyAddressValid: state.company.isCompanyAddressValid,
+        isCompanyStreetValid: state.company.isCompanyStreetValid,
+        isCompanyHouseValid: state.company.isCompanyHouseValid,
+
+        isServiceNameValid: state.company.isServiceNameValid,
+        isServicePriceValid: state.company.isServicePriceValid,
+        mustCheckNewAddress: state.company.mustCheckNewAddress,
+        mustCheckNewPrice: state.company.mustCheckNewPrice,
+        contactPersonPhoto: state.company.contactPersonPhoto,
     }
 };
 
@@ -288,7 +349,9 @@ const mapDispatchToProps = (dispatch) => {
         onAddPrice: () => dispatch({type: 'ADD_COMPANY_PRICE'}),
         onRemoveAddress : (id) => dispatch({type: 'REMOVE_COMPANY_ADDRESS', payload: id}),
         onRemovePrice: (id)=> dispatch({type: 'REMOVE_SERVICE_PRICE', payload: id}),
-        onChangeCheckbox: (e) => dispatch({type: 'CHANGE_COMPANY_CHECKBOX', payload: e.target})
+        onChangeCheckbox: (e) => dispatch({type: 'CHANGE_COMPANY_CHECKBOX', payload: e.target}),
+        onChangeFile:(e) => changeCompanyPersonFile(e.target.files[0]),
+        onUpdateCompanyProfile: (e) => dispatch(updateCompanyProfile(e))
     }
 };
 /* TODO:  загрузка изображения*/

@@ -1,17 +1,21 @@
-import {validationEmail, validationPhone, validationPrice} from '../utils/validation'
+import {validateCompanyFields, validationImage} from '../utils/validation'
+
 
 const initialState = {
-    companyCity:'',
-    companyHouse:'',
-    companyStreet:'',
+    companyCity: '',
+    companyHouse: '',
+    companyStreet: '',
     companyName: '',
     contactPerson: '',
     contactPersonEmail: '',
     contactPersonPhone: '',
+    contactPersonPhoto: 'http://placehold.it/200x200',
     ogrn: '',
     inn: '',
     serviceName: '',
     servicePrice: '',
+
+
     isFreeDiagnostics: false,
     isDelivery: false,
     isGuarantee: false,
@@ -20,57 +24,71 @@ const initialState = {
     isPhoneNotification: false,
     isEmailNews: false,
 
-    isPriceValid: false,
+    isPersonNameValid: false,
     isPersonEmailValid: false,
     isPersonPhoneValid: false,
+    isPersonPhotoValid: false,
 
+    isCompanyNameValid: false,
+    isOgrnValid: false,
+    isInnValid: false,
+
+    isCompanyAddressValid: false,
+    isCompanyStreetValid: false,
+    isCompanyHouseValid: false,
+
+    isServiceNameValid: false,
+    isServicePriceValid: false,
+
+    mustCheckNewAddress: false,
+    mustCheckNewPrice: false,
+    mustCheckCompanyFields: false,
     address: [],
     prices: []
 };
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
-        case 'CHANGE_COMPANY_INFO':
-            if(action.payload.name === 'servicePrice'){
-                return {
-                    ...state,
-                    [action.payload.name]: action.payload.value,
-                    isPriceValid: validationPrice(action.payload.value)
-                }
-            }
-            else if(action.payload.name === 'contactPersonEmail'){
-                return {
-                    ...state,
-                    [action.payload.name]: action.payload.value,
-                    isPersonEmailValid: validationEmail(action.payload.value)
-                }
-            }
-            else if(action.payload.name === 'contactPersonPhone'){
-                return {
-                    ...state,
-                    [action.payload.name]: action.payload.value,
-                    isPersonPhoneValid: validationPhone(action.payload.value)
-                }
-            }
-            else {
+        case 'UPLOAD_COMPANY_SUCCESS':
+            console.log('успешно')
             return {
                 ...state,
-                [action.payload.name]: action.payload.value
-            }}
+                mustCheckCompanyFields: false,
+            };
+        case 'UPLOAD_COMPANY_ERROR':
+            console.log('error')
+            return {
+                ...state,
+                mustCheckCompanyFields: true,
+            };
+        case 'CHANGE_COMPANY_PERSON_PHOTO':
+            console.log(action.payload);
+            return {
+                ...state,
+                contactPersonPhoto: action.payload.file,
+                isPersonPhotoValid: validationImage(action.payload.fileType)
+            };
+        case 'CHANGE_COMPANY_INFO':
+            const name = action.payload.name;
+            const valid = action.payload.getAttribute('data-validation');
+            return {
+                ...state,
+                [name]: action.payload.value,
+                [valid]: validateCompanyFields(valid, action.payload.value)
+            };
+
         case 'CHANGE_COMPANY_CHECKBOX':
             return {
                 ...state,
                 [action.payload.name]: !state[action.payload.name]
             };
 
-
         case 'ADD_COMPANY_PRICE':
             let priceId;
 
-            if(typeof state.prices[state.prices.length - 1] === 'undefined'){
+            if (typeof state.prices[state.prices.length - 1] === 'undefined') {
                 priceId = 0
-            }
-            else {
+            } else {
                 priceId = state.prices[state.prices.length - 1].id + 1;
             }
             const priceItem = {
@@ -78,23 +96,32 @@ export default function companyReducer(state = initialState, action) {
                 name: state.serviceName,
                 price: state.servicePrice,
             };
-            const newPrices = state.prices;
-            newPrices[newPrices.length] = priceItem;
-            return {
-                ...state,
-                prices: newPrices,
-                servicePrice: '',
-                serviceName: ''
-            };
+            if(state.isServicePriceValid && state.isServiceNameValid){
+               /* const newPrices = state.prices;
+                newPrices[newPrices.length] = priceItem;*/
+                return {
+                    ...state,
+                    prices: [...state.prices, priceItem],
+                    servicePrice: '',
+                    serviceName: ''
+                };
+            }
+            else {
+                return {
+                    ...state,
+                    mustCheckNewPrice: true,
+                };
+            }
+
         case 'REMOVE_COMPANY_ADDRESS':
             let key;
-            for(let i = 0; i < state.address.length; i++){
-                if(state.address[i].id === action.payload){
+            for (let i = 0; i < state.address.length; i++) {
+                if (state.address[i].id === action.payload) {
                     key = i
                 }
             }
             let newArr = state.address;
-            newArr.splice(key,1);
+            newArr.splice(key, 1);
             return {
                 ...state,
                 address: [
@@ -105,13 +132,13 @@ export default function companyReducer(state = initialState, action) {
 
         case 'REMOVE_SERVICE_PRICE':
             let priceKey;
-            for(let i = 0; i < state.prices.length; i++){
-                if(state.prices[i].id === action.payload){
+            for (let i = 0; i < state.prices.length; i++) {
+                if (state.prices[i].id === action.payload) {
                     priceKey = i
                 }
             }
             let newPriceArr = state.prices;
-            newPriceArr.splice(priceKey,1);
+            newPriceArr.splice(priceKey, 1);
 
             return {
                 ...state,
@@ -123,12 +150,11 @@ export default function companyReducer(state = initialState, action) {
         case 'ADD_COMPANY_ADDRESS':
             let companyId;
 
-         if(typeof state.address[state.address.length - 1] === 'undefined'){
-             companyId = 0
-         }
-         else {
-             companyId = state.address[state.address.length - 1].id + 1;
-         }
+            if (typeof state.address[state.address.length - 1] === 'undefined') {
+                companyId = 0
+            } else {
+                companyId = state.address[state.address.length - 1].id + 1;
+            }
 
             const addressItem = {
                 id: companyId,
@@ -136,16 +162,23 @@ export default function companyReducer(state = initialState, action) {
                 street: state.companyStreet,
                 house: state.companyHouse,
             };
-            const newAddress = state.address;
-            newAddress[newAddress.length] = addressItem;
-
-            return {
-                ...state,
-                address: newAddress,
-                companyCity: '',
-                companyHouse: '',
-                companyStreet: ''
-            };
+            //const newAddress = state.address;
+            //newAddress[newAddress.length] = addressItem;
+            if (state.isCompanyAddressValid) {
+                return {
+                    ...state,
+                    address: [...state.address, addressItem],
+                    companyCity: '',
+                    companyHouse: '',
+                    companyStreet: '',
+                    mustCheckNewAddress: false,
+                }
+            } else {
+                return {
+                    ...state,
+                    mustCheckNewAddress: true,
+                }
+            }
         default:
             return {
                 ...state

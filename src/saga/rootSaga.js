@@ -82,6 +82,150 @@ export function* workerChangeFileRequest(data) {
 
 /* CHANGE FILE */
 
+/* UPLOAD COMPANY PROFILE */
+export function * watchUploadCompanyProfile() {
+    yield takeEvery('UPLOAD_PROFILE_REQUEST', workerUploadCompanyProfile);
+}
+
+export function * workerUploadCompanyProfile(data) {
+    const uid = localStorage.getItem('userId');
+    const time = new Date();
+    const today = time.getDate() + '/' + (time.getMonth() + 1);
+    const now = formatHours(time.getHours()) + ':' + formatMinutes(time.getMinutes());
+    const isValidate = data.payload.isValidateUpload;
+    console.log(isValidate);
+    const id = randomInteger(1000, 100000)
+    var ref1 = fire.database().ref().child('users/' + uid);
+    var ref2 = fire.database().ref().child('company/');
+    var ref3 = fire.database().ref().child('company/' + uid);
+    let key;
+
+    yield call(() => {
+        return ref1.once('value').then(function (snapshot) {
+            key = Object.keys(snapshot.val())[0];
+        })
+    });
+
+    let keys;
+    yield call(() => {
+        return ref2.once('value').then(function (snapshot) {
+           keys = Object.keys(snapshot.val());
+        })
+    });
+
+    let ifCompanyExist = false;
+    let companyKey;
+
+    for(let i = 0; i<keys.length; i++){
+        if(keys[i] === uid){
+            ifCompanyExist = true;
+            break;
+        }
+    }
+
+    if(ifCompanyExist){
+        yield call(() => {
+            return ref3.once('value').then(function (snapshot) {
+                companyKey = Object.keys(snapshot.val())[0];
+                console.log('company key',  companyKey);
+            })
+        });
+    }
+
+    console.log(ifCompanyExist);
+
+    if (isValidate) {
+        try {
+            yield call(() => {
+                    return fire.database().ref('users/' + uid + `/${key}`).update({
+                        dateUpload: today,
+                        timeUpload: now,
+                        name: data.payload.profile.name,
+                        ogrn: data.payload.profile.ogrn,
+                        inn: data.payload.profile.inn,
+                        personName: data.payload.profile.personName,
+                        personEmail: data.payload.profile.personEmail,
+                        personPhone: data.payload.profile.personPhone,
+                        personPhoto: data.payload.profile.personPhoto,
+                        isFreeDiagnostics: data.payload.profile.isFreeDiagnostics,
+                        isDelivery: data.payload.profile.isDelivery,
+                        isGuarantee: data.payload.profile.isGuarantee,
+                        isWorkWithLegalEntity: data.payload.profile.isWorkWithLegalEntity,
+                        isEmailNotification: data.payload.profile.isEmailNotification,
+                        isPhoneNotification: data.payload.profile.isPhoneNotification,
+                        isEmailNews: data.payload.profile.isEmailNews,
+                        address: data.payload.profile.address,
+                        prices: data.payload.profile.prices
+                    });
+                }
+            );
+            if(ifCompanyExist){
+                console.log('company exist')
+                yield call(() => {
+                        return fire.database().ref('company/' + uid + `/${companyKey}`).update({
+                            dateUpload: today,
+                            timeUpload: now,
+                            name: data.payload.profile.name,
+                            ogrn: data.payload.profile.ogrn,
+                            inn: data.payload.profile.inn,
+                            personName: data.payload.profile.personName,
+                            personEmail: data.payload.profile.personEmail,
+                            personPhone: data.payload.profile.personPhone,
+                            personPhoto: data.payload.profile.personPhoto,
+                            isFreeDiagnostics: data.payload.profile.isFreeDiagnostics,
+                            isDelivery: data.payload.profile.isDelivery,
+                            isGuarantee: data.payload.profile.isGuarantee,
+                            isWorkWithLegalEntity: data.payload.profile.isWorkWithLegalEntity,
+                            isEmailNotification: data.payload.profile.isEmailNotification,
+                            isPhoneNotification: data.payload.profile.isPhoneNotification,
+                            isEmailNews: data.payload.profile.isEmailNews,
+                            address: data.payload.profile.address,
+                            prices: data.payload.profile.prices
+                        });
+                    }
+                );
+            }
+            else {
+                console.log('company not exist')
+                yield call(() => {
+                        return fire.database().ref('company/' + uid).push({
+                            id: id,
+                            dateUpload: today,
+                            timeUpload: now,
+                            name: data.payload.profile.name,
+                            ogrn: data.payload.profile.ogrn,
+                            inn: data.payload.profile.inn,
+                            personName: data.payload.profile.personName,
+                            personEmail: data.payload.profile.personEmail,
+                            personPhone: data.payload.profile.personPhone,
+                            personPhoto: data.payload.profile.personPhoto,
+                            isFreeDiagnostics: data.payload.profile.isFreeDiagnostics,
+                            isDelivery: data.payload.profile.isDelivery,
+                            isGuarantee: data.payload.profile.isGuarantee,
+                            isWorkWithLegalEntity: data.payload.profile.isWorkWithLegalEntity,
+                            isEmailNotification: data.payload.profile.isEmailNotification,
+                            isPhoneNotification: data.payload.profile.isPhoneNotification,
+                            isEmailNews: data.payload.profile.isEmailNews,
+                            address: data.payload.profile.address,
+                            prices: data.payload.profile.prices
+                        });
+                    }
+                );
+            }
+
+            yield put({type: 'UPLOAD_COMPANY_SUCCESS'});
+            //history.push('/my-requests')
+
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        yield put({type: 'UPLOAD_COMPANY_ERROR'});
+    }
+}
+
+/* UPLOAD COMPANY PROFILE */
+
 /* NEW REQUEST */
 export function* watchAddRequest() {
     yield takeEvery('ADD_REQUEST', workerAddRequest);
@@ -288,6 +432,7 @@ export default function* rootSaga() {
         watchAddRequest(),
         watchChangeFileRequest(),
         watchLoadRequests(),
-        watchLoadAnswers()
+        watchLoadAnswers(),
+        watchUploadCompanyProfile()
     ])
 }

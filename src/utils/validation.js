@@ -45,8 +45,45 @@ export const validationImage = type => {
     else {
         return false
     }
-}
+};
 
 export const validationPrice = price => {
-    return price >= 0 && price <= 20000;
+    return +price >= 0 && +price <= 20000;
 }
+
+export const validationEmptyString = string => {
+    return string.length !== 0;
+}
+
+export const validationCompanyAddress = string => {
+    return string.length >= 4;
+}
+
+export const validateCompanyFields = (name, field) => {
+    switch (name) {
+        case 'isPersonNameValid':
+            return validationEmptyString(field);
+        case 'isPersonEmailValid':
+            return validationEmail(field);
+        case 'isPersonPhoneValid':
+            return validationPhone(field);
+        case 'isCompanyNameValid':
+            return validationEmptyString(field);
+        case 'isOgrnValid':
+            return validationEmptyString(field);
+        case 'isInnValid':
+            return validationEmptyString(field);
+        case 'isCompanyAddressValid':
+            return validationCompanyAddress(field);
+        case 'isCompanyStreetValid':
+            return  validationCompanyAddress(field);
+        case 'isCompanyHouseValid':
+            return validationCompanyAddress(field);
+        case 'isServiceNameValid':
+            return validationEmptyString(field);
+        case 'isServicePriceValid':
+            return validationPrice(field);
+        default:
+            return true
+    }
+};
