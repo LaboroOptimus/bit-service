@@ -117,6 +117,18 @@ export const changeCompanyPersonFile = (file) => {
     })
 };
 
+export const changeCompanyPhoto = (file) => {
+    //console.log('file', file.name.split(".").splice(-1,1)[0]);
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = () => {
+            resolve(store.dispatch({type:'CHANGE_COMPANY_PHOTO', payload: {file: reader.result, fileType: file.name.split(".").splice(-1,1)[0]}}))
+        };
+        reader.readAsDataURL(file);
+        reader.onerror = reject;
+    })
+};
+
 
 export const phoneNotification = () => {
     return {
@@ -134,8 +146,8 @@ function validateRequest(a,b,c,d,e,f,g) {
     return a&&b&&c&&d&&e&&f&&g;
 }
 
-function validateUploadCompanyProfile(a,b,c,d,e,f,g,h,i,j,k) {
-    return a&&b&&c&&d&&e&&f&&g&&h&&i&&j&&k;
+function validateUploadCompanyProfile(a,b,c,d,e,f,g,h,i,j,k,l,m) {
+    return a&&b&&c&&d&&e&&f&&g&&h&&i&&j&&k&&l&&m;
 }
 
 export const updateCompanyProfile = (e) => {
@@ -143,7 +155,7 @@ export const updateCompanyProfile = (e) => {
     let data =  store.getState().company;
     let isValidateUpload = validateUploadCompanyProfile(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
-        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid);
+        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid, data.isPersonPhotoValid, data.isCompanyPhotoValid); // TODO: добавить валидацию картинок
 
     console.log(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
@@ -152,6 +164,7 @@ export const updateCompanyProfile = (e) => {
         name: data.companyName,
         ogrn: data.ogrn,
         inn: data.inn,
+        photo: data.companyPhoto,
         personName: data.contactPerson,
         personEmail: data.contactPersonEmail,
         personPhone: data.contactPersonPhone,

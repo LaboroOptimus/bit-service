@@ -6,6 +6,7 @@ const initialState = {
     companyHouse: '',
     companyStreet: '',
     companyName: '',
+    companyPhoto: 'http://placehold.it/200x200',
     contactPerson: '',
     contactPersonEmail: '',
     contactPersonPhone: '',
@@ -30,6 +31,7 @@ const initialState = {
     isPersonPhotoValid: false,
 
     isCompanyNameValid: false,
+    isCompanyPhotoValid: false,
     isOgrnValid: false,
     isInnValid: false,
 
@@ -50,23 +52,30 @@ const initialState = {
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
         case 'UPLOAD_COMPANY_SUCCESS':
-            console.log('успешно')
+            console.log('успешно');
             return {
                 ...state,
                 mustCheckCompanyFields: false,
             };
         case 'UPLOAD_COMPANY_ERROR':
-            console.log('error')
+            console.log('error');
             return {
                 ...state,
                 mustCheckCompanyFields: true,
             };
         case 'CHANGE_COMPANY_PERSON_PHOTO':
-            console.log(action.payload);
+            console.log('валидация',validationImage(action.payload.fileType));
             return {
                 ...state,
                 contactPersonPhoto: action.payload.file,
                 isPersonPhotoValid: validationImage(action.payload.fileType)
+            };
+        case 'CHANGE_COMPANY_PHOTO':
+            console.log('валидация',validationImage(action.payload.fileType));
+            return {
+                ...state,
+                companyPhoto: action.payload.file,
+                isCompanyPhotoValid: validationImage(action.payload.fileType)
             };
         case 'CHANGE_COMPANY_INFO':
             const name = action.payload.name;
