@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import {validationEmail, validationEmptyString, validationPhone,} from "../../utils/validation";
-import {changeCompanyPersonFile,updateCompanyProfile} from '../../redux/user-action-creators'
+import {changeCompanyPersonFile,updateCompanyProfile,changeCompanyPhoto} from '../../redux/user-action-creators'
 import {login} from "../../redux/action-creators";
 
 const Wrapper = styled.div`
@@ -190,10 +190,15 @@ function Company(props) {
                 <Column>
                     <Img src={props.contactPersonPhoto}/>
                     <File type={'file'} onChange={props.onChangeFile}/>
+                    {!props.isPersonPhotoValid && props.mustCheckCompanyFields && <Error width={'100%'}>Файл должен быть в формате .png, .jpg, .jpeg</Error>}
                 </Column>
                 <Column>
                     <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
                         себе?</Question></SubTitle>
+                    {(!props.isPersonPhoneValid || !props.isPersonEmailValid || props.isPersonNameValid) && props.mustCheckCompanyFields &&
+                    <Row>
+                        <Error width={'50%'}>Проверьте правильность полей!</Error>
+                    </Row>}
                     <Row>
                         <Input data-validation-func={validationEmptyString} data-validation={'isPersonNameValid'} onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
                     </Row>
@@ -201,6 +206,7 @@ function Company(props) {
                         <Input data-validation-func={validationEmail} data-validation={'isPersonEmailValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
                         <Input data-validation-func={validationPhone} data-validation={'isPersonPhoneValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
                     </Row>
+
                 </Column>
             </Row>
             <Row>
@@ -212,6 +218,15 @@ function Company(props) {
                         <Input data-validation={'isOgrnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
                         <Input data-validation={'isInnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
                     </Row>
+                    {(!props.isCompanyNameValid || !props.isOgrnValid || !props.isInnValid) && props.mustCheckCompanyFields &&
+                    <Row>
+                        <Error width={'50%'}>Проверьте правильность полей!</Error>
+                    </Row>}
+
+                        <SubTitle>Фото сервиса</SubTitle>
+                        <Img src={props.companyPhoto}/>
+                        <File onChange={props.onChangeCompanyPhoto} type={'file'}/>
+
                     <SubTitle>Адреса сервисов</SubTitle>
 
                     {props.address.length !== 0 && props.address.map((e,index) => {
@@ -319,6 +334,7 @@ const mapStateToProps = (state) => {
         companyCity: state.company.companyCity,
         companyHouse: state.company.companyHouse,
         companyStreet: state.company.companyStreet,
+        companyPhoto: state.company.companyPhoto,
         address: state.company.address,
         prices: state.company.prices,
         serviceName: state.company.serviceName,
@@ -333,11 +349,13 @@ const mapStateToProps = (state) => {
         isCompanyAddressValid: state.company.isCompanyAddressValid,
         isCompanyStreetValid: state.company.isCompanyStreetValid,
         isCompanyHouseValid: state.company.isCompanyHouseValid,
+        isCompanyPhotoValid: state.company.isCompanyPhotoValid,
 
         isServiceNameValid: state.company.isServiceNameValid,
         isServicePriceValid: state.company.isServicePriceValid,
         mustCheckNewAddress: state.company.mustCheckNewAddress,
         mustCheckNewPrice: state.company.mustCheckNewPrice,
+        mustCheckCompanyFields: state.company.mustCheckCompanyFields,
         contactPersonPhoto: state.company.contactPersonPhoto,
     }
 };
@@ -351,6 +369,7 @@ const mapDispatchToProps = (dispatch) => {
         onRemovePrice: (id)=> dispatch({type: 'REMOVE_SERVICE_PRICE', payload: id}),
         onChangeCheckbox: (e) => dispatch({type: 'CHANGE_COMPANY_CHECKBOX', payload: e.target}),
         onChangeFile:(e) => changeCompanyPersonFile(e.target.files[0]),
+        onChangeCompanyPhoto: (e) => changeCompanyPhoto(e.target.files[0]),
         onUpdateCompanyProfile: (e) => dispatch(updateCompanyProfile(e))
     }
 };
