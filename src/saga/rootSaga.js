@@ -17,6 +17,7 @@ import fire from "../config/Fire";
 import {randomInteger} from "../utils/randomNumm";
 import {history} from '../router/history'
 import {formatHours,formatMinutes} from "../utils/format";
+import {watchLoadCompanyPage} from './companySaga'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -243,7 +244,6 @@ export function* workerAddRequest(data) {
     console.log(isValidate);
     const id = randomInteger(1000, 100000)
 
-
     if (isValidate) {
         try {
             yield call(() => {
@@ -339,19 +339,12 @@ export function* workerLoadAnswers(data) {
     let uid = localStorage.getItem('userId');
     let request;
     let index;
-
-   /* console.log('saga');
-    console.log(typeof data.payload);
-*/
     try {
         let f1 = fire.database().ref(`/users/${uid}/requests`);
         yield call(() => {
             return f1.orderByChild('id').equalTo(+data.payload).once('value').then(function (snapshot) {
                 index = Object.keys(snapshot.val())[0];
                 request = snapshot.val();
-               /* console.log(request);
-                console.log(index);
-                console.log(request[index]);*/
             })
         });
         yield put({type: 'LOAD_REQUEST_SUCCESS', payload: request[index]})
@@ -436,6 +429,7 @@ export default function* rootSaga() {
         watchChangeFileRequest(),
         watchLoadRequests(),
         watchLoadAnswers(),
-        watchUploadCompanyProfile()
+        watchUploadCompanyProfile(),
+        watchLoadCompanyPage()
     ])
 }
