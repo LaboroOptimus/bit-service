@@ -46,11 +46,70 @@ const initialState = {
     mustCheckNewPrice: false,
     mustCheckCompanyFields: false,
     address: [],
-    prices: []
+    prices: [],
+
+    pageMode: '',
+    isPageLoad: false,
+    dateUpload: null,
+    timeUpload: null,
 };
+
+/*
+
+id: 74491
+
+
+
+ */
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
+        case 'LOAD_COMPANY_PROFILE':
+            console.log('data', action.payload);
+            return {
+                ...state,
+                dateUpload: action.payload.dateUpload,
+                timeUpload: action.payload.timeUpload,
+                address: action.payload.address,
+                price: action.payload.prices,
+                inn: action.payload.inn,
+                contactPersonEmail: action.payload.personEmail,
+                contactPersonPhone: action.payload.personPhone,
+                contactPersonPhoto: action.payload.personPhoto,
+                contactPerson: action.payload.personName,
+                companyName:action.payload.name,
+                companyPhoto: action.payload.photo,
+                isFreeDiagnostics: action.payload.isFreeDiagnostics,
+                isDelivery: action.payload.isDelivery,
+                isGuarantee: action.payload.isGuarantee,
+                isWorkWithLegalEntity: action.payload.isWorkWithLegalEntity,
+                isEmailNotification: action.payload.isEmailNotification,
+                isPhoneNotification: action.payload.isPhoneNotification,
+                isEmailNews: action.payload.isEmailNews,
+                ogrn: action.payload.ogrn,
+                pageMode: 'profile',
+                isPageLoad: true,
+            };
+        case 'EDIT_COMPANY_PROFILE':
+            return {
+                ...state,
+                pageMode: 'edit',
+                isPageLoad: true,
+                isPersonNameValid: true,
+                isPersonEmailValid: true,
+                isPersonPhoneValid: true,
+                isPersonPhotoValid: true,
+                isCompanyNameValid: true,
+                isCompanyPhotoValid: true,
+                isOgrnValid: true,
+                isInnValid: true,
+                isCompanyAddressValid: true,
+                isCompanyStreetValid: true,
+                isCompanyHouseValid: true,
+                isServiceNameValid: true,
+                isServicePriceValid: true,
+            };
+
         case 'UPLOAD_COMPANY_SUCCESS':
             console.log('успешно');
             return {

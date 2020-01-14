@@ -182,7 +182,7 @@ const Button = styled.button`
     box-shadow: 0px 4px 6px rgba(106, 123, 255, 0.1);
 `;
 
-function Company(props) {
+function CompanyEdit(props) {
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -259,8 +259,8 @@ function Company(props) {
                     {props.prices.length !== 0 && props.prices.map((e,index) => {
                         return (
                             <Row key={index}>
-                                <AddedItem>{e.name}</AddedItem>
-                                <AddedItem>{e.price}</AddedItem>
+                                <AddedItem>{e.name} -</AddedItem>
+                                <AddedItem> {e.price}</AddedItem>
                                 <DeleteIcon icon={faTrashAlt} onClick={()=>props.onRemovePrice(e.id)}/>
                             </Row>
                         )
@@ -374,4 +374,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 /* TODO:  загрузка изображения*/
-export default connect(mapStateToProps, mapDispatchToProps)(Company)
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyEdit)
