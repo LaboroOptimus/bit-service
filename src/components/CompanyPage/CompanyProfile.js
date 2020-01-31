@@ -84,7 +84,7 @@ const PersonLabel = styled.span`
 const PersonInfo = styled.span`
     font-size: 20px;
     font-family: 'NotoSans-Bold';
-    color: #222;
+    color: #444;
 `;
 
 const Button = styled.button`
@@ -116,7 +116,7 @@ const CompanyInfo = styled.span`
     font-size: 22px;
     margin-bottom: 20px;
     font-family: 'NotoSans-Bold';
-    color: #222;
+    color: #444;
 `;
 
 const Status = styled.span`
@@ -167,10 +167,10 @@ const CompanyLabel = styled.span`
 `;
 
 const PriceName = styled.span`
-    color: #222;
+    color: #444;
 `;
 const PriceValue = styled.span`
-   color: #222;
+   color: #444;
 `;
 
 const AdnvantagesBlock = styled.div`
@@ -181,7 +181,7 @@ const AdnvantagesBlock = styled.div`
 `;
 
 const AdnvantagesLabel = styled.p`
-    color: #444444;
+    color: #444;
     text-align: center;
     padding: 0;
     margin: 10px 0 0 0;
@@ -197,7 +197,7 @@ const AdvantagesCount = styled.h4`
 `;
 
 const AdditionItem = styled.p`
-    color: #222;
+    color: #444;
     font-size: 16px;  
     margin: 5px 0;
 `;
@@ -220,7 +220,7 @@ const ServiceAddress = styled.h4`
 
 const ServiceMetro = styled.p`
     font-size: 16px;
-    color: #222;  
+    color: #444;  
     margin: 0 0 10px 0;
 `;
 
@@ -241,6 +241,7 @@ const WorkingHoursColumn = styled.span`
 const WorkingHours = styled.span`
     font-size: 14px;
     margin: 2px 0 2px 0;
+    color: #444;
 `;
 
 const ServiceContactItem = styled.p`
@@ -261,7 +262,7 @@ const ServicePhoto = styled.img`
 
 
 function CompanyProfile(props) {
-    console.log('цены', props.address);
+    console.log('цены', props.prices);
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -271,7 +272,7 @@ function CompanyProfile(props) {
                 </MainProfile>
                 <MainProfile>
                     <PersonLabel>Фамилия Имя Отчество</PersonLabel>
-                    <PersonTitle>Смирнов Игорь Витальевич</PersonTitle>
+                    <PersonTitle>{props.contactPerson}</PersonTitle>
                     <Row>
                         <PersonInfoBlock>
                             <PersonLabel>email</PersonLabel>
@@ -329,25 +330,14 @@ function CompanyProfile(props) {
             <Row marginTop={'40px'}>
                 <Column margin={'0 60px 0 0'}>
                     <SubTitle>Цены на ремонт</SubTitle>
-                    <Price backgroundColor={'transparent'}>
-                        <PriceName>ремонт дисплея</PriceName>
-                        <PriceValue>5000 рублей</PriceValue>
-                    </Price>
-
-                    <Price backgroundColor={'rgba(230,221,222,.2)'}>
-                        <PriceName>ремонт дисплея</PriceName>
-                        <PriceValue>5000 рублей</PriceValue>
-                    </Price>
-
-                    <Price backgroundColor={'transparent'}>
-                        <PriceName>ремонт дисплея</PriceName>
-                        <PriceValue>5000 рублей</PriceValue>
-                    </Price>
-
-                    <Price backgroundColor={'rgba(230,221,222,.2)'}>
-                        <PriceName>ремонт дисплея</PriceName>
-                        <PriceValue>5000 рублей</PriceValue>
-                    </Price>
+                    {props.prices.map((e,index)=>{
+                        return (
+                            <Price key={index + e.name + e.price} backgroundColor={index%2 === 0 ? 'transparent' : 'rgba(230,221,222,.2)'}>
+                                <PriceName>{e.name}</PriceName>
+                                <PriceValue>{e.price} рублей</PriceValue>
+                            </Price>
+                        )
+                    })}
                 </Column>
 
                 <Column>
@@ -427,7 +417,7 @@ const mapStateToProps = (state) => {
         dateUpload: state.company.dateUpload,
         timeUpload: state.company.timeUpload,
         address: state.company.address,
-        price: state.company.prices,
+        prices: state.company.prices,
         inn: state.company.inn,
         contactPersonEmail: state.company.contactPersonEmail,
         contactPersonPhone: state.company.contactPersonPhone,
@@ -443,7 +433,6 @@ const mapStateToProps = (state) => {
         isPhoneNotification: state.company.isPhoneNotification,
         isEmailNews: state.company.isEmailNews,
         ogrn: state.company.ogrn,
-
     }
 }
 
