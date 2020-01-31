@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
     padding: ${props=>props.padding}
-`
+`;
 
 class CompanyPage extends Component {
     componentDidMount() {
