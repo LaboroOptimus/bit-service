@@ -71,7 +71,7 @@ export default function companyReducer(state = initialState, action) {
                 dateUpload: action.payload.dateUpload,
                 timeUpload: action.payload.timeUpload,
                 address: action.payload.address,
-                price: action.payload.prices,
+                prices: action.payload.prices,
                 inn: action.payload.inn,
                 contactPersonEmail: action.payload.personEmail,
                 contactPersonPhone: action.payload.personPhone,
