@@ -52,6 +52,10 @@ const initialState = {
     isPageLoad: false,
     dateUpload: null,
     timeUpload: null,
+    rating: 0,
+    userRating: 0,
+    amountOrders: 0,
+    status: '',
 };
 
 /*
@@ -89,6 +93,11 @@ export default function companyReducer(state = initialState, action) {
                 ogrn: action.payload.ogrn,
                 pageMode: 'profile',
                 isPageLoad: true,
+                rating: action.payload.rating,
+                userRating: action.payload.userRating,
+                amountOrders: action.payload.amountOrders,
+                status: action.payload.status,
+
             };
         case 'EDIT_COMPANY_PROFILE':
             return {
