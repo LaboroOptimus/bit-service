@@ -7,20 +7,9 @@ import clipboard from './assets/clipboard.png'
 import star from './assets/favorites.png';
 import review from './assets/review.png';
 import phone from './assets/phone.png'
-
-const Wrapper = styled.div`
-    padding: 100px;
-    display: flex;
-    flex-direction: column;
-`;
-
-const Title = styled.h3`
-    font-size: 40px;
-    padding: 0;
-    margin: 0 0 20px 0;
-    font-family: 'NotoSans-Bold';
-    color: #222;
-`;
+import TextField from "../../UI/TextField";
+import Title from "../../UI/Title";
+import Wrapper from "../../UI/Wrapper";
 
 const MainProfile = styled.div`
     display: flex;
@@ -177,7 +166,7 @@ const AdnvantagesBlock = styled.div`
     background-image: url(${props=>props.backgroundImage});
     background-repeat: no-repeat;
     background-position: center center;
-    padding: 35px;
+    padding: 60px;
 `;
 
 const AdnvantagesLabel = styled.p`
@@ -295,7 +284,7 @@ function CompanyProfile(props) {
             </Row>
 
             <Row marginTop={'40px'}>
-                <Title>Моя компания <Status>не подтвержден</Status></Title> </Row>
+                <Title>Моя компания <Status>{props.status}</Status></Title> </Row>
                 <Row>
                 <Column margin={'0 10% 0 0'}>
                     <CompanyLabel>Название компании</CompanyLabel>
@@ -308,21 +297,21 @@ function CompanyProfile(props) {
                 <Column>
                     <AdnvantagesBlock backgroundImage={clipboard}>
                         <AdnvantagesLabel>Выполненых заявок</AdnvantagesLabel>
-                        <AdvantagesCount>167</AdvantagesCount>
+                        <AdvantagesCount>{props.amountOrders}</AdvantagesCount>
                     </AdnvantagesBlock>
                 </Column>
 
                     <Column>
                         <AdnvantagesBlock backgroundImage={review}>
                             <AdnvantagesLabel>Оценка пользователей</AdnvantagesLabel>
-                            <AdvantagesCount>4.5/5</AdvantagesCount>
+                            <AdvantagesCount>{props.userRating}/5</AdvantagesCount>
                         </AdnvantagesBlock>
                     </Column>
 
                     <Column margin={'0 20px'}>
                         <AdnvantagesBlock backgroundImage={star}>
                             <AdnvantagesLabel>Рейтинг</AdnvantagesLabel>
-                            <AdvantagesCount>1895</AdvantagesCount>
+                            <AdvantagesCount>{props.rating}</AdvantagesCount>
                         </AdnvantagesBlock>
                     </Column>
                 </Row>
@@ -433,6 +422,10 @@ const mapStateToProps = (state) => {
         isPhoneNotification: state.company.isPhoneNotification,
         isEmailNews: state.company.isEmailNews,
         ogrn: state.company.ogrn,
+        rating: state.company.rating,
+        userRating: state.company.userRating,
+        amountOrders: state.company.amountOrders,
+        status: state.company.status,
     }
 }
 

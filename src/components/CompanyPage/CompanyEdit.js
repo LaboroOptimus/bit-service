@@ -6,41 +6,16 @@ import { faCoffee, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import {validationEmail, validationEmptyString, validationPhone,} from "../../utils/validation";
 import {changeCompanyPersonFile,updateCompanyProfile,changeCompanyPhoto} from '../../redux/user-action-creators'
 import {login} from "../../redux/action-creators";
+import TextField from "../../UI/TextField";
+import Title from "../../UI/Title";
+import Wrapper from "../../UI/Wrapper";
+import Subtitle from "../../UI/Subtitle";
 
-const Wrapper = styled.div`
-    padding: 30px 100px;
-    display: flex;
-    flex-direction: column;
-`;
 
-const Title = styled.h3`
-    font-size: 30px;
-`;
-
-const SubTitle = styled.h3`
+/*const SubTitle = styled.h3`
     font-size: 20px;
     margin: 20px 0 20px 0;
-`;
-
-const Input = styled.input`
-    background-color: #fff;
-    padding: 13px 120px 13px 13px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    border: 1px solid #eee;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    outline: 0;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #333333;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    width: ${props => props.width};
-    height: 50px;
-`;
+`;*/
 
 const File = styled.input`
     margin-top: 15px;
@@ -183,6 +158,7 @@ const Button = styled.button`
 `;
 
 function CompanyEdit(props) {
+    console.log('ОГРН', props.ogrn)
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -193,18 +169,18 @@ function CompanyEdit(props) {
                     {!props.isPersonPhotoValid && props.mustCheckCompanyFields && <Error width={'100%'}>Файл должен быть в формате .png, .jpg, .jpeg</Error>}
                 </Column>
                 <Column>
-                    <SubTitle>Контактная информация <Question>для чего мне загружать информацию о
-                        себе?</Question></SubTitle>
+                    <Subtitle>Контактная информация <Question>для чего мне загружать информацию о
+                        себе?</Question></Subtitle>
                     {(!props.isPersonPhoneValid || !props.isPersonEmailValid || props.isPersonNameValid) && props.mustCheckCompanyFields &&
                     <Row>
                         <Error width={'50%'}>Проверьте правильность полей!</Error>
                     </Row>}
                     <Row>
-                        <Input data-validation-func={validationEmptyString} data-validation={'isPersonNameValid'} onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
+                        <TextField dataValidationFunc={validationEmptyString} dataValidation={'isPersonNameValid'} onChange={props.onChangeCompanyInfo} width={'60%'} placeholder={'Смирнов Игорь Витальевич'} name={'contactPerson'}/>
                     </Row>
                     <Row>
-                        <Input data-validation-func={validationEmail} data-validation={'isPersonEmailValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
-                        <Input data-validation-func={validationPhone} data-validation={'isPersonPhoneValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
+                        <TextField dataValidationFunc={validationEmail} dataValidation={'isPersonEmailValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'igor@mail.ru'} name={'contactPersonEmail'}/>
+                        <TextField dataValidationFunc={validationPhone} dataValidation={'isPersonPhoneValid'} onChange={props.onChangeCompanyInfo} width={'40%'} placeholder={'89269258713'} name={'contactPersonPhone'}/>
                     </Row>
 
                 </Column>
@@ -212,22 +188,22 @@ function CompanyEdit(props) {
             <Row>
                 <Column>
                     <Title>Моя компания</Title>
-                    <SubTitle>Информация о компании</SubTitle>
+                    <Subtitle>Информация о компании</Subtitle>
                     <Row>
-                        <Input data-validation={'isCompanyNameValid'} onChange={props.onChangeCompanyInfo} placeholder={'Название компании'} name={'companyName'}/>
-                        <Input data-validation={'isOgrnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
-                        <Input data-validation={'isInnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
+                        <TextField dataValidation={'isCompanyNameValid'} onChange={props.onChangeCompanyInfo} placeholder={'Название компании'} name={'companyName'}/>
+                        <TextField dataValidation={'isOgrnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ОГРН'} name={'ogrn'}/>
+                        <TextField dataValidation={'isInnValid'} onChange={props.onChangeCompanyInfo} placeholder={'ИНН'} name={'inn'}/>
                     </Row>
                     {(!props.isCompanyNameValid || !props.isOgrnValid || !props.isInnValid) && props.mustCheckCompanyFields &&
                     <Row>
                         <Error width={'50%'}>Проверьте правильность полей!</Error>
                     </Row>}
 
-                        <SubTitle>Фото сервиса</SubTitle>
+                        <Subtitle>Фото сервиса</Subtitle>
                         <Img src={props.companyPhoto}/>
                         <File onChange={props.onChangeCompanyPhoto} type={'file'}/>
 
-                    <SubTitle>Адреса сервисов</SubTitle>
+                    <Subtitle>Адреса сервисов</Subtitle>
 
                     {props.address.length !== 0 && props.address.map((e,index) => {
                         return (
@@ -241,11 +217,11 @@ function CompanyEdit(props) {
                     })}
 
                     <Row>
-                        <Input data-validation={'isCompanyAddressValid'} name={'companyCity'} onChange={props.onChangeCompanyInfo} value={props.companyCity} width={'20%'}
+                        <TextField dataValidation={'isCompanyAddressValid'} name={'companyCity'} onChange={props.onChangeCompanyInfo} value={props.companyCity}
                                placeholder={'Москва'}/>
-                        <Input data-validation={'isCompanyStreetValid'} name={'companyStreet'} onChange={props.onChangeCompanyInfo} value={props.companyStreet} width={'30%'}
+                        <TextField dataValidation={'isCompanyStreetValid'} name={'companyStreet'} onChange={props.onChangeCompanyInfo} value={props.companyStreet}
                                placeholder={'ул. Ленина'}/>
-                        <Input data-validation={'isCompanyHouseValid'} name={'companyHouse'} onChange={props.onChangeCompanyInfo} value={props.companyHouse} width={'25%'}
+                        <TextField dataValidation={'isCompanyHouseValid'} name={'companyHouse'} onChange={props.onChangeCompanyInfo} value={props.companyHouse}
                                placeholder={'дом 5 строение 2'}/>
 
                         <Add>
@@ -255,7 +231,7 @@ function CompanyEdit(props) {
                     {props.mustCheckNewAddress && !(props.isCompanyHouseValid && props.isCompanyStreetValid && props.isCompanyAddressValid) &&
                     <Error width={'20%'}>Проверьте правильность адреса!</Error>}
 
-                    <SubTitle>Цены на услуги</SubTitle>
+                    <Subtitle>Цены на услуги</Subtitle>
                     {props.prices.length !== 0 && props.prices.map((e,index) => {
                         return (
                             <Row key={index}>
@@ -268,8 +244,8 @@ function CompanyEdit(props) {
 
 
                     <Row>
-                        <Input data-validation={'isServiceNameValid'} name={'serviceName'} width={'30%'}  value={props.serviceName} onChange={props.onChangeCompanyInfo} placeholder={'замена дисплея iphone'}/>
-                        <Input data-validation={'isServicePriceValid'} name={'servicePrice'} width={'20%'} value={props.servicePrice} onChange={props.onChangeCompanyInfo} placeholder={'1000'}/>
+                        <TextField dataValidation={'isServiceNameValid'} name={'serviceName'} width={'30%'}  value={props.serviceName} onChange={props.onChangeCompanyInfo} placeholder={'замена дисплея iphone'}/>
+                        <TextField dataValidation={'isServicePriceValid'} name={'servicePrice'} width={'20%'} value={props.servicePrice} onChange={props.onChangeCompanyInfo} placeholder={'1000'}/>
                         <Add>
                             {/* <AddIcon src={plus}/>*/}
                             <AddValue onClick={()=>props.onAddPrice()}>добавить еще</AddValue>
@@ -280,7 +256,7 @@ function CompanyEdit(props) {
 
                     <Row>
                         <Column>
-                            <SubTitle>Дополнительная информация</SubTitle>
+                            <Subtitle>Дополнительная информация</Subtitle>
                             <CheckboxGroup>
                                 <Checkbox onChange={props.onChangeCheckbox} id='ch1' type='checkbox' name={'isFreeDiagnostics'}/>
                                 <CheckboxLabel htmlFor={'ch1'}>Бесплатная диагностика</CheckboxLabel>
@@ -303,7 +279,7 @@ function CompanyEdit(props) {
                         </Column>
 
                         <Column marginLeft={'50px'}>
-                            <SubTitle>Настройка уведомлений</SubTitle>
+                            <Subtitle>Настройка уведомлений</Subtitle>
                             <CheckboxGroup>
                                 <Checkbox onChange={props.onChangeCheckbox} id='ch5' type='checkbox' name={'isEmailNotification'}/>
                                 <CheckboxLabel htmlFor={'ch5'}>Уведомление по email</CheckboxLabel>
@@ -357,6 +333,7 @@ const mapStateToProps = (state) => {
         mustCheckNewPrice: state.company.mustCheckNewPrice,
         mustCheckCompanyFields: state.company.mustCheckCompanyFields,
         contactPersonPhoto: state.company.contactPersonPhoto,
+        ogrn: state.company.ogrn
     }
 };
 
@@ -373,5 +350,5 @@ const mapDispatchToProps = (dispatch) => {
         onUpdateCompanyProfile: (e) => dispatch(updateCompanyProfile(e))
     }
 };
-/* TODO:  загрузка изображения*/
+
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyEdit)

@@ -11,12 +11,10 @@ import Reviews from "../Reviews/Reviews";
 import News from "../News/News";
 import Footer from "../Footer/Footer";
 import styled from "styled-components";
-import {font} from "../../fonts/Raleway-Regular.ttf";
 
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
-  font-family: ${font};
 `;
 
 const MainPage = () => {

@@ -157,7 +157,7 @@ export function * workerUploadCompanyProfile(data) {
                         isPhoneNotification: data.payload.profile.isPhoneNotification,
                         isEmailNews: data.payload.profile.isEmailNews,
                         address: data.payload.profile.address,
-                        prices: data.payload.profile.prices
+                        prices: data.payload.profile.prices,
                     });
                 }
             );
@@ -211,14 +211,18 @@ export function * workerUploadCompanyProfile(data) {
                             isPhoneNotification: data.payload.profile.isPhoneNotification,
                             isEmailNews: data.payload.profile.isEmailNews,
                             address: data.payload.profile.address,
-                            prices: data.payload.profile.prices
+                            prices: data.payload.profile.prices,
+                            status: 'не подтвержден',
+                            rating: 0,
+                            amountOrders: 0,
+                            userRating: 0,
                         });
                     }
                 );
             }
 
             yield put({type: 'UPLOAD_COMPANY_SUCCESS'});
-            //history.push('/my-requests')
+            history.push('/company')
 
         } catch (e) {
             console.log(e);
