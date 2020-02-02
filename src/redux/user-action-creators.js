@@ -155,11 +155,11 @@ export const updateCompanyProfile = (e) => {
     let data =  store.getState().company;
     let isValidateUpload = validateUploadCompanyProfile(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
-        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid, data.isPersonPhotoValid, data.isCompanyPhotoValid); // TODO: добавить валидацию картинок
+        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid, data.isPersonPhotoValid, data.isCompanyPhotoValid);
 
     console.log(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
-        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid)
+        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid);
     let profile = {
         name: data.companyName,
         ogrn: data.ogrn,
@@ -177,7 +177,7 @@ export const updateCompanyProfile = (e) => {
         isPhoneNotification: data.isPhoneNotification,
         isEmailNews: data.isEmailNews,
         address: data.address,
-        prices: data.prices
+        prices: data.prices,
     };
 
     return {

@@ -367,7 +367,7 @@ function CompanyProfile(props) {
                 <ServicePhoto src={`${props.companyPhoto}`}/>
             </Row>
 
-            {props.address.map((e, index)=>{
+            {props.address && props.address.map((e, index)=>{
                 return (
                     <Row marginTop={'40px'} key={index+e.street+e.house}>
                         <Column>

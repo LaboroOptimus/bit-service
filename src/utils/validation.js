@@ -59,6 +59,15 @@ export const validationCompanyAddress = string => {
     return string.length >= 4;
 }
 
+export const validationWorkHours = string => {
+    if(Number(string) > 0 && Number(string) < 24){
+        return true
+    }
+    else {
+        return false
+    }
+};
+
 export const validateCompanyFields = (name, field) => {
     switch (name) {
         case 'isPersonNameValid':
@@ -83,6 +92,8 @@ export const validateCompanyFields = (name, field) => {
             return validationEmptyString(field);
         case 'isServicePriceValid':
             return validationPrice(field);
+        case 'isCompanyWorkHoursValid':
+            return validationWorkHours(field);
         default:
             return true
     }

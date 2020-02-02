@@ -11,7 +11,8 @@ const Input = styled.input`
     border: 1px solid #dbdbdb;
     background: #fff;
     outline: 0;
-    width: 90%;
+    width: ${props=>props.width ? props.width : '100%'};
+    height: ${props=>props.height ? props.height : 'auto'}
     resize: none;
     margin-bottom: 16px;
     font-style: normal;
@@ -21,6 +22,7 @@ const Input = styled.input`
     color: #000000;
     border-radius: 10px;
     margin-right: 10px;
+    margin-left: ${props=>props.marginLeft ? props.marginLeft : '0'}
     
     :active, :focus {
         border: 1px solid #368594;
@@ -36,6 +38,9 @@ export default function TextField(props) {
             data-validation-func={props.dataValidationFunc}
             name={props.name}
             value={props.value}
+            width={props.width}
+            height={props.height}
+            marginLeft={props.marginLeft}
         />
     )
 }

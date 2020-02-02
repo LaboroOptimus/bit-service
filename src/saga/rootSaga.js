@@ -183,7 +183,7 @@ export function * workerUploadCompanyProfile(data) {
                             isPhoneNotification: data.payload.profile.isPhoneNotification,
                             isEmailNews: data.payload.profile.isEmailNews,
                             address: data.payload.profile.address,
-                            prices: data.payload.profile.prices
+                            prices: data.payload.profile.prices,
                         });
                     }
                 );
