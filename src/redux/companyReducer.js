@@ -5,6 +5,7 @@ const initialState = {
     companyCity: '',
     companyHouse: '',
     companyStreet: '',
+    companyStation: '',
     companyName: '',
     companyPhoto: 'http://placehold.it/200x200',
     contactPerson: '',
@@ -56,15 +57,29 @@ const initialState = {
     userRating: 0,
     amountOrders: 0,
     status: '',
+
+    mondayStart: 0,
+    mondayEnd: 0,
+
+    tuesdayStart: 0,
+    tuesdayEnd: 0,
+
+    wednesdayStart: 0,
+    wednesdayEnd: 0,
+
+    thursdayStart: 0,
+    thursdayEnd: 0,
+
+    fridayStart: 0,
+    fridayEnd: 0,
+
+    saturdayStart: 0,
+    saturdayEnd: 0,
+
+    sundayStart: 0,
+    sundayEnd: 0,
 };
 
-/*
-
-id: 74491
-
-
-
- */
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
@@ -97,7 +112,6 @@ export default function companyReducer(state = initialState, action) {
                 userRating: action.payload.userRating,
                 amountOrders: action.payload.amountOrders,
                 status: action.payload.status,
-
             };
         case 'EDIT_COMPANY_PROFILE':
             return {
@@ -174,8 +188,6 @@ export default function companyReducer(state = initialState, action) {
                 price: state.servicePrice,
             };
             if(state.isServicePriceValid && state.isServiceNameValid){
-               /* const newPrices = state.prices;
-                newPrices[newPrices.length] = priceItem;*/
                 return {
                     ...state,
                     prices: [...state.prices, priceItem],
@@ -226,34 +238,88 @@ export default function companyReducer(state = initialState, action) {
             };
         case 'ADD_COMPANY_ADDRESS':
             let companyId;
-
-            if (typeof state.address[state.address.length - 1] === 'undefined') {
-                companyId = 0
-            } else {
+            if (typeof state.address !== 'undefined' && state.address.length !== 0) {
                 companyId = state.address[state.address.length - 1].id + 1;
+            } else {
+                companyId = 0
             }
 
             const addressItem = {
                 id: companyId,
                 city: state.companyCity,
                 street: state.companyStreet,
+                station: state.companyStation,
                 house: state.companyHouse,
+                mondayStart: state.mondayStart,
+                mondayEnd: state.mondayEnd,
+                tuesdayStart: state.tuesdayStart,
+                tuesdayEnd: state.tuesdayEnd,
+                wednesdayStart: state.wednesdayStart,
+                wednesdayEnd: state.wednesdayEnd,
+                thursdayStart: state.thursdayStart,
+                thursdayEnd: state.tuesdayStart,
+                fridayStart: state.fridayStart,
+                fridayEnd: state.fridayEnd,
+                saturdayStart: state.saturdayStart,
+                saturdayEnd: state.saturdayEnd,
+                sundayStart: state.sundayStart,
+                sundayEnd: state.sundayEnd,
             };
-            //const newAddress = state.address;
-            //newAddress[newAddress.length] = addressItem;
-            if (state.isCompanyAddressValid) {
+
+            if (state.isCompanyAddressValid && state.address) {
                 return {
                     ...state,
                     address: [...state.address, addressItem],
+                    companyStation: '',
                     companyCity: '',
                     companyHouse: '',
                     companyStreet: '',
                     mustCheckNewAddress: false,
+                    mondayStart: 0,
+                    mondayEnd: 0,
+                    tuesdayStart: 0,
+                    tuesdayEnd: 0,
+                    wednesdayStart: 0,
+                    wednesdayEnd: 0,
+                    thursdayStart: 0,
+                    thursdayEnd: 0,
+                    fridayStart: 0,
+                    fridayEnd: 0,
+                    saturdayStart: 0,
+                    saturdayEnd: 0,
+                    sundayStart: 0,
+                    sundayEnd: 0,
                 }
-            } else {
+            } else if (!state.isCompanyAddressValid){
                 return {
                     ...state,
                     mustCheckNewAddress: true,
+                }
+            }
+            else if(!state.address){
+                let arr = [addressItem];
+                return {
+                    ...state,
+                    address: arr,
+                    companyCity: '',
+                    companyHouse: '',
+                    companyStation: '',
+                    companyStreet: '',
+                    mustCheckNewAddress: false,
+                    mondayStart: 0,
+                    mondayEnd: 0,
+                    tuesdayStart: 0,
+                    tuesdayEnd: 0,
+                    wednesdayStart: 0,
+                    wednesdayEnd: 0,
+                    thursdayStart: 0,
+                    thursdayEnd: 0,
+                    fridayStart: 0,
+                    fridayEnd: 0,
+                    saturdayStart: 0,
+                    saturdayEnd: 0,
+                    sundayStart: 0,
+                    sundayEnd: 0,
                 }
             }
         default:
