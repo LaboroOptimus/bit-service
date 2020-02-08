@@ -7,7 +7,7 @@ const initialState = {
     companyStreet: '',
     companyStation: '',
     companyName: '',
-    companyPhoto: 'http://placehold.it/200x200',
+    companyPhoto: 'http://placehold.it/100x100',
     contactPerson: '',
     contactPersonEmail: '',
     contactPersonPhone: '',
@@ -84,7 +84,7 @@ const initialState = {
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
         case 'LOAD_COMPANY_PROFILE':
-            console.log('data', action.payload);
+            console.log('data address', action.payload.address);
             return {
                 ...state,
                 dateUpload: action.payload.dateUpload,
@@ -250,6 +250,7 @@ export default function companyReducer(state = initialState, action) {
                 street: state.companyStreet,
                 station: state.companyStation,
                 house: state.companyHouse,
+                photo: state.companyPhoto,
                 mondayStart: state.mondayStart,
                 mondayEnd: state.mondayEnd,
                 tuesdayStart: state.tuesdayStart,
@@ -270,6 +271,7 @@ export default function companyReducer(state = initialState, action) {
                 return {
                     ...state,
                     address: [...state.address, addressItem],
+                    companyPhoto: 'http://placehold.it/100x100',
                     companyStation: '',
                     companyCity: '',
                     companyHouse: '',
@@ -301,6 +303,7 @@ export default function companyReducer(state = initialState, action) {
                 return {
                     ...state,
                     address: arr,
+                    companyPhoto: 'http://placehold.it/100x100',
                     companyCity: '',
                     companyHouse: '',
                     companyStation: '',

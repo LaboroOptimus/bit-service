@@ -118,7 +118,6 @@ export const changeCompanyPersonFile = (file) => {
 };
 
 export const changeCompanyPhoto = (file) => {
-    //console.log('file', file.name.split(".").splice(-1,1)[0]);
     return new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.onload = () => {
