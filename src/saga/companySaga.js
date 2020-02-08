@@ -19,7 +19,6 @@ export function* workerLoadCompanyPage() {
 
     for(let i = 0; i<keys.length; i++){
         if(keys[i] === uid){
-
             isCompanyAlreadyExist = true;
             break;
         }

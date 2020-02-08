@@ -9,6 +9,7 @@ import TextField from "../../UI/TextField";
 import Title from "../../UI/Title";
 import Wrapper from "../../UI/Wrapper";
 import Subtitle from "../../UI/Subtitle";
+import AddButton from "../../UI/AddButton";
 
 
 const TextFieldLabel = styled.span`
@@ -18,6 +19,11 @@ const TextFieldLabel = styled.span`
 
 const File = styled.input`
     margin-top: 15px;
+`;
+
+const PhotoPreview = styled.img`
+    width: 50px;
+    height: 50px;
 `;
 
 const Row = styled.div`
@@ -32,10 +38,16 @@ const Img = styled.img`
     width: 200px;
 `;
 
+const CompanyPhoto = styled.img`
+    width: 100px;
+    height: 100px;
+`;
+
 const Column = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: ${props => props.marginLeft};
+    margin-top: ${props=>props.marginTop};
     padding: ${props=>props.padding ? props.padding : '0'};
 `;
 
@@ -236,36 +248,34 @@ function CompanyEdit(props) {
                         <Error width={'50%'}>Проверьте правильность полей!</Error>
                     </Row>}
 
-                    <Subtitle>Фото сервиса</Subtitle>
-                    <Img src={props.companyPhoto}/>
-                    <File onChange={props.onChangeCompanyPhoto} type={'file'}/>
-
                     <Subtitle>Адреса сервисов</Subtitle>
-                    <Add>
-                        <AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>
-                    </Add>
+
 
                     {props.address && props.address.map((e, index) => {
                         return (
-                            <Column key={index + e.city + e.street + e.house}>
-                                <Row marginTop={'10px'}>
-                                    <AddedItem>{index + 1}. {e.city}, {e.street}, {e.house}</AddedItem>
-                                    <DeleteIcon icon={faTrashAlt} onClick={() => props.onRemoveAddress(e.id)}/>
-                                </Row>
-                                <Row>
-                                    <WorkingHours>
-                                        пн:{e.mondayStart}:00 - {e.mondayEnd}:00,
-                                        вт:{e.tuesdayStart}:00 - {e.tuesdayEnd}:00,
-                                        ср:{e.wednesdayStart}:00 - {e.wednesdayEnd}:00,
-                                        чт:{e.thursdayStart}:00 - {e.thursdayEnd}:00,
-                                        пт:{e.fridayStart}:00 - {e.fridayEnd}:00,
-                                        сб:{e.saturdayStart}:00 - {e.saturdayEnd}:00,
-                                        вск:{e.sundayStart}:00 - {e.sundayEnd}:00,
-                                    </WorkingHours>
-                                </Row>
-                            </Column>
-                        )
-                    })}
+
+                    <Row marginTop={'20px'}>
+                        <Column>
+                            <PhotoPreview src={e.photo}/>
+                        </Column>
+                        <Column marginLeft={'20px'}>
+                            <Row marginTop={'10px'}>
+                                <AddedItem>{index + 1}. {e.city}, {e.street}, {e.house}</AddedItem>
+                                <DeleteIcon icon={faTrashAlt} onClick={() => props.onRemoveAddress(e.id)}/>
+                            </Row>
+                            <Row>
+                                <WorkingHours>
+                                    пн:{e.mondayStart}:00 - {e.mondayEnd}:00,
+                                    вт:{e.tuesdayStart}:00 - {e.tuesdayEnd}:00,
+                                    ср:{e.wednesdayStart}:00 - {e.wednesdayEnd}:00,
+                                    чт:{e.thursdayStart}:00 - {e.thursdayEnd}:00,
+                                    пт:{e.fridayStart}:00 - {e.fridayEnd}:00,
+                                    сб:{e.saturdayStart}:00 - {e.saturdayEnd}:00,
+                                    вск:{e.sundayStart}:00 - {e.sundayEnd}:00
+                                </WorkingHours>
+                            </Row>
+                        </Column>
+                    </Row>)})}
 
 
                     <Row marginTop={'20px'}>
@@ -302,6 +312,12 @@ function CompanyEdit(props) {
 
                     <Row>
                         <Column>
+                            <Subtitle>Фото сервиса</Subtitle>
+                            <CompanyPhoto src={props.companyPhoto}/>
+                            <File onChange={props.onChangeCompanyPhoto} type={'file'}/>
+                        </Column>
+
+                        <Column marginTop={'20px'}>
                             <WorkingHoursLabel>Понедельник</WorkingHoursLabel>
                             <WorkingHoursLabel>Вторник</WorkingHoursLabel>
                             <WorkingHoursLabel>Среда</WorkingHoursLabel>
@@ -311,7 +327,7 @@ function CompanyEdit(props) {
                             <WorkingHoursLabel>Воскресенье</WorkingHoursLabel>
                         </Column>
 
-                        <Column>
+                        <Column marginTop={'20px'}>
                             <Row>
                                 <TextField height={'10%'} width={'10%'} placeholder={'8'}
                                            dataValidation={'isCompanyWorkHoursValid'}
@@ -394,7 +410,15 @@ function CompanyEdit(props) {
                                            onChange={props.onChangeCompanyInfo} name={'sundayEnd'}
                                            value={props.sundayEnd}/>
                             </Row>
+                        </Column>
 
+
+
+                        <Column marginTop={'20px'}>
+                            <Add>
+                                {/*<AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>*/}
+                                <AddButton text={'Добавить адрес'} onClick={()=>props.onAddAddress()}/>
+                            </Add>
                         </Column>
                     </Row>
 
