@@ -54,13 +54,12 @@ export default function rootReducer(state = initialState, action) {
                 isPassValid: action.payload.check
             };
 
-        case 'CHANGE_COMPANY_CHECKBOX':
+        case 'CHANGE_COMPANY_CHECKBOX_REG':
             return {
                 ...state,
                 isAgreementCheck: !state.isAgreementCheck,
             };
         case 'CHECK_COMPANY_FIELDS':
-            //console.log(state.isPassValid, state.isAgreementCheck, state.isCityValid, state.isNameValid, state.isPhoneValid, state.isCompanyValid,state.isEmailValid)
             return {
                 ...state,
                 mustCheckFields: true,
