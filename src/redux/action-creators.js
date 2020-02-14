@@ -181,9 +181,9 @@ export const changeCompanyPass = (e) => {
     }
 };
 
-export const changeCompanyCheckbox = (e) => {
+export const changeCompanyCheckboxReg = (e) => {
     return {
-        type: 'CHANGE_COMPANY_CHECKBOX',
+        type: 'CHANGE_COMPANY_CHECKBOX_REG',
     }
 };
 

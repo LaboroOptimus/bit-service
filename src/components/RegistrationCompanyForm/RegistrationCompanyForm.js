@@ -2,7 +2,8 @@ import React from 'react'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
-import {onCompanyRegistration, changeCompanyName,changeCompany,changeCompanyCheckbox,changeCompanyCity,changeCompanyEmail,changeCompanyPass,changeCompanyPhone} from "../../redux/action-creators";
+import {onCompanyRegistration, changeCompanyName,changeCompany,changeCompanyCheckboxReg,
+    changeCompanyCity,changeCompanyEmail,changeCompanyPass,changeCompanyPhone} from "../../redux/action-creators";
 
 const Wrapper = styled.div`
     display: flex;
@@ -164,14 +165,6 @@ const Checkbox = styled.input`
    }
 `;
 
-/*
-*
-
-
-
-
-    isPassValid: true,*/
-
 class RegistrationCompanyForm extends React.Component {
     render() {
         const {name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid} = this.props;
@@ -200,8 +193,6 @@ class RegistrationCompanyForm extends React.Component {
                             <Input onChange={this.props.onPhoneChange} value={phone} placeholder={'8(800)000-00-00'}/>
                         </Container>
                     </Row>
-
-
                     <Row>
                         <Container>
                             <Label>Введите email</Label>
@@ -218,7 +209,7 @@ class RegistrationCompanyForm extends React.Component {
                     <Row>
                         <Container>
                             <CheckboxGroup>
-                                <Checkbox onClick={() => this.props.onCheckboxChange()} id='phone_email' type='checkbox'/>
+                                <Checkbox onClick={() => this.props.onCheckboxChangeReg()} id='phone_email' type='checkbox'/>
                                 <CheckboxLabel htmlFor={'phone_email'}>Согласен на обработку персональных данных</CheckboxLabel>
                             </CheckboxGroup>
                         </Container>
@@ -268,7 +259,7 @@ const mapDispatchToProps = (dispatch) => {
         onPhoneChange: (e) => dispatch(changeCompanyPhone(e)),
         onEmailChange: (e) => dispatch(changeCompanyEmail(e)),
         onPassChange: (e) => dispatch(changeCompanyPass(e)),
-        onCheckboxChange: () => dispatch(changeCompanyCheckbox()),
+        onCheckboxChangeReg: () => dispatch(changeCompanyCheckboxReg()),
         onSubmit:(e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid) => {
             dispatch(onCompanyRegistration(e,name,company,phone,email,city,pass, isAgreementCheck,isCompanyValid,isNameValid,isCityValid,isPhoneValid,isEmailValid,isPassValid))
         }

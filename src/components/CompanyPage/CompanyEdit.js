@@ -32,6 +32,7 @@ const Row = styled.div`
     margin-top: ${props => props.marginTop}
 `;
 
+
 const Img = styled.img`
     margin-right: 30px;
     height: 200px;
@@ -48,6 +49,7 @@ const Column = styled.div`
     flex-direction: column;
     margin-left: ${props => props.marginLeft};
     margin-top: ${props=>props.marginTop};
+    margin-right: ${props=>props.marginRight};
     padding: ${props=>props.padding ? props.padding : '0'};
 `;
 
@@ -171,7 +173,7 @@ const Button = styled.button`
 `;
 
 const WorkingHoursLabel = styled.span`
-    margin: 7px 20px 25px 0;
+    margin: 10px 20px 25px 0;
     font-size: 13px;
 `;
 
@@ -186,9 +188,6 @@ const WorkingHours = styled.span`
 `;
 
 function CompanyEdit(props) {
-    console.log('пн старт', props.mondayStart)
-
-    console.log('вт старт', props.tuesdayStart)
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -227,17 +226,17 @@ function CompanyEdit(props) {
                     <Title>Моя компания</Title>
                     <Subtitle>Информация о компании</Subtitle>
                     <Row>
-                        <Column>
+                        <Column marginRight={'40px'}>
                             <TextFieldLabel>Название компании</TextFieldLabel>
                             <TextField dataValidation={'isCompanyNameValid'} onChange={props.onChangeCompanyInfo}
                                        placeholder={'ООО "Рога и Копыта"'} name={'companyName'}/>
                         </Column>
-                        <Column>
+                        <Column marginRight={'40px'}>
                             <TextFieldLabel>ОГРН</TextFieldLabel>
                             <TextField dataValidation={'isOgrnValid'} onChange={props.onChangeCompanyInfo}
                                        placeholder={'1177746126040'} name={'ogrn'}/>
                         </Column>
-                        <Column>
+                        <Column marginRight={'40px'}>
                             <TextFieldLabel>ИНН</TextFieldLabel>
                             <TextField dataValidation={'isInnValid'} onChange={props.onChangeCompanyInfo}
                                        placeholder={'7731347089'} name={'inn'}/>
@@ -427,24 +426,24 @@ function CompanyEdit(props) {
                     {props.prices.length !== 0 && props.prices.map((e, index) => {
                         return (
                             <Row key={index}>
-                                <AddedItem>{e.name} -</AddedItem>
+                                <AddedItem>{index + 1}.{e.name} - </AddedItem>
                                 <AddedItem> {e.price}</AddedItem>
-
                                 <DeleteIcon icon={faTrashAlt} onClick={() => props.onRemovePrice(e.id)}/>
                             </Row>
                         )
                     })}
 
-                    <Row>
+                    <Row marginTop={'20px'}>
                         <TextField dataValidation={'isServiceNameValid'} name={'serviceName'} width={'30%'}
                                    value={props.serviceName} onChange={props.onChangeCompanyInfo}
                                    placeholder={'замена дисплея iphone'}/>
                         <TextField dataValidation={'isServicePriceValid'} name={'servicePrice'} width={'20%'}
                                    value={props.servicePrice} onChange={props.onChangeCompanyInfo}
                                    placeholder={'1000'}/>
+
                         <Add>
-                            {/* <AddIcon src={plus}/>*/}
-                            <AddValue onClick={() => props.onAddPrice()}>добавить еще</AddValue>
+                            {/*<AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>*/}
+                            <AddButton text={'Добавить цену'} onClick={() => props.onAddPrice()}/>
                         </Add>
                     </Row>
 

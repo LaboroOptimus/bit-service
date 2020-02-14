@@ -251,7 +251,7 @@ const ServicePhoto = styled.img`
 
 
 function CompanyProfile(props) {
-    console.log('цены', props.prices);
+    console.log('props', props.address)
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -331,60 +331,35 @@ function CompanyProfile(props) {
 
                 <Column>
                     <SubTitle>Дополнительные услуги</SubTitle>
-                    <AdditionItem><AdditionItemCircle/>Бесплатная диагностика</AdditionItem>
-                    <AdditionItem><AdditionItemCircle/>Доставка до сервиса</AdditionItem>
-                    <AdditionItem><AdditionItemCircle/>Работаем с юридическими лицами</AdditionItem>
+                    {props.isFreeDiagnostics && <AdditionItem><AdditionItemCircle/>Бесплатная диагностика</AdditionItem>}
+                    {props.isGuarantee && <AdditionItem><AdditionItemCircle/>Даем гарантию</AdditionItem>}
+                    {props.isDelivery && <AdditionItem><AdditionItemCircle/>Доставка до сервиса</AdditionItem>}
+                    {props.isWorkWithLegalEntity && <AdditionItem><AdditionItemCircle/>Работаем с юридическими лицами</AdditionItem>}
                 </Column>
             </Row>
 
 
             <Row marginTop={'40px'}>
                 <SubTitle>Адрес и режим работы</SubTitle> </Row>
-            <Row >
-                <Column>
-                    <ServiceAddress>г.Москва, ул. Соколово-Мещерская, д. 26 к.1</ServiceAddress>
-                    <ServiceMetro><MetroCircle backgroundColor={'#782678'}/>м. Планерная</ServiceMetro>
-                    <Row>
-                        <WorkingHoursColumn>
-                            <WorkingHours>Пн - 10:00 - 18:00</WorkingHours>
-                            <WorkingHours>Вт - 10:00 - 18:00</WorkingHours>
-                            <WorkingHours>Ср - 10:00 - 18:00</WorkingHours>
-                            <WorkingHours>Чт - 10:00 - 18:00</WorkingHours>
-                        </WorkingHoursColumn>
-
-                        <WorkingHoursColumn>
-                            <WorkingHours>Пт - 10:00 - 18:00</WorkingHours>
-                            <WorkingHours>Сб - 10:00 - 18:00</WorkingHours>
-                            <WorkingHours>Вск - выходной</WorkingHours>
-                        </WorkingHoursColumn>
-
-                        <WorkingHoursColumn>
-                            <ServiceContactItem><ServiceContactImg src={phone}/>+7(900)555-35-35</ServiceContactItem>
-                            <ServiceContactItem><ServiceContactImg src={phone}/>+7(900)555-35-35</ServiceContactItem>
-                        </WorkingHoursColumn>
-                    </Row>
-                </Column>
-                <ServicePhoto src={`${props.companyPhoto}`}/>
-            </Row>
 
             {props.address && props.address.map((e, index)=>{
                 return (
                     <Row marginTop={'40px'} key={index+e.street+e.house}>
                         <Column>
                             <ServiceAddress>{e.city}, {e.street}, {e.house}</ServiceAddress>
-                            <ServiceMetro><MetroCircle backgroundColor={'#D90102'}/>м. Чистые Пруды</ServiceMetro>
+                            <ServiceMetro><MetroCircle backgroundColor={'#D90102'}/>м. {e.station}</ServiceMetro>
                             <Row>
                                 <WorkingHoursColumn>
-                                    <WorkingHours>Пн - 10:00 - 18:00</WorkingHours>
-                                    <WorkingHours>Вт - 10:00 - 18:00</WorkingHours>
-                                    <WorkingHours>Ср - 10:00 - 18:00</WorkingHours>
-                                    <WorkingHours>Чт - 10:00 - 18:00</WorkingHours>
+                                    <WorkingHours>Пн - {e.mondayStart}:00 - {e.mondayStart}:00 </WorkingHours>
+                                    <WorkingHours>Вт - {e.tuesdayStart}:00  - {e.tuesdayEnd}:00 </WorkingHours>
+                                    <WorkingHours>Ср - {e.wednesdayStart}:00  - {e.wednesdayEnd}:00</WorkingHours>
+                                    <WorkingHours>Чт - {e.thursdayStart}:00 - {e.thursdayEnd}:00</WorkingHours>
                                 </WorkingHoursColumn>
 
                                 <WorkingHoursColumn>
-                                    <WorkingHours>Пт - 10:00 - 18:00</WorkingHours>
-                                    <WorkingHours>Сб - 10:00 - 18:00</WorkingHours>
-                                    <WorkingHours>Вск - выходной</WorkingHours>
+                                    <WorkingHours>Пт - {e.fridayStart}:00 - {e.fridayEnd}:00</WorkingHours>
+                                    <WorkingHours>Сб - {e.saturdayStart}:00 - {e.saturdayEnd}:00</WorkingHours>
+                                    <WorkingHours>Вск - {e.sundayStart}:00 - {e.sundayEnd}:00</WorkingHours>
                                 </WorkingHoursColumn>
 
                                 <WorkingHoursColumn>
@@ -427,7 +402,7 @@ const mapStateToProps = (state) => {
         amountOrders: state.company.amountOrders,
         status: state.company.status,
     }
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
