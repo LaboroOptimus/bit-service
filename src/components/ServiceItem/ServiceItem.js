@@ -20,6 +20,7 @@ const Name = styled.h3`
     font-size: 28px;
     margin: 0;
     padding-left: 15px;
+    font-family: 'NotoSans-Bold';
     
      @media (max-width: 768px) {
         font-size: 23px;
@@ -36,7 +37,9 @@ const YetContainer = styled.div`
     margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 6px;
-`
+    font-size: 14px;
+    
+`;
 
 const Yet = styled(NavLink)`
     color: #368594;
@@ -61,6 +64,7 @@ const Container = styled.div`
     margin: 20px 0;
     padding: 20px 20px 40px 20px;
     width: 95%;
+    font-family: 'NotoSans-Regular';
     
     @media (max-width: 768px) {
         padding: 10px;
@@ -193,10 +197,16 @@ const Contact = styled.div`
     }
 `;
 
+const ContactImg = styled.img`
+    width: 25px;
+    height: 25px;
+`;
+
 const ContactDescription = styled.p`
     margin: 0 0 0 5px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
+     
     
     @media (max-width: 768px) {
         font-size: 19px;
@@ -251,30 +261,32 @@ const SecondaryButton = styled(NavLink)`
        margin-right: 0;
        margin: 5px 0px;
     }
-`
+`;
 
-/*const Button = styled(NavLink)`
-    background: ${props => props.backgroundColor}; 
-    border-radius: 5px;
-    color: ${props => props.color}; 
-    font-size: 15px;
-    padding: 10px 20px;
-    text-decoration: none;
-    margin-right: ${props => props.marginRight};
-    
-    @media (max-width: 768px) {
-       margin-right: 0;
-       margin: 5px 0px;
-    }
-`;*/
+const ContactPerson = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+`;
 
+const ContactPersonPhoto = styled.img`
+   width: 75px;
+   height: 75px;
+   border-radius: 50%;
+`;
+
+const ContactPersonColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+`;
 
 class ServiceItem extends React.Component {
     render() {
         return (
             <Container>
                 <NameContainer>
-                    {this.props.prostatus && <ShieldPro src={shieldpro}/>}
+                    {this.props.isProStatus && <ShieldPro src={shieldpro}/>}
                     <Name>{this.props.name}</Name>
                     <Stars rating={this.props.rating}/>
                 </NameContainer>
@@ -284,8 +296,8 @@ class ServiceItem extends React.Component {
                         {this.props.address.map((e, index) => {
                             return (
                                 <>
-                                    {index < 2 ? (<Contact index={index}><img alt={'alt'} src={map}/>
-                                        <ContactDescription>{e}</ContactDescription>
+                                    {index < 2 ? (<Contact index={index}><ContactImg alt={'alt'} src={map}/>
+                                        <ContactDescription>{'м.' + e.station + ', ' + e.street + ', ' + e.house}</ContactDescription>
                                     </Contact>) : null}
                                 </>
                             )
@@ -295,15 +307,15 @@ class ServiceItem extends React.Component {
                             Еще {this.props.address.length - 2} {formatAddress(this.props.address.length - 2)}
                         </Yet></YetContainer>}
 
-                        {/*{this.props.phone.map((e, index) => {
+                        {this.props.address.map((e, index) => {
                             return (
                                 <>
-                                    {index < 2 ? (<Contact index={index}><img alt={'alt'} src={phone}/>
-                                        <ContactDescription>{e}</ContactDescription>
+                                    {index < 2 && e.phone ? (<Contact index={index}><img alt={'alt'} src={email}/>
+                                        <ContactDescription>{e.phone}</ContactDescription>
                                     </Contact>) : null}
                                 </>
                             )
-                        })}*/}
+                        })}
                       {/*  {this.props.phone.length > 2 &&
 
                         <YetContainer><PlusIcon/> <Yet
@@ -315,14 +327,10 @@ class ServiceItem extends React.Component {
                     </LeftColumn>
 
                     <CenterColumn>
-                        {this.props.advantages.map((e, index) => {
-                            return (
-                                <AdvantagesItem
-                                    backgroundColor={index === 0 ? '#E6DDDE' : index === 1 ? '#F5C6B4' : index === 2 ? '#F9DC8E' : 'transparent'}
-                                    index={index}>{e}
-                                </AdvantagesItem>
-                            )
-                        })}
+                        {this.props.isFreeDiagnostics && <AdvantagesItem backgroundColor={'#E6DDDE'}>Бесплатная диагностика</AdvantagesItem>}
+                        <AdvantagesItem backgroundColor={'#F5C6B4'}>Рейтинг {this.props.rating}/5</AdvantagesItem>
+                        {this.props.isGuarantee && <AdvantagesItem backgroundColor={'#F9DC8E'}>Даем гарантию</AdvantagesItem>}
+                        {this.props.isSafeDeal && <AdvantagesItem backgroundColor={'#E6DDDE'}>Безопасная сделка</AdvantagesItem>}
                     </CenterColumn>
                     <RightColumn>
                         <Description>
@@ -333,7 +341,7 @@ class ServiceItem extends React.Component {
                                 <>
                                     {index < 5 ? (<PriceItem
                                         backgroundColor={index % 2 === 0 ? 'transparent' : 'rgb(230, 221, 222, 0.2)'}>
-                                        <PriceName>{e.title}</PriceName>
+                                        <PriceName>{e.name}</PriceName>
                                         <PriceValue>от {e.price} рублей</PriceValue>
                                     </PriceItem>) : null}
 
@@ -344,12 +352,24 @@ class ServiceItem extends React.Component {
                         {this.props.prices.length > 5 ? <YetContainer><PlusIcon/> <Yet to={'/'}> Смотреть
                             еще {this.props.prices.length - 5} {formatPrice(this.props.prices.length - 5)}</Yet></YetContainer> : null}
 
+
                         <Link>
                             <SecondaryButton to={'/'}> На
                                 страницу сервиса </SecondaryButton>
                             <PrimaryButton to={'/'}> Заказать ремонт
                                 техники </PrimaryButton>
                         </Link>
+
+                        <p>Контактное лицо</p>
+                        <ContactPerson>
+                            <ContactPersonPhoto src={`${this.props.personPhoto}`}/>
+                            <ContactPersonColumn>
+                                {this.props.personName && <span>{this.props.personName}</span>}
+                                {this.props.personPhone && <span>Телефон : {this.props.personPhone}</span>}
+                                {this.props.personEmail && <span>Email : {this.props.personEmail}</span>}
+                            </ContactPersonColumn>
+                        </ContactPerson>
+
                     </RightColumn>
                 </Content>
             </Container>
