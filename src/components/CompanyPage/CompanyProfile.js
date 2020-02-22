@@ -251,7 +251,7 @@ const ServicePhoto = styled.img`
 
 
 function CompanyProfile(props) {
-    console.log('props', props.address)
+    console.log('props dress', props.address)
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -363,11 +363,11 @@ function CompanyProfile(props) {
                                 </WorkingHoursColumn>
 
                                 <WorkingHoursColumn>
-                                    <ServiceContactItem><ServiceContactImg src={phone}/>8(800)555-35-35</ServiceContactItem>
+                                    <ServiceContactItem><ServiceContactImg src={phone}/>{e.phone}</ServiceContactItem>
                                 </WorkingHoursColumn>
                             </Row>
                         </Column>
-                        <ServicePhoto src={`${props.companyPhoto}`}/>
+                        <ServicePhoto src={`${e.photo}`}/>
                     </Row>
                 )
             })}

@@ -188,6 +188,7 @@ const WorkingHours = styled.span`
 `;
 
 function CompanyEdit(props) {
+    console.log('телефон', props.address);
     return (
         <Wrapper>
             <Title>Мой профиль</Title>
@@ -259,7 +260,7 @@ function CompanyEdit(props) {
                         </Column>
                         <Column marginLeft={'20px'}>
                             <Row marginTop={'10px'}>
-                                <AddedItem>{index + 1}. {e.city}, {e.street}, {e.house}</AddedItem>
+                                <AddedItem>{index + 1}. {e.city}, {e.street}, {e.house}, {e.phone}</AddedItem>
                                 <DeleteIcon icon={faTrashAlt} onClick={() => props.onRemoveAddress(e.id)}/>
                             </Row>
                             <Row>
@@ -301,6 +302,14 @@ function CompanyEdit(props) {
                         <TextField dataValidation={'isCompanyHouseValid'} name={'companyStation'}
                                    onChange={props.onChangeCompanyInfo} value={props.companyStation}
                                    placeholder={'Пушкинская'}/>
+                        </Column>
+
+                        <Column padding={'0 20px 0 20px'}>
+                            <TextFieldLabel>Телефон</TextFieldLabel>
+                            <TextField placeholder={'8'}
+                                       dataValidation={'isCompanyPhoneValid'}
+                                       onChange={props.onChangeCompanyInfo} name={'companyPhone'}
+                                       value={props.companyPhone}/>
                         </Column>
 
                     </Row>
@@ -413,9 +422,10 @@ function CompanyEdit(props) {
 
 
 
+
+
                         <Column marginTop={'20px'}>
                             <Add>
-                                {/*<AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>*/}
                                 <AddButton text={'Добавить адрес'} onClick={()=>props.onAddAddress()}/>
                             </Add>
                         </Column>
@@ -442,7 +452,6 @@ function CompanyEdit(props) {
                                    placeholder={'1000'}/>
 
                         <Add>
-                            {/*<AddValue onClick={() => props.onAddAddress()}>добавить еще адрес</AddValue>*/}
                             <AddButton text={'Добавить цену'} onClick={() => props.onAddPrice()}/>
                         </Add>
                     </Row>
@@ -553,6 +562,7 @@ const mapStateToProps = (state) => {
         saturdayEnd: state.company.saturdayEnd,
         sundayStart: state.company.sundayStart,
         sundayEnd: state.company.sundayEnd,
+        companyPhone: state.company.companyPhone,
     }
 };
 

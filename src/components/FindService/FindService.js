@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import ServiceList from "../ServiceList/ServiceList";
+import {connect} from "react-redux";
 
 const Wrapper = styled.div`
     padding: 100px 30px;
@@ -105,7 +106,12 @@ const SortItem = styled.a`
 
 
 class FindService extends React.Component {
+    componentDidMount() {
+        this.props.loadCompany()
+    }
+
     render(){
+        console.log('компонент', this.props.company);
         return(
             <Wrapper>
                 <Title>Найти сервис</Title>
@@ -123,11 +129,23 @@ class FindService extends React.Component {
                         <SortItem>по удаленности</SortItem>
                     </Container>
                 </FormWrapper>
-                <ServiceList/>
+                <ServiceList data={this.props.company}/>
 
             </Wrapper>
         )
     }
 }
 
-export default FindService
+const mapStateToProps = (state) => {
+    return {
+        company: state.company.loaded_company,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadCompany:() => dispatch({type:'LOAD_COMPANY'}),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindService)

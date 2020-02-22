@@ -8,11 +8,35 @@ const Wrapper = styled.div`
     flex-direction: column;
 `;
 
+
+
+/*
+address: [{…}]
+amountOrders: 0
+
+
+
+isDelivery: false
+
+
+isFreeDiagnostics: true
+isGuarantee: false
+isWorkWithLegalEntity: false
+name: "Рога и Копыта"
+ogrn: "12346552534"
+personEmail: "igor@mail.ru"
+personName: "Смирнов Игорь Витальевич"
+personPhone: "89269258713"
+personPhoto: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD"
+photo: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD"
+prices: (3) [{…}, {…}, {…}]
+rating: 0
+status: "не подтвержден"
+timeUpload: "21:55"
+userRating: 0
+*/
+
 class ServiceList extends React.Component {
-    componentDidMount() {
-
-    }
-
     render() {
         return (
             <Wrapper>

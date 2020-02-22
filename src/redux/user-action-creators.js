@@ -118,6 +118,7 @@ export const changeCompanyPersonFile = (file) => {
 };
 
 export const changeCompanyPhoto = (file) => {
+    console.log('change photo')
     return new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.onload = () => {
@@ -156,9 +157,9 @@ export const updateCompanyProfile = (e) => {
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
         data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid, data.isPersonPhotoValid, data.isCompanyPhotoValid);
 
-    console.log(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
+  /*  console.log(data.isPersonNameValid, data.isPersonPhoneValid,data.isPersonEmailValid,
         data.isCompanyNameValid,data.isOgrnValid,data.isInnValid,data.isCompanyAddressValid,data.isCompanyStreetValid,
-        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid);
+        data.isCompanyHouseValid,data.isServiceNameValid,data.isServicePriceValid);*/
     let profile = {
         name: data.companyName,
         ogrn: data.ogrn,
