@@ -38,26 +38,30 @@ userRating: 0
 
 class ServiceList extends React.Component {
     render() {
+        console.log('приходит', this.props.data);
+        console.log('имя', this.props.data.name)
         return (
             <Wrapper>
-                {data.map((e, index) => {
+                {this.props.data.map((e, index) => {
                     return (
                         <ServiceItem
                             index={index}
                             id={e.id}
-                            url={e.url}
-                            name={e.serviceName}
-                            description={e.serviceDescription}
-                            rating={e.serviceRating}
-                            address={e.serviceAddress}
-                            phone={e.servicePhone}
-                            station={e.serviceStation}
-                            advantages={e.serviceAdvantages}
-                            email={e.serviceEmail}
-                            prices={e.servicePrices}
-                            city={e.city}
-                            safedeal={e.isSafeDeal}
-                            prostatus={e.isProStatus}
+                           // url={e.url}
+                            name={e.name}
+                          //  description={e.serviceDescription}
+                           rating={e.rating}
+                           address={e.address}
+                            isFreeDiagnostics={e.isFreeDiagnostics}
+                            isGuarantee={e.isGuarantee}
+                            personName={e.personName}
+                            personPhoto={e.personPhoto}
+                            personEmail={e.personEmail}
+                           // station={e.serviceStation}
+                            prices={e.prices}
+
+                            isSafeDeal={e.safedeal}
+                            isProStatus={e.prostatus}
                         />
                     )
                 })}
