@@ -1,6 +1,32 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects'
 import fire from "../config/Fire";
 
+export function* watchCompanyLoad() {
+    yield takeEvery('LOAD_COMPANY', workerCompanyLoad);
+}
+
+export function* workerCompanyLoad() {
+    let ref = fire.database().ref().child('company/');
+    let data;
+    let keys;
+    yield call(() => {
+        return ref.once('value').then(function (snapshot) {
+            data = snapshot.val();
+            keys = Object.keys(snapshot.val());
+        })
+    });
+
+    let formatedData = [];
+
+    for(let i = 0; i < keys.length; i++){
+        let obj = data[keys[i]];
+        let secondKey = Object.keys(obj);
+        formatedData.push(obj[secondKey])
+    }
+    yield put({type: 'LOAD_COMPANY_SUCCESS', payload: formatedData})
+}
+
+
 export function* watchLoadCompanyPage() {
     yield takeEvery('LOAD_COMPANY_PAGE', workerLoadCompanyPage);
 }
@@ -38,15 +64,9 @@ export function* workerLoadCompanyPage() {
         catch (e) {
 
         }
-
-
     }
     else {
         yield put({type: 'EDIT_COMPANY_PROFILE'})
     }
-
-   /* console.log('isCompanyAlreadyExist', isCompanyAlreadyExist);
-    console.log(keys);
-    console.log(uid)*/
 }
 

@@ -17,7 +17,7 @@ import fire from "../config/Fire";
 import {randomInteger} from "../utils/randomNumm";
 import {history} from '../router/history'
 import {formatHours,formatMinutes} from "../utils/format";
-import {watchLoadCompanyPage} from './companySaga'
+import {watchCompanyLoad, watchLoadCompanyPage} from './companySaga'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -162,7 +162,7 @@ export function * workerUploadCompanyProfile(data) {
                 }
             );
             if(ifCompanyExist){
-                console.log('company exist')
+                console.log('company exist', data.payload.profile.address);
                 yield call(() => {
                         return fire.database().ref('company/' + uid + `/${companyKey}`).update({
                             dateUpload: today,
@@ -434,6 +434,7 @@ export default function* rootSaga() {
         watchLoadRequests(),
         watchLoadAnswers(),
         watchUploadCompanyProfile(),
-        watchLoadCompanyPage()
+        watchLoadCompanyPage(),
+        watchCompanyLoad()
     ])
 }

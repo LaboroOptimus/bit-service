@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import {NavLink} from "react-router-dom";
 import shieldpro from './assets/success.png'
 import servicephoto from './assets/service.png'
-import star from './assets/star.png'
 import map from './assets/map.png'
-import phone from './assets/phone.png'
 import email from './assets/email.png'
 import {ReactComponent as Plus} from "./assets/add.svg";
 import {formatAddress, formatPhone, formatPrice} from "../../utils/format";
@@ -294,10 +292,10 @@ class ServiceItem extends React.Component {
                         })}
                         {this.props.address.length > 2 &&
                         <YetContainer><PlusIcon/> <Yet to={'/'}>
-                          Еще {this.props.address.length - 2} {formatAddress(this.props.address.length - 2)}
+                            Еще {this.props.address.length - 2} {formatAddress(this.props.address.length - 2)}
                         </Yet></YetContainer>}
 
-                        {this.props.phone.map((e, index) => {
+                        {/*{this.props.phone.map((e, index) => {
                             return (
                                 <>
                                     {index < 2 ? (<Contact index={index}><img alt={'alt'} src={phone}/>
@@ -305,13 +303,13 @@ class ServiceItem extends React.Component {
                                     </Contact>) : null}
                                 </>
                             )
-                        })}
-                        {this.props.phone.length > 2 &&
+                        })}*/}
+                      {/*  {this.props.phone.length > 2 &&
 
                         <YetContainer><PlusIcon/> <Yet
-                            to={'/'}>Еще {this.props.phone.length - 2} {formatPhone(this.props.phone.length - 2)}
+                            to={'/'}>Еще {this.props.phone.length - 2} {formatPhone(this.props.phone.length - 2)}>
                         </Yet></YetContainer>}
-                        <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>
+                        <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>}*/}
 
 
                     </LeftColumn>

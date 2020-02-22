@@ -9,6 +9,7 @@ const initialState = {
     companyName: '',
     companyPhoto: 'http://placehold.it/100x100',
     contactPerson: '',
+    companyPhone: '',
     contactPersonEmail: '',
     contactPersonPhone: '',
     contactPersonPhoto: 'http://placehold.it/200x200',
@@ -39,6 +40,7 @@ const initialState = {
     isCompanyAddressValid: false,
     isCompanyStreetValid: false,
     isCompanyHouseValid: false,
+    isCompanyPhoneValid: false,
 
     isServiceNameValid: false,
     isServicePriceValid: false,
@@ -78,13 +80,14 @@ const initialState = {
 
     sundayStart: 0,
     sundayEnd: 0,
+
+    loaded_company: [],
 };
 
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
         case 'LOAD_COMPANY_PROFILE':
-            console.log('data address', action.payload.address);
             return {
                 ...state,
                 dateUpload: action.payload.dateUpload,
@@ -97,6 +100,7 @@ export default function companyReducer(state = initialState, action) {
                 contactPersonPhoto: action.payload.personPhoto,
                 contactPerson: action.payload.personName,
                 companyName:action.payload.name,
+
                 companyPhoto: action.payload.photo,
                 isFreeDiagnostics: action.payload.isFreeDiagnostics,
                 isDelivery: action.payload.isDelivery,
@@ -129,12 +133,12 @@ export default function companyReducer(state = initialState, action) {
                 isCompanyAddressValid: true,
                 isCompanyStreetValid: true,
                 isCompanyHouseValid: true,
+                isCompanyPhoneValid: true,
                 isServiceNameValid: true,
                 isServicePriceValid: true,
             };
 
         case 'UPLOAD_COMPANY_SUCCESS':
-            console.log('успешно');
             return {
                 ...state,
                 mustCheckCompanyFields: false,
@@ -153,7 +157,7 @@ export default function companyReducer(state = initialState, action) {
                 isPersonPhotoValid: validationImage(action.payload.fileType)
             };
         case 'CHANGE_COMPANY_PHOTO':
-            console.log('валидация',validationImage(action.payload.fileType));
+            console.log('change photo reducer', action.payload.file);
             return {
                 ...state,
                 companyPhoto: action.payload.file,
@@ -247,6 +251,7 @@ export default function companyReducer(state = initialState, action) {
             const addressItem = {
                 id: companyId,
                 city: state.companyCity,
+                phone: state.companyPhone,
                 street: state.companyStreet,
                 station: state.companyStation,
                 house: state.companyHouse,
@@ -273,6 +278,7 @@ export default function companyReducer(state = initialState, action) {
                     address: [...state.address, addressItem],
                     companyPhoto: 'http://placehold.it/100x100',
                     companyStation: '',
+                    companyPhone: '',
                     companyCity: '',
                     companyHouse: '',
                     companyStreet: '',
@@ -307,6 +313,7 @@ export default function companyReducer(state = initialState, action) {
                     companyCity: '',
                     companyHouse: '',
                     companyStation: '',
+                    companyPhone: '',
                     companyStreet: '',
                     mustCheckNewAddress: false,
                     mondayStart: 0,
@@ -324,6 +331,16 @@ export default function companyReducer(state = initialState, action) {
                     sundayStart: 0,
                     sundayEnd: 0,
                 }
+            }
+        case 'LOAD_COMPANY':
+            return {
+                ...state
+            }
+
+        case 'LOAD_COMPANY_SUCCESS':
+            return {
+                ...state,
+                loaded_company: action.payload,
             }
         default:
             return {
