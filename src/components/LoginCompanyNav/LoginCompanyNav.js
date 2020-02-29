@@ -124,7 +124,7 @@ function LoginCompanyNav() {
                 </div>
             </NavLink>
 
-            <NavLink to="/" className="menu-item">
+            <NavLink to="/allrequests" className="menu-item">
                 <div>
                     <ServiceIcon/>
                     Все заявки

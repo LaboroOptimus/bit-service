@@ -66,7 +66,7 @@ const Subtitle = styled.p`
     font-size: 18px;
     margin-bottom: 40px;
     margin-top: 0;
-`
+`;
 
 const ForgotPass = () => {
     return (

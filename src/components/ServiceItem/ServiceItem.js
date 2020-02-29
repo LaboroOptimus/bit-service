@@ -263,11 +263,14 @@ const SecondaryButton = styled(NavLink)`
        margin: 5px 0px;
     }
 `;
+const ContactPersonTitle = styled.p`
+    margin-left: 10px;
+`;
 
 const ContactPerson = styled.div`
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    margin: 10px 0 0 10px;
 `;
 
 const ContactPersonPhoto = styled.img`
@@ -375,7 +378,7 @@ class ServiceItem extends React.Component {
                                 техники </PrimaryButton>
                         </Link>
 
-                        <p>Контактное лицо</p>
+                        <ContactPersonTitle>Контактное лицо</ContactPersonTitle>
                         <ContactPerson>
                             <ContactPersonPhoto src={`${this.props.personPhoto}`}/>
                             <ContactPersonColumn>
