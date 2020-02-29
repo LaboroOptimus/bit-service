@@ -8,6 +8,7 @@ import email from './assets/email.png'
 import {ReactComponent as Plus} from "./assets/add.svg";
 import {formatAddress, formatPhone, formatPrice} from "../../utils/format";
 import Stars from "./assets/Stars";
+import { metroStationColor } from '../../utils/metroStationColor'
 
 const PlusIcon = styled(Plus)`
     fill: #368594;
@@ -35,7 +36,7 @@ const ShieldPro = styled.img`
 
 const YetContainer = styled.div`
     margin-top: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     margin-left: 6px;
     font-size: 14px;
     
@@ -281,6 +282,15 @@ const ContactPersonColumn = styled.div`
     margin-left: 20px;
 `;
 
+const StationColoredCircle = styled.div`
+    display: inline-block;
+    margin-right: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: ${props=>props.backgroundColor};
+`;
+
 class ServiceItem extends React.Component {
     render() {
         return (
@@ -294,10 +304,15 @@ class ServiceItem extends React.Component {
                     <LeftColumn>
                         <ServicePhoto src={servicephoto}/>
                         {this.props.address.map((e, index) => {
+                            let stationColor = metroStationColor(e.station);
+                            console.log(+stationColor)
                             return (
                                 <>
-                                    {index < 2 ? (<Contact index={index}><ContactImg alt={'alt'} src={map}/>
-                                        <ContactDescription>{'м.' + e.station + ', ' + e.street + ', ' + e.house}</ContactDescription>
+                                    {index < 2 ? (<Contact index={index}>
+                                        <ContactDescription>
+                                            <StationColoredCircle backgroundColor={typeof stationColor !== "undefined" ? stationColor : '#000'}/>
+                                            {e.station + ', ' + e.street + ', ' + e.house}
+                                        </ContactDescription>
                                     </Contact>) : null}
                                 </>
                             )
@@ -316,12 +331,12 @@ class ServiceItem extends React.Component {
                                 </>
                             )
                         })}
-                      {/*  {this.props.phone.length > 2 &&
+                        {this.props.address.length > 2 &&
 
                         <YetContainer><PlusIcon/> <Yet
-                            to={'/'}>Еще {this.props.phone.length - 2} {formatPhone(this.props.phone.length - 2)}>
+                            to={'/'}>Еще {this.props.address.length - 2} {formatPhone(this.props.address.length - 2)}
                         </Yet></YetContainer>}
-                        <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>}*/}
+                     {/*   <Contact><img alt={'alt'} src={email}/><ContactDescription>email@service.ru</ContactDescription></Contact>*/}
 
 
                     </LeftColumn>

@@ -39,7 +39,6 @@ userRating: 0
 class ServiceList extends React.Component {
     render() {
         console.log('приходит', this.props.data);
-        console.log('имя', this.props.data.name)
         return (
             <Wrapper>
                 {this.props.data.map((e, index) => {
