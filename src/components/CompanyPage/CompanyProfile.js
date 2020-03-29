@@ -10,6 +10,7 @@ import phone from './assets/phone.png'
 import TextField from "../../UI/TextField";
 import Title from "../../UI/Title";
 import Wrapper from "../../UI/Wrapper";
+import {metroStationColor} from "../../utils/metroStationColor";
 
 const MainProfile = styled.div`
     display: flex;
@@ -347,7 +348,7 @@ function CompanyProfile(props) {
                     <Row marginTop={'40px'} key={index+e.street+e.house}>
                         <Column>
                             <ServiceAddress>{e.city}, {e.street}, {e.house}</ServiceAddress>
-                            <ServiceMetro><MetroCircle backgroundColor={'#D90102'}/>м. {e.station}</ServiceMetro>
+                            <ServiceMetro><MetroCircle backgroundColor={metroStationColor(e.station)}/>м. {e.station}</ServiceMetro>
                             <Row>
                                 <WorkingHoursColumn>
                                     <WorkingHours>Пн - {e.mondayStart}:00 - {e.mondayStart}:00 </WorkingHours>
