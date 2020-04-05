@@ -183,8 +183,6 @@ const AllRequests = (props) => {
         props.loadAllRequests();
     },[isLoad]);
 
-    console.log(requests)
-
     return (
         <Wrapper>
           <Title>Все заявки</Title>
@@ -197,7 +195,8 @@ const AllRequests = (props) => {
                                     <RequestInfo><Icon icon={faTable}/>{e.date}</RequestInfo>
                                     <RequestInfo><Icon icon={faClock}/>15:02</RequestInfo>
                                 </RequestContainer>
-                                <RequestTitle>{e.type} + ' ' + {e.brand} + ' ' + {e.model}</RequestTitle>
+                               {/* <RequestTitle>{e.type} + ' ' + {e.brand} + ' ' + {e.model}</RequestTitle>*/}
+                                <RequestTitle>{e.type + ` ` + e.brand + ` ` +  e.model}</RequestTitle>
                                 <RequestDescription>{e.desc}</RequestDescription>
                                 <RequestContainer>
                                     {e.type.length !== 0 && <RequestsLabels backgroundColor={'#F5C6B4'}>{e.type}</RequestsLabels>}
@@ -217,7 +216,7 @@ const AllRequests = (props) => {
                                         </PersonRow>
                                         <PersonRow>
                                             <PersonLabel><Icon icon={faCreditCard}/> 175 заказов</PersonLabel>
-                                            <PersonLabel><Icon icon={faUserClock}/> на сайте с 14.02.2019</PersonLabel>
+                                            <PersonLabel><Icon icon={faUserClock}/> на сайте с {e.userInfo.dateOfReg.replace(/\s/g,'.')}</PersonLabel>
                                         </PersonRow>
                                     </PersonColumn>
                                 </Row>
@@ -239,56 +238,6 @@ const AllRequests = (props) => {
                     </Item>
                 )
             })}
-           {/* <Item>
-                <Row>
-                    <Column width={'32%'}>
-                        <RequestContainer>
-                            <RequestInfo><Icon icon={faTable}/>24.02</RequestInfo>
-                            <RequestInfo><Icon icon={faClock}/>15:02</RequestInfo>
-                        </RequestContainer>
-                        <RequestTitle>Разбит экран у телефона Iphone 8</RequestTitle>
-                        <RequestDescription>Классический «Lorem ipsum dolor sit amet…»
-                            проход отнести к ремиксов римского философа Цицерона 45 г. до н.э. текст
-                            De Finibus Bonorum et Malorum </RequestDescription>
-                        <RequestContainer>
-                            <RequestsLabels backgroundColor={'#F5C6B4'}>смартфон</RequestsLabels>
-                            <RequestsLabels backgroundColor={'#F07554'}>apple</RequestsLabels>
-                            <RequestsLabels backgroundColor={'#F9DC8E'}>разбит экран</RequestsLabels>
-                        </RequestContainer>
-                    </Column>
-
-                    <Column width={'33%'}>
-                        <Row>
-                            <PersonColumn>
-                                <RequestPersonImage src={'https://www.crn.ru/upload/iblock/c2a/Ivan_Ivanov.jpg'}/>
-                            </PersonColumn>
-                            <PersonColumn>
-                                <PersonRow>
-                                    <RequestPersonName>Иван Иванов</RequestPersonName>
-                                        <PersonStation><PersonStationCircle backgroundColor={'#932072'}/>Планерная</PersonStation>
-                                </PersonRow>
-                                <PersonRow>
-                                    <PersonLabel><Icon icon={faCreditCard}/> 175 заказов</PersonLabel>
-                                    <PersonLabel><Icon icon={faUserClock}/> на сайте с 14.02.2019</PersonLabel>
-                                </PersonRow>
-                            </PersonColumn>
-                        </Row>
-
-                        <PersonContactBlock margin={'30px 0 0 0'}>
-                            <PersonContactImage src={`${phone}`}/>
-                            <PersonContactValue>8(800)000-00-00</PersonContactValue>
-                        </PersonContactBlock>
-                        <PersonContactBlock margin={'10px 0 30px 0'}>
-                            <PersonContactImage src={`${email}`}/>
-                            <PersonContactValue>ivanivanoff@mail.ru</PersonContactValue>
-                        </PersonContactBlock>
-                        <Button text={'Ответить на заявку'}/>
-                    </Column>
-                    <Column width={'31%'}>
-                        <RequestImage src={'https://media2.24aul.ru/imgs/55050e9563d0d414743b79ac/'}/>
-                    </Column>
-                </Row>
-            </Item>*/}
         </Wrapper>
     )
 };

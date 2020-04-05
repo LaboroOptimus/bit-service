@@ -134,6 +134,8 @@ export function * workerAllRequests() {
         dataWithUsers.push(data[dataWithUsersKeys[i]]);
     }
 
+
+
     if(Object.keys(data).length !== 0) {
         yield put({type: 'LOAD_ALL_REQUESTS_SUCCESS', payload: dataWithUsers});
     }
