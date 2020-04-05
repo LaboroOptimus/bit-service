@@ -17,7 +17,7 @@ import fire from "../config/Fire";
 import {randomInteger} from "../utils/randomNumm";
 import {history} from '../router/history'
 import {formatHours,formatMinutes} from "../utils/format";
-import {watchCompanyLoad, watchLoadCompanyPage} from './companySaga'
+import {watchCompanyLoad, watchLoadCompanyPage, watchLoadAllRequests} from './companySaga'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -435,6 +435,7 @@ export default function* rootSaga() {
         watchLoadAnswers(),
         watchUploadCompanyProfile(),
         watchLoadCompanyPage(),
-        watchCompanyLoad()
+        watchCompanyLoad(),
+        watchLoadAllRequests()
     ])
 }

@@ -82,11 +82,25 @@ const initialState = {
     sundayEnd: 0,
 
     loaded_company: [],
+    all_requests: [],
+    isRequestsLoaded: false,
 };
 
 
 export default function companyReducer(state = initialState, action) {
     switch (action.type) {
+        case 'LOAD_ALL_REQUESTS':
+            return {
+                ...state,
+            };
+
+        case 'LOAD_ALL_REQUESTS_SUCCESS':
+            return {
+               ...state,
+                isRequestsLoaded: true,
+                all_requests: action.payload,
+            };
+
         case 'LOAD_COMPANY_PROFILE':
             return {
                 ...state,
