@@ -150,7 +150,7 @@ const RequestImage = styled.img`
 
 const AllRequests = (props) => {
 
-    const { isLoad, requests } = props
+    const { isLoad, requests } = props;
 
     /*
     *
@@ -183,6 +183,7 @@ const AllRequests = (props) => {
         props.loadAllRequests();
     },[isLoad]);
 
+    console.log(requests);
     return (
         <Wrapper>
           <Title>Все заявки</Title>
@@ -193,7 +194,7 @@ const AllRequests = (props) => {
                             <Column width={'32%'}>
                                 <RequestContainer>
                                     <RequestInfo><Icon icon={faTable}/>{e.date}</RequestInfo>
-                                    <RequestInfo><Icon icon={faClock}/>15:02</RequestInfo>
+                                    <RequestInfo><Icon icon={faClock}/>{e.time}</RequestInfo>
                                 </RequestContainer>
                                {/* <RequestTitle>{e.type} + ' ' + {e.brand} + ' ' + {e.model}</RequestTitle>*/}
                                 <RequestTitle>{e.type + ` ` + e.brand + ` ` +  e.model}</RequestTitle>

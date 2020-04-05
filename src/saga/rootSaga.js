@@ -244,9 +244,10 @@ export function* workerAddRequest(data) {
     const time = new Date();
     const today = time.getDate() + '/' + (time.getMonth() + 1);
     const now = formatHours(time.getHours()) + ':' + formatMinutes(time.getMinutes());
+    console.log(now)
     const isValidate = data.payload.isValidate;
     console.log(isValidate);
-    const id = randomInteger(1000, 100000)
+    const id = randomInteger(1000, 100000);
 
     if (isValidate) {
         try {
