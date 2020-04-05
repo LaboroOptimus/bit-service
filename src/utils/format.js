@@ -44,7 +44,7 @@ export const formatMinutes = (minutes) => {
     else {
         return minutes
     }
-}
+};
 
 export const formatHours = (hours) => {
     if(hours >=0 && hours <= 9){
@@ -53,4 +53,18 @@ export const formatHours = (hours) => {
     else {
         return hours
     }
-}
+};
+
+export const uniqueArray = (arr) => {
+    let i = 0,
+        current,
+        length = arr.length,
+        unique = [];
+    for (; i < length; i++) {
+        current = arr[i];
+        if (!~unique.indexOf(current)) {
+            unique.push(current);
+        }
+    }
+    return unique;
+};
