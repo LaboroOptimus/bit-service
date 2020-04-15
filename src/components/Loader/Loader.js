@@ -69,13 +69,6 @@ const Loader = ()  =>{
         </Box>
         </Wrapper>
     );
-}
+};
 
 export default Loader
-
-
-/*<div class="box">
-			<div class="loader1"></div>
-			<p>Loader 1</p>
-</div>
-*/
