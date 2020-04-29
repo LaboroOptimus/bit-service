@@ -107,9 +107,18 @@ const SocialContainer = styled.div`
      }
 `;
 
-
+async function request() {
+    let url = '/';
+    let response = await fetch(url);
+    let commits = await response; // читаем ответ в формате JSON
+    console.log(commits);
+}
 
 class Footer extends React.Component{
+    componentDidMount() {
+        request()
+    }
+
     render() {
         return (
             <FooterBlock>
