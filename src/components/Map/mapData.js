@@ -1,29 +1,80 @@
-export const mapData = [
+import { redirect } from '../../utils/redirect';
+var data = [
     {
-        geometry: [55.88669056886585,37.41228049999999],
-        properties: {
-            /*phone:'8(800)555-35-35',
-            info:'г.Химки, ул. Строителей, 4В, Химки этаж 1',*/
-            hintContent: 'ООО Хитес',
-            balloonContentHeader:'<Link><h3>ООО "Хитес"</h3></Link>',
-            balloonContentBody: '<p>+7 (800)555-35-35</p>' + '<p>ул. Строителей, 4В</p>',
-            balloonContentFooter:'ремонт телевизоров, ремонт смартфонов, ремонт холодильников'
+        point: [55.88669056886585,37.41228049999999],
+        serviceInfo: {
+            id: '1',
+            name: 'ООО Хитес',
+            phones: ['+7 (800)555-35-35'],
+            site: 'www.hutec.ru',
+            address: 'г. Химки, ул. Строителей, 4В',
+            tags: ['ремонт телевизоров', 'ремонт смартфонов', 'ремонт холодильников'],
         },
-        modules: ['geoObject.addon.balloon', 'geoObject.addon.hint'],
     },
 
     {
-        geometry: [55.89469706885654,37.404455999999875],
-        properties: {
-            url:'/',
-            hintContent: 'ООО Химки-Сервис +7 (495) 970-46-1',
-            balloonContentHeader:'<Link><h3>ООО "Химки Сервис"</h3></Link>',
-            balloonContentBody: '<p>+7 (495) 970-46-1</p>' + '<p>Нагорное ш., 4</p>',
-            balloonContentFooter:'ремонт телевизоров, ремонт смартфонов, ремонт холодильников'
+        point: [55.89469706885654,37.404455999999875],
+        serviceInfo: {
+            id: '2',
+            name: 'ООО Химки-Сервис',
+            phones: ['+7 (495) 970-46-1', '+7 (495) 970-46-2'],
+            site: 'www.himku-service.ru',
+            address: 'г. Химки, ул. Нагорное ш., 4',
+            tags: ['ремонт телевизоров', 'ремонт смартфонов', 'ремонт холодильников'],
         },
-        modules: ['geoObject.addon.balloon', 'geoObject.addon.hint'],
     },
 ];
+
+const makeListItem = (val) => '<li>' + val + '</li>';
+const makeLink = (val, href) => '<a href="' + href + '">' + val + '</a>';
+
+const buttonStyle = [
+    "display: block;",
+    "color: #fff;",
+    "cursor: pointer;",
+    "-webkit-transition: all 0.3s ease;",
+    "transition: all 0.3s ease;",
+    "justify-content: center;",
+    //"padding: 15px 35px;",
+    //"border-radius: 50px;",
+    "-webkit-text-decoration: none;",
+    "text-decoration: none;",
+    "outline: none;",
+    "border: 3px solid #368594;",
+    "-webkit-user-select: none;",
+    "-moz-user-select: none;",
+    "-ms-user-select: none;",
+    "user-select: none;",
+    "background-color: #368594;",
+    "font-size: 18px;",
+    "font-family: 'NotoSans-Bold';",
+].reduce((a, c) => a + c, '');
+
+
+export const mapData = data.map((e, i) => {
+  return {
+    geometry: e.point,
+    properties: {
+        hintContent: '<h3>' + e.serviceInfo.name + '</h3>',
+        balloonContentHeader: '<a onclick="redirect(\'/map\',\''+ e.serviceInfo.url+'\')" style="cursor: pointer"><h3>' + e.serviceInfo.name + '</h3></a>',
+        balloonContentFooter: '<i>' + e.serviceInfo.tags.join(', ') + '</i>',
+        balloonContentBody: '<div style="display: flex">'
+            + '<div style="width: 60%">'
+            + '<p>Контакты:</p>'
+            + '<ul style="list-style: none; padding-left: 1rem; margin-top: .5rem">'
+            + e.serviceInfo.phones.reduce((a, c) => a + makeListItem(makeLink(c, c.replace(/[^\d+]/g, ''))), '')
+            + '</ul>'
+            + '<p>' + makeLink(e.serviceInfo.site, '//' + e.serviceInfo.site) + '</p>'
+            + '<p>Адрес: '+ e.serviceInfo.address + '</p>'
+            + '</div>'
+            + '<div style="width: 40%;">'
+            + '<button onClick="" style="' + buttonStyle + '">Страница сервиса</button>'
+            + '</div>'
+            + '</div>',
+    },
+    modules: ['geoObject.addon.balloon', 'geoObject.addon.hint'],
+  }
+})
 
 
 /* default one tag
