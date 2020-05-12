@@ -13,8 +13,8 @@ const MapPage = () => {
         <React.Fragment>
             <Navigation/>
             <Navtop/>
-            <NewMap/>
-            {/*<MapComponent/>*/}
+            {/*<NewMap/>*/}
+            <MapComponent/>
             <Footer/>
         </React.Fragment>
     )
