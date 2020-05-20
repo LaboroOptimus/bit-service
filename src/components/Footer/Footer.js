@@ -39,7 +39,9 @@ const SocialContainer = styled.div`
      }
 `;
 
-
+const FooterTitle = styled.h3`
+    
+`;
 
 class Footer extends React.Component{
     render() {

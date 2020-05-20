@@ -10,6 +10,7 @@ import Title from "../../UI/Title";
 import Wrapper from "../../UI/Wrapper";
 import Subtitle from "../../UI/Subtitle";
 import AddButton from "../../UI/AddButton";
+import CustomTooltip from "../../UI/CustomTooltip";
 
 
 const TextFieldLabel = styled.span`
@@ -200,8 +201,13 @@ function CompanyEdit(props) {
                     <Error width={'100%'}>Файл должен быть в формате .png, .jpg, .jpeg</Error>}
                 </Column>
                 <Column>
-                    <Subtitle>Контактная информация <Question>для чего мне загружать информацию о
-                        себе?</Question></Subtitle>
+                    <Subtitle>Контактная информация
+                        <CustomTooltip
+                            buttonContent={' для чего мне загружать информацию себе?'}
+                            tooltipContent={'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.'}
+                            position={'top'}
+                        />
+                        </Subtitle>
                     {(!props.isPersonPhoneValid || !props.isPersonEmailValid || props.isPersonNameValid) && props.mustCheckCompanyFields &&
                     <Row>
                         <Error width={'50%'}>Проверьте правильность полей!</Error>
