@@ -28,27 +28,50 @@ var data = [
 const makeListItem = (val) => '<li>' + val + '</li>';
 const makeLink = (val, href) => '<a href="' + href + '">' + val + '</a>';
 
-const buttonStyle = [
-    "display: block;",
-    "color: #fff;",
-    "cursor: pointer;",
-    "-webkit-transition: all 0.3s ease;",
-    "transition: all 0.3s ease;",
-    "justify-content: center;",
-    //"padding: 15px 35px;",
-    //"border-radius: 50px;",
-    "-webkit-text-decoration: none;",
-    "text-decoration: none;",
-    "outline: none;",
-    "border: 3px solid #368594;",
-    "-webkit-user-select: none;",
-    "-moz-user-select: none;",
-    "-ms-user-select: none;",
-    "user-select: none;",
-    "background-color: #368594;",
-    "font-size: 18px;",
-    "font-family: 'NotoSans-Bold';",
-].reduce((a, c) => a + c, '');
+const buttonStyle = {
+    normal: [
+        "display: block;",
+        "color: #fff;",
+        "cursor: pointer;",
+        "-webkit-transition: all 0.3s ease;",
+        "transition: all 0.3s ease;",
+        "justify-content: center;",
+        //"padding: 15px 35px;",
+        //"border-radius: 50px;",
+        "-webkit-text-decoration: none;",
+        "text-decoration: none;",
+        "outline: none;",
+        "border: 3px solid #368594;",
+        "-webkit-user-select: none;",
+        "-moz-user-select: none;",
+        "-ms-user-select: none;",
+        "user-select: none;",
+        "background-color: #368594;",
+        "font-size: 18px;",
+        "font-family: 'NotoSans-Bold';",
+    ].reduce((a, c) => a + c, ''),
+    hover:  [
+        "display: block;",
+        "cursor: pointer;",
+        "-webkit-transition: all 0.3s ease;",
+        "transition: all 0.3s ease;",
+        "justify-content: center;",
+        //"padding: 15px 35px;",
+        //"border-radius: 50px;",
+        "-webkit-text-decoration: none;",
+        "text-decoration: none;",
+        "outline: none;",
+        "-webkit-user-select: none;",
+        "-moz-user-select: none;",
+        "-ms-user-select: none;",
+        "user-select: none;",
+        'border: 3px solid #368594;',
+        'background: transparent;',
+        'color: #368594;',
+        "font-size: 18px;",
+        "font-family: 'NotoSans-Bold';",
+    ].reduce((a, c) => a + c, ''),
+};
 
 
 export const mapData = data.map((e, i) => {
@@ -68,7 +91,10 @@ export const mapData = data.map((e, i) => {
             + '<p>Адрес: '+ e.serviceInfo.address + '</p>'
             + '</div>'
             + '<div style="width: 40%;">'
-            + '<button onClick="" style="' + buttonStyle + '">Страница сервиса</button>'
+            + '<button onClick="location.replace(location.origin + \'/service/\' + ' + e.serviceInfo.id + ')"'
+                + ' style="' + buttonStyle.normal + '"'
+                + ' onMouseOver="this.style=`' + buttonStyle.hover + '`"'
+                + ' onMouseOut="this.style=`' + buttonStyle.normal + '`">Страница сервиса</button>'
             + '</div>'
             + '</div>',
     },
