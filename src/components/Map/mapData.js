@@ -73,7 +73,6 @@ const buttonStyle = {
     ].reduce((a, c) => a + c, ''),
 };
 
-
 export const mapData = data.map((e, i) => {
   return {
     geometry: e.point,
