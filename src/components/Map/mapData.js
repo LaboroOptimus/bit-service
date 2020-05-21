@@ -1,4 +1,4 @@
-import { redirect } from '../../utils/redirect';
+
 var data = [
     {
         point: [55.88669056886585,37.41228049999999],
@@ -78,7 +78,7 @@ export const mapData = data.map((e, i) => {
     geometry: e.point,
     properties: {
         hintContent: '<h3>' + e.serviceInfo.name + '</h3>',
-        balloonContentHeader: '<a onclick="redirect(\'/map\',\''+ e.serviceInfo.url+'\')" style="cursor: pointer"><h3>' + e.serviceInfo.name + '</h3></a>',
+        balloonContentHeader: '<a onclick="location.replace(location.origin + \'/service/\' + ' + e.serviceInfo.id + ')" style="cursor: pointer"><h3>' + e.serviceInfo.name + '</h3></a>',
         balloonContentFooter: '<i>' + e.serviceInfo.tags.join(', ') + '</i>',
         balloonContentBody: '<div style="display: flex">'
             + '<div style="width: 60%">'
